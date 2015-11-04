@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "TopStoryModel.h"
 #import "ContentStoryModel.h"
-#import "PastContentStoryItem.h"
-#import "DateHeaderModel.h"
 
 @interface StoryModel : NSObject
 

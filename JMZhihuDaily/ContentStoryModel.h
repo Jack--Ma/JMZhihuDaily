@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PastContentStoryItem.h"
 
-@interface ContentStoryModel : NSObject <PastContentStoryItem>
+@interface ContentStoryModel : NSObject
 
 @property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic, strong) NSString *mid;
