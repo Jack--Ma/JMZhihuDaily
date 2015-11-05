@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-  //设置左barButton和手势
+  //SWRevealViewController 提供了一个叫 revealViewController()的方法来从任何子控制器中拿到父控制器 SWRevealViewController；它还提供了一个叫 revealToggle: 的方法来 显示/隐藏 菜单栏，最后我们添加了一个手势。
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
@@ -59,6 +59,7 @@
     [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
     [self updateData];
   } else {
+    [self getApp].firstDisplay = NO;
     [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
   }
   
@@ -81,8 +82,11 @@
   return [self getApp].contentStory.count + [self getApp].contentStory.count;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.row == [self getApp].contentStory.count) {
+    return 44.0f;
+  }
+  return 93.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -90,7 +94,7 @@
   if (indexPath.row < [self getApp].contentStory.count) {
     TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
     NSDictionary *data = [self getApp].contentStory[indexPath.row];
-    
+
     if (_selectedIndex[indexPath.row]) {
       cell.titleLabel.textColor = [UIColor lightGrayColor];
     } else {
@@ -110,6 +114,7 @@
     cell.contentView.backgroundColor = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
 //    NSLog(@"%@", data);
     cell.dateLabel.text = data[1];
+    cell.dateLabel.text = @"过去三天日报";
     return cell;
   }
   //过去三天内容的设置

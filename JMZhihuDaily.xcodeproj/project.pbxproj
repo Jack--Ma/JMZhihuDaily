@@ -10,6 +10,10 @@
 		AD11BEF0BDF8D31F7EF3FAA1 /* libPods-JMZhihuDaily.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5688F39C562A66E2926245DD /* libPods-JMZhihuDaily.a */; };
 		C4058A7E1BE9D75B00FCD01C /* HomeSideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4058A7D1BE9D75B00FCD01C /* HomeSideCell.m */; };
 		C4058A811BE9D76C00FCD01C /* ContentSideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4058A801BE9D76C00FCD01C /* ContentSideCell.m */; };
+		C40605991BEB7A25009A0DBA /* ThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C40605981BEB7A25009A0DBA /* ThemeViewController.m */; };
+		C406059C1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C406059B1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m */; };
+		C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */; };
+		C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */; };
 		C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */; };
 		C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D301BEA28D1000EA5B3 /* JSAnimatedImagesView.m */; };
 		C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D351BEA291C000EA5B3 /* ZFModalTransitionAnimator.m */; };
@@ -50,6 +54,14 @@
 		C4058A7F1BE9D76C00FCD01C /* ContentSideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentSideCell.h; sourceTree = "<group>"; };
 		C4058A801BE9D76C00FCD01C /* ContentSideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentSideCell.m; sourceTree = "<group>"; };
 		C4058A821BE9E62F00FCD01C /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = JMZhihuDaily/PrefixHeader.pch; sourceTree = "<group>"; };
+		C40605971BEB7A25009A0DBA /* ThemeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeViewController.h; sourceTree = "<group>"; };
+		C40605981BEB7A25009A0DBA /* ThemeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeViewController.m; sourceTree = "<group>"; };
+		C406059A1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeTextWithImageTableViewCell.h; sourceTree = "<group>"; };
+		C406059B1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeTextWithImageTableViewCell.m; sourceTree = "<group>"; };
+		C406059D1BEB7B43009A0DBA /* ThemeEditorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeEditorTableViewCell.h; sourceTree = "<group>"; };
+		C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeEditorTableViewCell.m; sourceTree = "<group>"; };
+		C40605A01BEB7B5D009A0DBA /* ThemeTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeTextTableViewCell.h; sourceTree = "<group>"; };
+		C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeTextTableViewCell.m; sourceTree = "<group>"; };
 		C4847D2C1BEA250F000EA5B3 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Awesome.h"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Awesome.m"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		C4847D2F1BEA28D1000EA5B3 /* JSAnimatedImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSAnimatedImagesView.h; path = Framework/JSAnimated/JSAnimatedImagesView.h; sourceTree = "<group>"; };
@@ -143,6 +155,21 @@
 				C4058A801BE9D76C00FCD01C /* ContentSideCell.m */,
 			);
 			name = SideViewController;
+			sourceTree = "<group>";
+		};
+		C40605961BEB7937009A0DBA /* ThemeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C40605971BEB7A25009A0DBA /* ThemeViewController.h */,
+				C40605981BEB7A25009A0DBA /* ThemeViewController.m */,
+				C406059D1BEB7B43009A0DBA /* ThemeEditorTableViewCell.h */,
+				C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */,
+				C406059A1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.h */,
+				C406059B1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m */,
+				C40605A01BEB7B5D009A0DBA /* ThemeTextTableViewCell.h */,
+				C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */,
+			);
+			name = ThemeViewController;
 			sourceTree = "<group>";
 		};
 		C4847D2B1BEA24E7000EA5B3 /* AwsomeNavigationBar */ = {
@@ -266,6 +293,7 @@
 				C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
 				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
+				C40605961BEB7937009A0DBA /* ThemeViewController */,
 				C4C3C1371BE9A87100AA1E73 /* Framework */,
 				C4C3C1271BE8A91900AA1E73 /* Model */,
 				C4C3C1161BE895C500AA1E73 /* Assets.xcassets */,
@@ -463,12 +491,15 @@
 			files = (
 				C4C3C1261BE8A91500AA1E73 /* TopStoryModel.m in Sources */,
 				C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */,
+				C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */,
+				C40605991BEB7A25009A0DBA /* ThemeViewController.m in Sources */,
 				C4847D4B1BEA297E000EA5B3 /* SDCollectionViewCell.m in Sources */,
 				C4058A7E1BE9D75B00FCD01C /* HomeSideCell.m in Sources */,
 				C4847D621BEA2A94000EA5B3 /* MSWeakTimer.m in Sources */,
 				C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */,
 				C4C3C1361BE9A24D00AA1E73 /* ThemeModel.m in Sources */,
 				C4847D5B1BEA2A26000EA5B3 /* TAAbstractDotView.m in Sources */,
+				C406059C1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m in Sources */,
 				C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */,
 				C4847D4C1BEA297E000EA5B3 /* SDCycleScrollView.m in Sources */,
 				C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */,
@@ -477,6 +508,7 @@
 				C4C3C1401BE9C71400AA1E73 /* SWRevealViewController.m in Sources */,
 				C4058A811BE9D76C00FCD01C /* ContentSideCell.m in Sources */,
 				C4847D491BEA297E000EA5B3 /* NSData+SDDataCache.m in Sources */,
+				C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */,
 				C4C3C10C1BE895C500AA1E73 /* main.m in Sources */,
 				C4C3C14E1BE9CF2000AA1E73 /* myUILabel.m in Sources */,
 				C4847D3E1BEA2964000EA5B3 /* ParallaxHeaderView.m in Sources */,

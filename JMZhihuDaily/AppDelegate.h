@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *offsetYValue;
 
 @property (nonatomic, strong) NSMutableArray *themes;
+@property (nonatomic, strong) NSMutableArray *themeContent;
 
 @property (nonatomic, assign) BOOL firstDisplay;
 @end
