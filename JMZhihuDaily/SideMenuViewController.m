@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "HomeSideCell.h"
 #import "ContentSideCell.h"
+#import "ThemeViewController.h"
 
 @interface SideMenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -42,11 +43,7 @@
   return [[UIApplication sharedApplication] delegate];
 }
 
-//拓展NavigationController以设置StatusBar
-- (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.navigationController.topViewController;
-}
-
+//设置StatusBar
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
 }
@@ -73,5 +70,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+  NSInteger row = self.tableView.indexPathForSelectedRow.row;
+  if (row != 0) {
+    UINavigationController *nav = segue.destinationViewController;
+    ThemeViewController *themeViewController = (ThemeViewController *)nav.topViewController;
+    themeViewController.name = [self getApp].themes[row-1][@"name"];
+    themeViewController.tid = [self getApp].themes[row-1][@"id"];
+  }
+
 }
 @end

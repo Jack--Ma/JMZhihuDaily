@@ -199,18 +199,17 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="y3S-17-CSL" firstAttribute="top" secondItem="oCW-qh-Xxh" secondAttribute="topMargin" constant="8" id="4n5-1i-MtO"/>
+                                                <constraint firstItem="y3S-17-CSL" firstAttribute="centerY" secondItem="oCW-qh-Xxh" secondAttribute="centerY" id="E4o-K2-UmE"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="pUp-IG-lkf" secondAttribute="trailing" constant="7" id="Zvz-zg-DUL"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="y3S-17-CSL" secondAttribute="bottom" constant="8" id="dh7-mD-4Qb"/>
+                                                <constraint firstItem="pUp-IG-lkf" firstAttribute="centerY" secondItem="oCW-qh-Xxh" secondAttribute="centerY" id="ecD-pD-iX6"/>
                                                 <constraint firstItem="pUp-IG-lkf" firstAttribute="leading" secondItem="y3S-17-CSL" secondAttribute="trailing" constant="17" id="fgL-AM-XpM"/>
-                                                <constraint firstItem="y3S-17-CSL" firstAttribute="centerY" secondItem="pUp-IG-lkf" secondAttribute="centerY" id="hZt-1Y-6KK"/>
                                                 <constraint firstItem="y3S-17-CSL" firstAttribute="leading" secondItem="oCW-qh-Xxh" secondAttribute="leadingMargin" constant="7" id="zfT-e2-Uj5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
                                             <outlet property="themeImageView" destination="pUp-IG-lkf" id="W84-Pq-mED"/>
-                                            <outlet property="themeTitleLabel" destination="y3S-17-CSL" id="hhJ-sL-P6d"/>
+                                            <outlet property="themeTitleLabel" destination="y3S-17-CSL" id="jpa-mg-XVy"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="themeTextTableViewCell" rowHeight="92" id="Gcm-gG-4gs" customClass="ThemeTextTableViewCell">
@@ -220,7 +219,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="91"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9Z-rB-NEe">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9Z-rB-NEe">
                                                     <rect key="frame" x="15" y="16" width="570" height="59"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
@@ -238,7 +237,7 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
-                                            <outlet property="themeTitleLabel" destination="W9Z-rB-NEe" id="MJR-NZ-ngb"/>
+                                            <outlet property="themeTitleLabel" destination="W9Z-rB-NEe" id="avW-4b-nrX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
