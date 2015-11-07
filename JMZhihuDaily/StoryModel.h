@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TopStoryModel.h"
-#import "ContentStoryModel.h"
 
 @interface StoryModel : NSObject
 

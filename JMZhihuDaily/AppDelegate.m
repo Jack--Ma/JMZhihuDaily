@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
-#import "StoryModel.h"
 
 static NSOperationQueue *queue = nil;
 
@@ -35,7 +34,7 @@ static NSOperationQueue *queue = nil;
     
     self.topStory = [[NSMutableArray alloc] initWithArray:data[@"top_stories"] copyItems:YES];
     self.contentStory = [[NSMutableArray alloc] initWithArray:data[@"stories"] copyItems:YES];
-    
+
     self.offsetYNumber = [[NSMutableArray alloc] initWithCapacity:1];
     self.offsetYValue = [[NSMutableArray alloc] initWithCapacity:1];
     [self.offsetYNumber addObject:@(self.contentStory.count * 93 + 120)];
@@ -44,7 +43,6 @@ static NSOperationQueue *queue = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"todayDataGet" object:nil];
     [self getPastData];
     
-//    NSLog(@"数据获取成功：%@   %@", self.offsetYNumber[0], self.offsetYValue[0]);
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"数据获取失败");
     return;
@@ -72,74 +70,73 @@ static NSOperationQueue *queue = nil;
     NSArray *contentStoryData = data[@"stories"];
     //昨天日期cell数据
     NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]], @"昨天"];
-//    NSLog(@"%@", tempDateString);
     //昨天的contentStoty
     self.pastContentStory = [[NSMutableArray alloc] initWithArray:contentStoryData copyItems:YES];
+    self.pastContentStoryNumber = [[NSMutableArray alloc] initWithCapacity:1];
+    [self.pastContentStoryNumber addObject:@(contentStoryData.count)];
     //设置昨天Y坐标的长度和昨天的标题
-    [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
+    [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 44 + 93 * contentStoryData.count)];
     [self.offsetYValue addObject:tempDateString];
+    /*
+     *前天的数据获取
+     */
+    NSString *twoDayDefore = [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]];
+    NSString  *urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", twoDayDefore];
+    NSURL  *url = [NSURL URLWithString:urlString];
+    NSURLRequest  *request = [NSURLRequest requestWithURL:url];
     
-//    NSLog(@"%@   %@",self.offsetYNumber, self.offsetYValue);
+    AFHTTPRequestOperation *operation1 = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation1.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation1 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+      NSDictionary *data = responseObject;
+      //取得文章列表数据
+      NSArray *contentStoryData = data[@"stories"];
+      //前一天日期cell数据
+      NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]], @"前天"];
+      //将前天的内容加入pastContentStory
+      [self.pastContentStory addObjectsFromArray:contentStoryData];
+      [self.pastContentStoryNumber addObject:@(contentStoryData.count)];
+      //设置前天Y坐标的长度和前天的标题
+      [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 44 + 93 * contentStoryData.count)];
+      [self.offsetYValue addObject:tempDateString];
+      /*
+       *大前天的数据获取
+       */
+      NSString *threeDayDefore = [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]];
+      NSString  *urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", threeDayDefore];
+      NSURL  *url = [NSURL URLWithString:urlString];
+      NSURLRequest  *request = [NSURLRequest requestWithURL:url];
+      
+      AFHTTPRequestOperation *operation2 = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+      operation2.responseSerializer = [AFJSONResponseSerializer serializer];
+      [operation2 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSDictionary *data = responseObject;
+        //取得文章列表数据
+        NSArray *contentStoryData = data[@"stories"];
+        //前一天日期cell数据
+        NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*3]], @"大前天"];
+        //将前天的内容加入pastContentStory
+        [self.pastContentStory addObjectsFromArray:contentStoryData];
+        [self.pastContentStoryNumber addObject:@(contentStoryData.count)];
+        //设置前天Y坐标的长度和前天的标题
+        [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
+        [self.offsetYValue addObject:tempDateString];
+      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        NSLog(@"数据获取失败");
+        return;
+      }];
+      [queue addOperation:operation2];
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+      NSLog(@"数据获取失败");
+      return;
+    }];
+    [queue addOperation:operation1];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"数据获取失败");
     return;
   }];
-  /*
-   *前天的数据获取
-   */
-  NSString *twoDayDefore = [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]];
-  urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", twoDayDefore];
-  url = [NSURL URLWithString:urlString];
-  request = [NSURLRequest requestWithURL:url];
+  [queue addOperation: operation];
   
-  AFHTTPRequestOperation *operation1 = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  operation1.responseSerializer = [AFJSONResponseSerializer serializer];
-  [operation1 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-    NSDictionary *data = responseObject;
-    //取得文章列表数据
-    NSArray *contentStoryData = data[@"stories"];
-    //前一天日期cell数据
-    NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]], @"前天"];
-//    NSLog(@"%@", tempDateString);
-    //将前天的内容加入pastContentStory
-    [self.pastContentStory addObjectsFromArray:contentStoryData];
-    //设置前天Y坐标的长度和前天的标题
-    [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
-    [self.offsetYValue addObject:tempDateString];
-//    NSLog(@"%@   %@", self.offsetYNumber, self.offsetYValue);
-  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
-    return;
-  }];
-  /*
-   *大前天的数据获取
-   */
-  NSString *threeDayDefore = [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]];
-  urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", threeDayDefore];
-  url = [NSURL URLWithString:urlString];
-  request = [NSURLRequest requestWithURL:url];
-  
-  AFHTTPRequestOperation *operation2 = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  operation2.responseSerializer = [AFJSONResponseSerializer serializer];
-  [operation2 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-    NSDictionary *data = responseObject;
-    //取得文章列表数据
-    NSArray *contentStoryData = data[@"stories"];
-    //前一天日期cell数据
-    NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*3]], @"大前天"];
-//    NSLog(@"%@", tempDateString);
-    //将前天的内容加入pastContentStory
-    [self.pastContentStory addObjectsFromArray:contentStoryData];
-    //设置前天Y坐标的长度和前天的标题
-    [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
-    [self.offsetYValue addObject:tempDateString];
-//    NSLog(@"%@   %@", self.offsetYNumber, self.offsetYValue);
-    
-  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
-    return;
-  }];
-  [queue addOperations:@[operation, operation1, operation2] waitUntilFinished:YES];
   [[NSNotificationCenter defaultCenter] postNotificationName:@"pastDataGet" object:nil];
 }
 - (void)getThemesData{
@@ -163,13 +160,12 @@ static NSOperationQueue *queue = nil;
 
 #pragma mark -
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//  [self.window makeKeyAndVisible];
   queue = [[NSOperationQueue alloc] init];
   self.firstDisplay = YES;
   
   [self getTodayData];
   [self getThemesData];
+  [queue waitUntilAllOperationsAreFinished];
   return YES;
 }
 
@@ -194,7 +190,5 @@ static NSOperationQueue *queue = nil;
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
-#pragma mark - other function
 
 @end

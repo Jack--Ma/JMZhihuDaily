@@ -34,10 +34,7 @@
 		C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1131BE895C500AA1E73 /* Main.storyboard */; };
 		C4C3C1171BE895C500AA1E73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1161BE895C500AA1E73 /* Assets.xcassets */; };
 		C4C3C11A1BE895C500AA1E73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */; };
-		C4C3C1261BE8A91500AA1E73 /* TopStoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1251BE8A91500AA1E73 /* TopStoryModel.m */; };
-		C4C3C12A1BE8DB1500AA1E73 /* ContentStoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1291BE8DB1500AA1E73 /* ContentStoryModel.m */; };
 		C4C3C12E1BE8DB9800AA1E73 /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C12D1BE8DB9800AA1E73 /* StoryModel.m */; };
-		C4C3C1361BE9A24D00AA1E73 /* ThemeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1351BE9A24D00AA1E73 /* ThemeModel.m */; };
 		C4C3C13C1BE9C47200AA1E73 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C13B1BE9C47200AA1E73 /* SideMenuViewController.m */; };
 		C4C3C1401BE9C71400AA1E73 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C13F1BE9C71400AA1E73 /* SWRevealViewController.m */; };
 		C4C3C1431BE9CAC000AA1E73 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1421BE9CAC000AA1E73 /* MainTableViewController.m */; };
@@ -100,14 +97,8 @@
 		C4C3C1161BE895C500AA1E73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4C3C1191BE895C500AA1E73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4C3C11B1BE895C500AA1E73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C4C3C1241BE8A91500AA1E73 /* TopStoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopStoryModel.h; sourceTree = "<group>"; };
-		C4C3C1251BE8A91500AA1E73 /* TopStoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopStoryModel.m; sourceTree = "<group>"; };
-		C4C3C1281BE8DB1500AA1E73 /* ContentStoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentStoryModel.h; sourceTree = "<group>"; };
-		C4C3C1291BE8DB1500AA1E73 /* ContentStoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentStoryModel.m; sourceTree = "<group>"; };
 		C4C3C12C1BE8DB9800AA1E73 /* StoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryModel.h; sourceTree = "<group>"; };
 		C4C3C12D1BE8DB9800AA1E73 /* StoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryModel.m; sourceTree = "<group>"; };
-		C4C3C1341BE9A24D00AA1E73 /* ThemeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeModel.h; sourceTree = "<group>"; };
-		C4C3C1351BE9A24D00AA1E73 /* ThemeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeModel.m; sourceTree = "<group>"; };
 		C4C3C13A1BE9C47200AA1E73 /* SideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuViewController.h; sourceTree = "<group>"; };
 		C4C3C13B1BE9C47200AA1E73 /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuViewController.m; sourceTree = "<group>"; };
 		C4C3C13E1BE9C71400AA1E73 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = Framework/SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
@@ -291,11 +282,11 @@
 			children = (
 				C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */,
 				C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */,
+				C4C3C1271BE8A91900AA1E73 /* Model */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
 				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
 				C40605961BEB7937009A0DBA /* ThemeViewController */,
 				C4C3C1371BE9A87100AA1E73 /* Framework */,
-				C4C3C1271BE8A91900AA1E73 /* Model */,
 				C4C3C1161BE895C500AA1E73 /* Assets.xcassets */,
 				C4C3C1131BE895C500AA1E73 /* Main.storyboard */,
 				C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */,
@@ -318,12 +309,6 @@
 			children = (
 				C4C3C12C1BE8DB9800AA1E73 /* StoryModel.h */,
 				C4C3C12D1BE8DB9800AA1E73 /* StoryModel.m */,
-				C4C3C1241BE8A91500AA1E73 /* TopStoryModel.h */,
-				C4C3C1251BE8A91500AA1E73 /* TopStoryModel.m */,
-				C4C3C1281BE8DB1500AA1E73 /* ContentStoryModel.h */,
-				C4C3C1291BE8DB1500AA1E73 /* ContentStoryModel.m */,
-				C4C3C1341BE9A24D00AA1E73 /* ThemeModel.h */,
-				C4C3C1351BE9A24D00AA1E73 /* ThemeModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -489,7 +474,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4C3C1261BE8A91500AA1E73 /* TopStoryModel.m in Sources */,
 				C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */,
 				C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */,
 				C40605991BEB7A25009A0DBA /* ThemeViewController.m in Sources */,
@@ -497,7 +481,6 @@
 				C4058A7E1BE9D75B00FCD01C /* HomeSideCell.m in Sources */,
 				C4847D621BEA2A94000EA5B3 /* MSWeakTimer.m in Sources */,
 				C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */,
-				C4C3C1361BE9A24D00AA1E73 /* ThemeModel.m in Sources */,
 				C4847D5B1BEA2A26000EA5B3 /* TAAbstractDotView.m in Sources */,
 				C406059C1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m in Sources */,
 				C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */,
@@ -516,7 +499,6 @@
 				C4847D5D1BEA2A26000EA5B3 /* TADotView.m in Sources */,
 				C4C3C1491BE9CE0600AA1E73 /* TableSeparatorViewCell.m in Sources */,
 				C4847D5E1BEA2A26000EA5B3 /* TAPageControl.m in Sources */,
-				C4C3C12A1BE8DB1500AA1E73 /* ContentStoryModel.m in Sources */,
 				C4847D3A1BEA2934000EA5B3 /* UIImage+ImageEffects.m in Sources */,
 				C4847D5C1BEA2A26000EA5B3 /* TAAnimatedDotView.m in Sources */,
 				C4C3C1461BE9CD1D00AA1E73 /* TableContentViewCell.m in Sources */,

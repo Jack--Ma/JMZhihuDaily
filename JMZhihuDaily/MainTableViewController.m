@@ -79,11 +79,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [self getApp].contentStory.count + [self getApp].contentStory.count;
+  return [self getApp].contentStory.count + 60;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.row == [self getApp].contentStory.count) {
+  NSInteger pastIndex = indexPath.row - [self getApp].contentStory.count;
+  if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
     return 44.0f;
   }
   return 93.0f;
@@ -107,20 +108,16 @@
     return cell;
   }
   //分隔cell内容的设置
-  if (indexPath.row == [self getApp].contentStory.count) {
+  NSInteger pastIndex = indexPath.row - [self getApp].contentStory.count;
+  if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
     TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
     NSArray *data = [self getApp].offsetYValue;
-    
-    cell.contentView.backgroundColor = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
-//    NSLog(@"%@", data);
-    cell.dateLabel.text = data[1];
-    cell.dateLabel.text = @"过去三天日报";
+    cell.dateLabel.text = data[pastIndex / 20 + 1];
     return cell;
   }
   //过去三天内容的设置
-  NSInteger pastIndex = indexPath.row - [self getApp].contentStory.count;
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
-  NSDictionary *data = [self getApp].pastContentStory[pastIndex];
+  NSDictionary *data = [self getApp].pastContentStory[pastIndex - pastIndex/20 - 1];
   
   if (_selectedIndex[indexPath.row]) {
     cell.titleLabel.textColor = [UIColor lightGrayColor];
@@ -129,7 +126,7 @@
   }
   [cell.imagesView sd_setImageWithURL:data[@"images"][0]];
   cell.titleLabel.text = data[@"title"];
-  
+
   return cell;
 }
 
@@ -159,9 +156,13 @@
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
   }
   //依据contentOffsetY设置titleView的标题
-  for (int i = 0; i < [self getApp].offsetYNumber.count; i++) {
-    if (offsetY > [[self getApp].offsetYNumber[i] intValue]) {
-      self.titleLabel.text = [self getApp].offsetYValue[1];
+  for (int i = 1; i < [self getApp].offsetYNumber.count; i++) {
+    if (offsetY < [[self getApp].offsetYNumber[0] intValue]) {
+      self.titleLabel.text = [self getApp].offsetYValue[0];
+      return;
+    }
+    if (offsetY > [[self getApp].offsetYNumber[3-i] intValue]) {
+      self.titleLabel.text = [self getApp].offsetYValue[4-i];
       return;
     }
   }

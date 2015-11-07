@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableArray *topStory;
 @property (nonatomic, strong) NSMutableArray *contentStory;
 @property (nonatomic, strong) NSMutableArray *pastContentStory;
+@property (nonatomic, strong) NSMutableArray *pastContentStoryNumber;
 @property (nonatomic, strong) NSMutableArray *offsetYNumber;
 @property (nonatomic, strong) NSMutableArray *offsetYValue;
 
