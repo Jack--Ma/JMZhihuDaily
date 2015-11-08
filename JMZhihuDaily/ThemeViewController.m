@@ -11,6 +11,7 @@
 #import "ThemeEditorTableViewCell.h"
 #import "ThemeTextWithImageTableViewCell.h"
 #import "ThemeTextTableViewCell.h"
+#import "WebViewController.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -165,7 +166,12 @@ static NSOperationQueue *queue = nil;
     cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
   }
   //跳转到WebView
+  WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+  webViewController.index = indexPath.row - 1;
+  webViewController.isThemeStory = YES;
+  webViewController.newsId = [[self getApp].themeContent[indexPath.row-1][@"id"] integerValue];
   
+  [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 #pragma mark - ParallaxHeaderViewDelegate

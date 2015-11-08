@@ -11,6 +11,6 @@
 @interface ThemeTextWithImageTableViewCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UIImageView *themeImageView;
-@property (nonatomic, weak) IBOutlet UILabel *themeTitleLabel;
+@property (nonatomic, weak) IBOutlet myUILabel *themeTitleLabel;
 
 @end

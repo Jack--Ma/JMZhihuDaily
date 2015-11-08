@@ -41,6 +41,9 @@
 		C4C3C1461BE9CD1D00AA1E73 /* TableContentViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1451BE9CD1D00AA1E73 /* TableContentViewCell.m */; };
 		C4C3C1491BE9CE0600AA1E73 /* TableSeparatorViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1481BE9CE0600AA1E73 /* TableSeparatorViewCell.m */; };
 		C4C3C14E1BE9CF2000AA1E73 /* myUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C14D1BE9CF2000AA1E73 /* myUILabel.m */; };
+		C4F15D361BEEE09000108D55 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F15D351BEEE09000108D55 /* LaunchViewController.m */; };
+		C4F15D391BEEE0AF00108D55 /* PaletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F15D381BEEE0AF00108D55 /* PaletteViewController.m */; };
+		C4F15D3C1BEF443400108D55 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F15D3B1BEF443400108D55 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +114,12 @@
 		C4C3C1481BE9CE0600AA1E73 /* TableSeparatorViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableSeparatorViewCell.m; sourceTree = "<group>"; };
 		C4C3C14C1BE9CF2000AA1E73 /* myUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myUILabel.h; path = Framework/myUILabel/myUILabel.h; sourceTree = "<group>"; };
 		C4C3C14D1BE9CF2000AA1E73 /* myUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = myUILabel.m; path = Framework/myUILabel/myUILabel.m; sourceTree = "<group>"; };
+		C4F15D341BEEE09000108D55 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		C4F15D351BEEE09000108D55 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		C4F15D371BEEE0AF00108D55 /* PaletteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteViewController.h; sourceTree = "<group>"; };
+		C4F15D381BEEE0AF00108D55 /* PaletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteViewController.m; sourceTree = "<group>"; };
+		C4F15D3A1BEF443400108D55 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		C4F15D3B1BEF443400108D55 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		F82AE5FCC6A14ACED8A12F38 /* Pods-JMZhihuDaily.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JMZhihuDaily.release.xcconfig"; path = "Pods/Target Support Files/Pods-JMZhihuDaily/Pods-JMZhihuDaily.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,7 +291,10 @@
 			children = (
 				C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */,
 				C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */,
+				C4F15D3A1BEF443400108D55 /* WebViewController.h */,
+				C4F15D3B1BEF443400108D55 /* WebViewController.m */,
 				C4C3C1271BE8A91900AA1E73 /* Model */,
+				C4F15D331BEEE05600108D55 /* LaunchViewController */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
 				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
 				C40605961BEB7937009A0DBA /* ThemeViewController */,
@@ -358,6 +370,17 @@
 				C4C3C14D1BE9CF2000AA1E73 /* myUILabel.m */,
 			);
 			name = MyUILabel;
+			sourceTree = "<group>";
+		};
+		C4F15D331BEEE05600108D55 /* LaunchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C4F15D341BEEE09000108D55 /* LaunchViewController.h */,
+				C4F15D351BEEE09000108D55 /* LaunchViewController.m */,
+				C4F15D371BEEE0AF00108D55 /* PaletteViewController.h */,
+				C4F15D381BEEE0AF00108D55 /* PaletteViewController.m */,
+			);
+			name = LaunchViewController;
 			sourceTree = "<group>";
 		};
 		CE02BEBD9FAFC6BE8B49A45B /* Frameworks */ = {
@@ -474,6 +497,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4F15D391BEEE0AF00108D55 /* PaletteViewController.m in Sources */,
 				C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */,
 				C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */,
 				C40605991BEB7A25009A0DBA /* ThemeViewController.m in Sources */,
@@ -486,9 +510,11 @@
 				C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */,
 				C4847D4C1BEA297E000EA5B3 /* SDCycleScrollView.m in Sources */,
 				C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */,
+				C4F15D3C1BEF443400108D55 /* WebViewController.m in Sources */,
 				C4C3C13C1BE9C47200AA1E73 /* SideMenuViewController.m in Sources */,
 				C4847D511BEA29A8000EA5B3 /* GradientView.m in Sources */,
 				C4C3C1401BE9C71400AA1E73 /* SWRevealViewController.m in Sources */,
+				C4F15D361BEEE09000108D55 /* LaunchViewController.m in Sources */,
 				C4058A811BE9D76C00FCD01C /* ContentSideCell.m in Sources */,
 				C4847D491BEA297E000EA5B3 /* NSData+SDDataCache.m in Sources */,
 				C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */,

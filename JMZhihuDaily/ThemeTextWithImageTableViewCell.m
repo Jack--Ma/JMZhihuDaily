@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
   [super awakeFromNib];
   //文字居上分布
-//  myUILabel *label = (myUILabel *)self.themeTitleLabel;
-//  [label setVerticalAlignment:(VerticalAlignmentTop)];
+  [self.themeTitleLabel setVerticalAlignment:(VerticalAlignmentTop)];
+  
   //添加分割线
   UIView *btmLine = [[UIView alloc] initWithFrame:CGRectMake(15, 91, self.frame.size.width-30, 1)];
   btmLine.backgroundColor = [UIColor colorWithRed:245.0f/255.0f green:245.0f/255.0f blue:245.0f/155.0f alpha:1];

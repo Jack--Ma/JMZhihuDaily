@@ -10,6 +10,6 @@
 
 @interface ThemeTextTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *themeTitleLabel;
+@property (nonatomic, weak) IBOutlet myUILabel *themeTitleLabel;
 
 @end

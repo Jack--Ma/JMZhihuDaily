@@ -11,13 +11,14 @@
 #import "AppDelegate.h"
 #import "TableContentViewCell.h"
 #import "TableSeparatorViewCell.h"
+#import "WebViewController.h"
 
 @interface MainTableViewController () <SDCycleScrollViewDelegate, ParallaxHeaderViewDelegate>
 
 @end
 
 @implementation MainTableViewController {
-  NSMutableArray *_selectedIndex;
+  int _number[256];
   
   ZFModalTransitionAnimator *_animator;
   SDCycleScrollView *_cycleScrollView;
@@ -78,8 +79,13 @@
   [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:@"pastDataGet" object:nil];
 }
 
+#pragma mark - tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [self getApp].contentStory.count + 60;
+  NSInteger num = [self getApp].contentStory.count + 60;
+  for (int i = 0; i < num; i++) {
+    _number[i] = 0;
+  }
+  return num;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -96,7 +102,7 @@
     TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
     NSDictionary *data = [self getApp].contentStory[indexPath.row];
 
-    if (_selectedIndex[indexPath.row]) {
+    if (_number[indexPath.row]) {
       cell.titleLabel.textColor = [UIColor lightGrayColor];
     } else {
       cell.titleLabel.textColor = [UIColor blackColor];
@@ -119,7 +125,7 @@
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
   NSDictionary *data = [self getApp].pastContentStory[pastIndex - pastIndex/20 - 1];
   
-  if (_selectedIndex[indexPath.row]) {
+  if (_number[indexPath.row]) {
     cell.titleLabel.textColor = [UIColor lightGrayColor];
   } else {
     cell.titleLabel.textColor = [UIColor blackColor];
@@ -130,10 +136,75 @@
   return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+  if ([cell isKindOfClass:[TableSeparatorViewCell class]]) {
+    return;
+  }
+  //记录已被选中的indexPath并改变其textColor
+  TableContentViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+  _number[indexPath.row] = 1;
+  selectedCell.textLabel.textColor = [UIColor lightGrayColor];
+  
+  //新建webView
+  WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+  webViewController.index = indexPath.row;
+  
+  //找到对应newsID
+  if (indexPath.row < [self getApp].contentStory.count) {
+    //当天情况
+    NSDictionary *story = [self getApp].contentStory[indexPath.row];
+    NSString *sid = [story objectForKey:@"id"];
+    webViewController.newsId = [sid integerValue];
+  } else {
+    //过去几天情况
+    NSInteger index = (indexPath.row-10) % 20 - 1;
+    NSDictionary *story = [self getApp].contentStory[index];
+    NSString *sid = [story objectForKey:@"id"];
+    webViewController.newsId = [sid integerValue];
+  }
+  
+  //对animator进行初始化
+  _animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:webViewController];
+  _animator.dragable = YES;
+  _animator.bounces = NO;
+  _animator.behindViewAlpha = 0.7;
+  _animator.behindViewScale = 0.7;
+  _animator.transitionDuration = 0.7;
+  _animator.direction = ZFModalTransitonDirectionRight;
+  
+  //设置webViewController
+  webViewController.transitioningDelegate = _animator;
+  
+   //跳转界面
+  [self presentViewController:webViewController animated:YES completion:^{
+    NSLog(@"webViewController");
+  }];
+}
 #pragma mark - SDCycleScrollViewDelegate & ParallaxHeaderViewDelegate
 //collectionView点击事件
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+  //初始化webView
+  WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+  webViewController.modalPresentationStyle = UIModalPresentationFullScreen;
   
+  //初始化animator
+  _animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:webViewController];
+  _animator.dragable = YES;
+  _animator.bounces = NO;
+  _animator.behindViewAlpha = 0.7;
+  _animator.behindViewScale = 0.7;
+  _animator.transitionDuration = 0.7;
+  _animator.direction = ZFModalTransitonDirectionRight;
+  
+  //设置webView
+  webViewController.transitioningDelegate = _animator;
+  webViewController.newsId = [[self getApp].topStory[index][@"id"] integerValue];
+  webViewController.isTopStory = YES;
+  
+  [self presentViewController:webViewController animated:YES completion:^{
+    NSLog(@"webViewController");
+  }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
