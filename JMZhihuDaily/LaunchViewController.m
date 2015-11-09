@@ -44,12 +44,12 @@
       NSData *data = responseObject;
       [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"launchImgKey"];
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-      NSLog(@"数据获取失败");
+      NSLog(@"%@", error);
       return;
     }];
     [imgOperation start];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
+    NSLog(@"%@", error);
     return;
   }];
   [operation start];

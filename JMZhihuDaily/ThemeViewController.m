@@ -16,8 +16,6 @@
 #import <AFNetworking/AFNetworking.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
-static NSOperationQueue *queue = nil;
-
 @interface ThemeViewController () <UITableViewDelegate, UITableViewDataSource, ParallaxHeaderViewDelegate>
 
 @end
@@ -31,8 +29,6 @@ static NSOperationQueue *queue = nil;
 }
 
 - (void)refreshData {
-  self.navTitleLabel.text = self.name;
-  
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/theme/%@", self.tid];
   NSURL *url = [NSURL URLWithString:urlString];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -53,38 +49,46 @@ static NSOperationQueue *queue = nil;
     
     [self.tableView reloadData];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
+    NSLog(@"%@", error);
     return;
   }];
-  [queue addOperation:operation];
+  [operation start];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+  self.navigationController.navigationBar.hidden = NO;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   //清空原数据
   [self getApp].themeContent = nil;
+  
   //拿到新数据
-  queue = [[NSOperationQueue alloc] init];
   [self refreshData];
-
-  self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-
   //添加左返回按钮和手势
+  self.navTitleLabel.text = self.name;
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+  
   //设置nav的背景图片_navImageView
   _navImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
   _navImageView.image = [UIImage imageNamed:@"ThemeImage"];
   _navImageView.contentMode = UIViewContentModeScaleAspectFill;
   _navImageView.clipsToBounds = YES;
+  
   //将其添加到ParallaxView
   _themeSubview = [ParallaxHeaderView parallaxThemeHeaderViewWithSubView:_navImageView forSize:CGSizeMake(self.view.frame.size.width, 64) andImage:_navImageView.image];
   _themeSubview.delegate = self;
+  
   //将ParallaxView设置为tableHeaderView，主View添加tableView
   self.tableView.tableHeaderView = _themeSubview;
   [self.view addSubview:self.tableView];
+  
   //设置背景透明
   [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
   self.navigationController.navigationBar.shadowImage = [UIImage new];

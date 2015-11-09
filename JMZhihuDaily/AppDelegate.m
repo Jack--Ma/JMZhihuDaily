@@ -44,7 +44,7 @@ static NSOperationQueue *queue = nil;
     [self getPastData];
     
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
+    NSLog(@"%@", error);
     return;
   }];
   
@@ -122,17 +122,17 @@ static NSOperationQueue *queue = nil;
         [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
         [self.offsetYValue addObject:tempDateString];
       } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        NSLog(@"数据获取失败");
+        NSLog(@"%@", error);
         return;
       }];
       [queue addOperation:operation2];
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-      NSLog(@"数据获取失败");
+      NSLog(@"%@", error);
       return;
     }];
     [queue addOperation:operation1];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
+    NSLog(@"%@", error);
     return;
   }];
   [queue addOperation: operation];
@@ -151,7 +151,7 @@ static NSOperationQueue *queue = nil;
     self.themes = [[NSMutableArray alloc] initWithArray:data copyItems:YES];
 //    NSLog(@"%@", self.themes[0][@"description"]);
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"数据获取失败");
+    NSLog(@"%@", error);
     return;
   }];
   

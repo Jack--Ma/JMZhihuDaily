@@ -118,6 +118,9 @@
   if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
     TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
     NSArray *data = [self getApp].offsetYValue;
+    if ([data count] == 1) {
+      return cell;
+    }
     cell.dateLabel.text = data[pastIndex / 20 + 1];
     return cell;
   }
@@ -144,7 +147,7 @@
   //记录已被选中的indexPath并改变其textColor
   TableContentViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
   _number[indexPath.row] = 1;
-  selectedCell.textLabel.textColor = [UIColor lightGrayColor];
+  selectedCell.titleLabel.textColor = [UIColor lightGrayColor];
   
   //新建webView
   WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
@@ -178,7 +181,7 @@
   
    //跳转界面
   [self presentViewController:webViewController animated:YES completion:^{
-    NSLog(@"webViewController");
+//    NSLog(@"webViewController");
   }];
 }
 #pragma mark - SDCycleScrollViewDelegate & ParallaxHeaderViewDelegate
@@ -203,7 +206,7 @@
   webViewController.isTopStory = YES;
   
   [self presentViewController:webViewController animated:YES completion:^{
-    NSLog(@"webViewController");
+//    NSLog(@"webViewController");
   }];
 }
 
@@ -272,7 +275,4 @@
   return UIStatusBarStyleLightContent;
 }
 
-//- (UIViewController *)childViewControllerForStatusBarHidden {
-//  return self.navigationController.topViewController;
-//}
 @end
