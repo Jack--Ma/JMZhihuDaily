@@ -17,6 +17,6 @@ README in JMZhihuDaily
 
 <br>
 
-![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo1.png) <br>
-![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo2.png) <br>
-![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo3.png)
+![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo1.gif) <br>
+![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo2.gif) <br>
+![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo3.gif)
