@@ -41,9 +41,10 @@
   _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
   _cycleScrollView.autoScrollTimeInterval = 6.0;
   _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
-  _cycleScrollView.titleLabelTextFont = [UIFont fontWithName:@"STHeitSC-Medium" size:21];
+  _cycleScrollView.titleLabelTextFont = [UIFont fontWithName:@"STHeitSC-Medium" size:34];
   _cycleScrollView.titleLabelBackgroundColor = [UIColor clearColor];
   _cycleScrollView.titleLabelHeight = 60;
+//  _cycleScrollView.tintAdjustmentMode
   
   //alpha在未设置的状态下默认为0
   _cycleScrollView.titleLabelAlpha = 1;

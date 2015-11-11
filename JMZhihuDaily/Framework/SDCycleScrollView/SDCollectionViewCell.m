@@ -113,7 +113,7 @@
     
     _imageView.frame = self.bounds;
     
-    CGFloat titleLabelW = self.sd_width;
+    CGFloat titleLabelW = self.sd_width - 20;//这里修改过
     CGFloat titleLabelH = _titleLabelHeight;
     CGFloat titleLabelX = 15;
     CGFloat titleLabelY = self.sd_height - titleLabelH - 25;
