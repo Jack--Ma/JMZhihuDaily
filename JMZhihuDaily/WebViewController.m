@@ -25,17 +25,23 @@
   myUILabel *_titleLabel;
   UILabel *_sourceLabel;
   GradientView *_blurView;
+  UIImageView *_refreshImageView;
+  
   
   BOOL _hasImage;
   BOOL _arrowState;//检测箭头方向
   BOOL _triggered;//检测下滑时手指是否按住屏幕
+  BOOL _dragging;//检测手指是否在屏幕上滑动
+  BOOL _statusBarFlat;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
   self.view.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
   self.webView.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1];
   _hasImage = YES;
+  _triggered = NO;
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   //避免因含有navBar而对scrollInsets做自动调整
   //避免ScrollView莫名其妙不能在viewController划到顶
@@ -57,6 +63,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  NSLog(@"%ld", self.index);
   [self loadWebView:self.newsId];
 }
 
@@ -106,38 +113,102 @@
 }
 
 - (void)lockDirection {
-  [self.webView.scrollView setContentOffset:CGPointMake(0, -155.0)];
+  [self.webView.scrollView setContentOffset:CGPointMake(0, -85.0)];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if (_hasImage) {
     NSInteger incrementY = scrollView.contentOffset.y;
     if (incrementY < 0) {
-      //下拉，不断设置titleLabel及sourceLabel以保证frame正确
+      //不断设置titleLabel、sourceLabel和blurView以保证frame正确
       _titleLabel.frame = CGRectMake(15, _originalHeight-80-incrementY, self.view.frame.size.width-30, 60);
       _sourceLabel.frame = CGRectMake(15, _originalHeight-20-incrementY, self.view.frame.size.width-30, 15);
-      //不断添加删除blurView.layer.sublayers![0]以保证frame正确
       _blurView.frame = CGRectMake(0, -85 - incrementY, self.view.frame.size.width, _originalHeight + 85);
       [_blurView.layer.sublayers[0] removeFromSuperlayer];
       [_blurView insertTwiceTransparentGradient];
       
-      if (incrementY <= -65) {
+      //调整箭头方向，同时判断是否加载上一篇
+      if (incrementY <= -75.0f) {
+        //箭头向上=0
         _arrowState = YES;
-//        return;
+        if (_refreshImageView) {
+          [UIView animateWithDuration:0.2 animations:^{
+            _refreshImageView.transform = CGAffineTransformMakeRotation(M_PI);
+          }];
+        }
+        //加载新文章
+        if (_dragging && !_triggered) {
+          if (self.index != 0) {
+            [self loadNewArticle];
+            _triggered = YES;
+          }
+        }
       } else {
+        //箭头向下
         _arrowState = NO;
+        if (_refreshImageView) {
+          [UIView animateWithDuration:0.2 animations:^{
+            _refreshImageView.transform = CGAffineTransformIdentity;
+          }];
+        }
       }
-      
-      [_imageView bringSubviewToFront:_titleLabel];
-      [_imageView bringSubviewToFront:_sourceLabel];
     }
-    if (incrementY > 223) {
-      
+    
+    //调整statusBar颜色
+    if (incrementY >= 203) {
+      _statusBarFlat = YES;
+      [UIView animateWithDuration:0.2 animations:^{
+        self.statusBarBackground.backgroundColor = [UIColor whiteColor];
+        [self setNeedsStatusBarAppearanceUpdate];
+      }];
+    } else {
+      _statusBarFlat = NO;
+      [UIView animateWithDuration:0.2 animations:^{
+        self.statusBarBackground.backgroundColor = [UIColor clearColor];
+        [self setNeedsStatusBarAppearanceUpdate];
+      }];
     }
-    [_webHeaderView layoutHeaderViewForScrollViewOffset:CGPointMake(0, incrementY)];
+    
+    [_imageView bringSubviewToFront:_titleLabel];
+    [_imageView bringSubviewToFront:_sourceLabel];
+
+    [_webHeaderView layoutWebHeaderViewForScrollViewOffset:CGPointMake(0, incrementY)];
+  } else {
+    //没有topImage的情况
+    //调整箭头方向，同时判断是否加载上一篇
+    if (self.webView.scrollView.contentOffset.y <= -35.0) {
+      //箭头方向向上
+      if (_refreshImageView) {
+        [UIView animateWithDuration:0.2 animations:^{
+          _refreshImageView.transform = CGAffineTransformMakeRotation(M_PI);
+        }];
+      }
+      //加载新文章
+      if (_dragging && !_triggered) {
+        if (self.index != 0) {
+          [self loadNewArticle];
+          _triggered = YES;
+        }
+      }
+    } else {
+      //箭头方向向下
+      if (_refreshImageView) {
+        [UIView animateWithDuration:0.2 animations:^{
+          _refreshImageView.transform = CGAffineTransformIdentity;
+        }];
+      }
+    }
   }
 }
 
+//记录下拉时状态
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  _dragging = NO;
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  _dragging = YES;
+}
 #pragma mark - webHeaderView
 - (void)loadParallaxHeader:(NSString *)imageURL imageSource:(NSString *)imageSource titleString:(NSString *)titleString {
   //初始化图片
@@ -184,12 +255,12 @@
   [_blurView addSubview:refreshLabel];
   
   //添加载入上一篇的图片
-  if (self.index == 1) {
-    UIImageView *refreshImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-47, 30, 15, 15)];
+  if (self.index != 0) {
+    _refreshImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-47, 30, 15, 15)];
     refreshLabel.contentMode = UIViewContentModeScaleAspectFill;
-    refreshImageView.image = [UIImage imageNamed:@"arrow"];
-    refreshImageView.tintColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
-    [_blurView addSubview:refreshImageView];
+    _refreshImageView.image = [UIImage imageNamed:@"arrow"];
+    _refreshImageView.tintColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
+    [_blurView addSubview:_refreshImageView];
   }
   [_imageView addSubview:_blurView];
   //使Label不被遮挡
@@ -222,23 +293,80 @@
   refreshLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
   [self.webView.scrollView addSubview:refreshLabel];
   
-  if (self.index == 1) {
+  if (self.index != 0) {
     //载入上一篇的图片
-    UIImageView *refreshImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-47, -30, 15, 15)];
-    refreshImageView.contentMode = UIViewContentModeScaleAspectFill;
-    refreshImageView.image = [UIImage imageNamed:@"arrow"];
-    refreshImageView.tintColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
-    [self.webView.scrollView addSubview:refreshImageView];
+    _refreshImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-47, -30, 15, 15)];
+    _refreshImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _refreshImageView.image = [UIImage imageNamed:@"arrow"];
+    _refreshImageView.tintColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
+    [self.webView.scrollView addSubview:_refreshImageView];
   }
 }
 
 #pragma mark - 其他函数
+- (void)loadNewArticle {
+  NSLog(@"loadNewArticle");
+  //生成动画初始位置
+  CGAffineTransform offScreenUp = CGAffineTransformMakeTranslation(0, -self.view.frame.size.height);
+  CGAffineTransform offScreenDown = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
+  //生成新的webView
+  WebViewController *newWebViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+  UIView *newView = newWebViewController.view;
+  
+  //传入相关数据
+  if (self.isThemeStory == NO) {
+    //不是theme中的文章
+    self.index--;
+    if (self.index < [self getApp].contentStory.count) {
+      //当前为今日的内容，上一篇也为今日的文章
+      newWebViewController.index = self.index;
+      newWebViewController.newsId = [[self getApp].contentStory[self.index][@"id"] integerValue];
+    } else if (self.index == [self getApp].contentStory.count) {
+      //当前为前一天的第一篇
+      newWebViewController.index = self.index - 1;
+      newWebViewController.newsId = [[self getApp].contentStory[self.index-1][@"id"] integerValue];
+    } else {
+      //当前是过去三天的内容（除了昨天的第一篇）前一篇为过去三天的内容
+      NSInteger newIndex = self.index - [self getApp].contentStory.count;
+      NSInteger day = newIndex / 20;//day表示当前文章是哪一天的，0=昨天，1=前天...
+      newWebViewController.index = newIndex - 1 - day;
+      newWebViewController.newsId = [[self getApp].pastContentStory[newIndex-1-day][@"id"] integerValue];
+    }
+  } else {
+    //是theme中的文章
+    self.index--;
+    newWebViewController.index = self.index;
+    newWebViewController.newsId = [[self getApp].themeContent[self.index][@"id"] integerValue];
+  }
+  
+  //生成原View截图添加到主View上
+  UIView *oldView = [self.view snapshotViewAfterScreenUpdates:YES];
+  [self.view addSubview:oldView];
+  
+  //将newWebView放在屏幕外并添加进主View中
+  newView.transform = offScreenUp;
+  [self.view addSubview:newView];
+  [self addChildViewController:newWebViewController];
+  
+  //动画开始
+  [UIView animateWithDuration:0.2 animations:^{
+    //oldView下滑出屏幕，newWebView进入屏幕
+    oldView.transform = offScreenDown;
+    newView.transform = CGAffineTransformIdentity;
+  } completion:^(BOOL finished) {
+    //动画完成后清理底层webView、statusBarBackground，以及滑出屏幕的oldView，但每次加载新文章都会留一层UIView 待解决
+    [self.webView removeFromSuperview];
+    [self.statusBarBackground removeFromSuperview];
+    [oldView removeFromSuperview];
+    NSLog(@"%@", self.view);
+  }];
+}
 - (AppDelegate*)getApp {
   return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  if (_hasImage == NO) {
+  if (_statusBarFlat) {
     return UIStatusBarStyleDefault;
   }
   return UIStatusBarStyleLightContent;

@@ -182,7 +182,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   //Parallax效果
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
-  [header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+  [header layoutThemeHeaderViewForScrollViewOffset:scrollView.contentOffset];
   //NavBar透明度渐变
   UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   CGFloat offsetY = scrollView.contentOffset.y;
