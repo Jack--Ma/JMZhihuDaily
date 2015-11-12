@@ -63,7 +63,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  NSLog(@"%ld", self.index);
   [self loadWebView:self.newsId];
 }
 
@@ -137,7 +136,7 @@
           }];
         }
         //加载新文章
-        if (_dragging && !_triggered) {
+        if (!_dragging && !_triggered) {
           if (self.index != 0) {
             [self loadNewArticle];
             _triggered = YES;
@@ -156,15 +155,15 @@
     
     //调整statusBar颜色
     if (incrementY >= 203) {
-      _statusBarFlat = YES;
       [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.backgroundColor = [UIColor whiteColor];
+        _statusBarFlat = YES;
         [self setNeedsStatusBarAppearanceUpdate];
       }];
     } else {
-      _statusBarFlat = NO;
       [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.backgroundColor = [UIColor clearColor];
+        _statusBarFlat = NO;
         [self setNeedsStatusBarAppearanceUpdate];
       }];
     }
@@ -184,7 +183,7 @@
         }];
       }
       //加载新文章
-      if (_dragging && !_triggered) {
+      if (!_dragging && !_triggered) {
         if (self.index != 0) {
           [self loadNewArticle];
           _triggered = YES;
@@ -202,13 +201,15 @@
 }
 
 //记录下拉时状态
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+//  NSLog(@"333");
   _dragging = NO;
 }
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+//  NSLog(@"111");
   _dragging = YES;
 }
+
 #pragma mark - webHeaderView
 - (void)loadParallaxHeader:(NSString *)imageURL imageSource:(NSString *)imageSource titleString:(NSString *)titleString {
   //初始化图片
@@ -305,7 +306,7 @@
 
 #pragma mark - 其他函数
 - (void)loadNewArticle {
-  NSLog(@"loadNewArticle");
+//  NSLog(@"loadNewArticle");
   //生成动画初始位置
   CGAffineTransform offScreenUp = CGAffineTransformMakeTranslation(0, -self.view.frame.size.height);
   CGAffineTransform offScreenDown = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
@@ -354,17 +355,19 @@
     oldView.transform = offScreenDown;
     newView.transform = CGAffineTransformIdentity;
   } completion:^(BOOL finished) {
-    //动画完成后清理底层webView、statusBarBackground，以及滑出屏幕的oldView，但每次加载新文章都会留一层UIView 待解决
+    //动画完成后清理底层webView、statusBarBackground，以及滑出屏幕的oldView
+    //但每次加载新文章都会留一层UIView 待解决 这里有问题
     [self.webView removeFromSuperview];
     [self.statusBarBackground removeFromSuperview];
     [oldView removeFromSuperview];
-    NSLog(@"%@", self.view);
   }];
 }
 - (AppDelegate*)getApp {
   return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+//多次加载上一篇后，这个方法一直存在，且新的webView不加载自己的此方法，而是最底层View的这个方法
+//！！！奇哉怪也
 - (UIStatusBarStyle)preferredStatusBarStyle {
   if (_statusBarFlat) {
     return UIStatusBarStyleDefault;

@@ -149,7 +149,6 @@ static NSOperationQueue *queue = nil;
   [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
     NSArray *data = responseObject[@"others"];
     self.themes = [[NSMutableArray alloc] initWithArray:data copyItems:YES];
-//    NSLog(@"%@", self.themes[0][@"description"]);
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"%@", error);
     return;

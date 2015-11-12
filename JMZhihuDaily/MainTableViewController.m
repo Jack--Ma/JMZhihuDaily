@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-  //SWRevealViewController 提供了一个叫 revealViewController()的方法来从任何子控制器中拿到父控制器 SWRevealViewController；它还提供了一个叫 revealToggle: 的方法来 显示/隐藏 菜单栏，最后我们添加了一个手势。
+  //SWRevealViewController提供了一个叫 revealViewController()的方法来从任何子控制器中拿到父控制器 SWRevealViewController；它还提供了一个叫 revealToggle: 的方法来显示或隐藏菜单栏，最后我们添加了一个手势。
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
@@ -44,7 +44,6 @@
   _cycleScrollView.titleLabelTextFont = [UIFont fontWithName:@"STHeitSC-Medium" size:34];
   _cycleScrollView.titleLabelBackgroundColor = [UIColor clearColor];
   _cycleScrollView.titleLabelHeight = 60;
-//  _cycleScrollView.tintAdjustmentMode
   
   //alpha在未设置的状态下默认为0
   _cycleScrollView.titleLabelAlpha = 1;
@@ -56,12 +55,36 @@
   //将ParallaxView设置为tableHeaderView
   [self.tableView setTableHeaderView:headerSubview];
   
-  //不是第一次加载
-  if (![self getApp].firstDisplay) {
-    [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
-    [self updateData];
-  } else {
+  //是第一次加载
+  if ([self getApp].firstDisplay) {
+    //生成第二启动页背景
+    UIView *launchView = [[UIView alloc] initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, self.view.frame.size.height)];
+    launchView.alpha = 0.99;
+    
+    //第二启动页的控制器
+    UIViewController *launchViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"launchViewController"];
+    [self addChildViewController:launchViewController];
+    [launchView addSubview:launchViewController.view];
+    
+    //加入进主View视图
+    [self.view addSubview:launchView];
+    self.navigationItem.titleView.hidden = YES;
+    
+    //加载第二页的动画
+    [UIView animateWithDuration:2.5 animations:^{
+      launchView.alpha = 1;
+    } completion:^(BOOL finished) {
+      [UIView animateWithDuration:0.2 animations:^{
+        launchView.alpha = 0;
+        self.navigationItem.titleView.hidden = NO;
+        [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
+      } completion:^(BOOL finished) {
+        [launchView removeFromSuperview];
+      }];
+    }];
     [self getApp].firstDisplay = NO;
+  } else {
+    [self updateData];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
   }
   

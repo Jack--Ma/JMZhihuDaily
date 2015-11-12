@@ -23,7 +23,7 @@
   
   //如果已有下载好的文字则使用
   if ([[NSUserDefaults standardUserDefaults] objectForKey:@"launchTextKey"]) {
-    self.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"launchTextKey"];
+    self.text.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"launchTextKey"];
   }
   
   NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://news-at.zhihu.com/api/4/start-image/1080*1776"]];
