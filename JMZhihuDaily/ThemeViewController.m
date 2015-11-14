@@ -68,6 +68,7 @@
   
   //拿到新数据
   [self refreshData];
+  
   //添加左返回按钮和手势
   self.navTitleLabel.text = self.name;
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];

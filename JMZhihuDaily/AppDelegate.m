@@ -8,6 +8,11 @@
 
 #import "AppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AVOSCloud/AVOSCloud.h>
+#import "UserModel.h"
+
+#define AVOSCloudAppID  @"uSM1CbTx40OXA9r3BmhGMlj7"
+#define AVOSCloudAppKey @"BT076YAKsGX6qkemmdVAya6d"
 
 static NSOperationQueue *queue = nil;
 
@@ -159,6 +164,12 @@ static NSOperationQueue *queue = nil;
 
 #pragma mark -
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  //设置AVOSCloud
+  [UserModel registerSubclass];
+  [AVOSCloud setApplicationId:AVOSCloudAppID clientKey:AVOSCloudAppKey];
+  //统计应用启动情况
+  [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+  
   queue = [[NSOperationQueue alloc] init];
   self.firstDisplay = YES;
   

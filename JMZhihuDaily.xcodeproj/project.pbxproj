@@ -8,12 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		AD11BEF0BDF8D31F7EF3FAA1 /* libPods-JMZhihuDaily.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5688F39C562A66E2926245DD /* libPods-JMZhihuDaily.a */; };
+		C4037CAC1BF616AB003D112B /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4037CAB1BF616AB003D112B /* UserModel.m */; };
+		C4037CAE1BF6B984003D112B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4037CAD1BF6B984003D112B /* Assets.xcassets */; };
+		C4037CB11BF71FAF003D112B /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4037CB01BF71FAF003D112B /* UserInfoViewController.m */; };
+		C4037CB51BF75A98003D112B /* UserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4037CB41BF75A98003D112B /* UserInfoCell.m */; };
 		C4058A7E1BE9D75B00FCD01C /* HomeSideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4058A7D1BE9D75B00FCD01C /* HomeSideCell.m */; };
 		C4058A811BE9D76C00FCD01C /* ContentSideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4058A801BE9D76C00FCD01C /* ContentSideCell.m */; };
 		C40605991BEB7A25009A0DBA /* ThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C40605981BEB7A25009A0DBA /* ThemeViewController.m */; };
 		C406059C1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C406059B1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m */; };
 		C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */; };
 		C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */; };
+		C45C93241BF5D4B2001D4B6F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C45C93231BF5D4B2001D4B6F /* LoginViewController.m */; };
 		C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */; };
 		C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D301BEA28D1000EA5B3 /* JSAnimatedImagesView.m */; };
 		C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D351BEA291C000EA5B3 /* ZFModalTransitionAnimator.m */; };
@@ -32,9 +37,7 @@
 		C4C3C10C1BE895C500AA1E73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10B1BE895C500AA1E73 /* main.m */; };
 		C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */; };
 		C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1131BE895C500AA1E73 /* Main.storyboard */; };
-		C4C3C1171BE895C500AA1E73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1161BE895C500AA1E73 /* Assets.xcassets */; };
 		C4C3C11A1BE895C500AA1E73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */; };
-		C4C3C12E1BE8DB9800AA1E73 /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C12D1BE8DB9800AA1E73 /* StoryModel.m */; };
 		C4C3C13C1BE9C47200AA1E73 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C13B1BE9C47200AA1E73 /* SideMenuViewController.m */; };
 		C4C3C1401BE9C71400AA1E73 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C13F1BE9C71400AA1E73 /* SWRevealViewController.m */; };
 		C4C3C1431BE9CAC000AA1E73 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C1421BE9CAC000AA1E73 /* MainTableViewController.m */; };
@@ -49,6 +52,13 @@
 /* Begin PBXFileReference section */
 		5688F39C562A66E2926245DD /* libPods-JMZhihuDaily.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JMZhihuDaily.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		68AAB5CB82B9C0937B5FB9AA /* Pods-JMZhihuDaily.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JMZhihuDaily.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JMZhihuDaily/Pods-JMZhihuDaily.debug.xcconfig"; sourceTree = "<group>"; };
+		C4037CAA1BF616AB003D112B /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		C4037CAB1BF616AB003D112B /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		C4037CAD1BF6B984003D112B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C4037CAF1BF71FAF003D112B /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
+		C4037CB01BF71FAF003D112B /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		C4037CB31BF75A98003D112B /* UserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoCell.h; sourceTree = "<group>"; };
+		C4037CB41BF75A98003D112B /* UserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoCell.m; sourceTree = "<group>"; };
 		C4058A7C1BE9D75B00FCD01C /* HomeSideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeSideCell.h; sourceTree = "<group>"; };
 		C4058A7D1BE9D75B00FCD01C /* HomeSideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSideCell.m; sourceTree = "<group>"; };
 		C4058A7F1BE9D76C00FCD01C /* ContentSideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentSideCell.h; sourceTree = "<group>"; };
@@ -62,6 +72,8 @@
 		C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeEditorTableViewCell.m; sourceTree = "<group>"; };
 		C40605A01BEB7B5D009A0DBA /* ThemeTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeTextTableViewCell.h; sourceTree = "<group>"; };
 		C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeTextTableViewCell.m; sourceTree = "<group>"; };
+		C45C93221BF5D4B2001D4B6F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		C45C93231BF5D4B2001D4B6F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C4847D2C1BEA250F000EA5B3 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Awesome.h"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Awesome.m"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		C4847D2F1BEA28D1000EA5B3 /* JSAnimatedImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSAnimatedImagesView.h; path = Framework/JSAnimated/JSAnimatedImagesView.h; sourceTree = "<group>"; };
@@ -97,11 +109,8 @@
 		C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C4C3C1141BE895C500AA1E73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C4C3C1161BE895C500AA1E73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4C3C1191BE895C500AA1E73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4C3C11B1BE895C500AA1E73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C4C3C12C1BE8DB9800AA1E73 /* StoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryModel.h; sourceTree = "<group>"; };
-		C4C3C12D1BE8DB9800AA1E73 /* StoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryModel.m; sourceTree = "<group>"; };
 		C4C3C13A1BE9C47200AA1E73 /* SideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuViewController.h; sourceTree = "<group>"; };
 		C4C3C13B1BE9C47200AA1E73 /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuViewController.m; sourceTree = "<group>"; };
 		C4C3C13E1BE9C71400AA1E73 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = Framework/SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
@@ -142,6 +151,19 @@
 				F82AE5FCC6A14ACED8A12F38 /* Pods-JMZhihuDaily.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C4037CB21BF7241B003D112B /* UserViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C45C93221BF5D4B2001D4B6F /* LoginViewController.h */,
+				C45C93231BF5D4B2001D4B6F /* LoginViewController.m */,
+				C4037CAF1BF71FAF003D112B /* UserInfoViewController.h */,
+				C4037CB01BF71FAF003D112B /* UserInfoViewController.m */,
+				C4037CB31BF75A98003D112B /* UserInfoCell.h */,
+				C4037CB41BF75A98003D112B /* UserInfoCell.m */,
+			);
+			name = UserViewController;
 			sourceTree = "<group>";
 		};
 		C4058A7B1BE9D4F200FCD01C /* SideViewController */ = {
@@ -296,13 +318,14 @@
 				C4C3C1271BE8A91900AA1E73 /* Model */,
 				C4F15D331BEEE05600108D55 /* LaunchViewController */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
-				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
 				C40605961BEB7937009A0DBA /* ThemeViewController */,
+				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
+				C4037CB21BF7241B003D112B /* UserViewController */,
 				C4C3C1371BE9A87100AA1E73 /* Framework */,
-				C4C3C1161BE895C500AA1E73 /* Assets.xcassets */,
 				C4C3C1131BE895C500AA1E73 /* Main.storyboard */,
 				C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */,
 				C4C3C11B1BE895C500AA1E73 /* Info.plist */,
+				C4037CAD1BF6B984003D112B /* Assets.xcassets */,
 				C4C3C10A1BE895C500AA1E73 /* Supporting Files */,
 			);
 			path = JMZhihuDaily;
@@ -319,8 +342,8 @@
 		C4C3C1271BE8A91900AA1E73 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C4C3C12C1BE8DB9800AA1E73 /* StoryModel.h */,
-				C4C3C12D1BE8DB9800AA1E73 /* StoryModel.m */,
+				C4037CAA1BF616AB003D112B /* UserModel.h */,
+				C4037CAB1BF616AB003D112B /* UserModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -452,7 +475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4C3C11A1BE895C500AA1E73 /* LaunchScreen.storyboard in Resources */,
-				C4C3C1171BE895C500AA1E73 /* Assets.xcassets in Resources */,
+				C4037CAE1BF6B984003D112B /* Assets.xcassets in Resources */,
 				C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +525,7 @@
 				C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */,
 				C40605991BEB7A25009A0DBA /* ThemeViewController.m in Sources */,
 				C4847D4B1BEA297E000EA5B3 /* SDCollectionViewCell.m in Sources */,
+				C4037CB11BF71FAF003D112B /* UserInfoViewController.m in Sources */,
 				C4058A7E1BE9D75B00FCD01C /* HomeSideCell.m in Sources */,
 				C4847D621BEA2A94000EA5B3 /* MSWeakTimer.m in Sources */,
 				C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */,
@@ -513,14 +537,17 @@
 				C4F15D3C1BEF443400108D55 /* WebViewController.m in Sources */,
 				C4C3C13C1BE9C47200AA1E73 /* SideMenuViewController.m in Sources */,
 				C4847D511BEA29A8000EA5B3 /* GradientView.m in Sources */,
+				C4037CAC1BF616AB003D112B /* UserModel.m in Sources */,
 				C4C3C1401BE9C71400AA1E73 /* SWRevealViewController.m in Sources */,
 				C4F15D361BEEE09000108D55 /* LaunchViewController.m in Sources */,
+				C4037CB51BF75A98003D112B /* UserInfoCell.m in Sources */,
 				C4058A811BE9D76C00FCD01C /* ContentSideCell.m in Sources */,
 				C4847D491BEA297E000EA5B3 /* NSData+SDDataCache.m in Sources */,
 				C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */,
 				C4C3C10C1BE895C500AA1E73 /* main.m in Sources */,
 				C4C3C14E1BE9CF2000AA1E73 /* myUILabel.m in Sources */,
 				C4847D3E1BEA2964000EA5B3 /* ParallaxHeaderView.m in Sources */,
+				C45C93241BF5D4B2001D4B6F /* LoginViewController.m in Sources */,
 				C4847D4D1BEA297E000EA5B3 /* UIView+SDExtension.m in Sources */,
 				C4847D5D1BEA2A26000EA5B3 /* TADotView.m in Sources */,
 				C4C3C1491BE9CE0600AA1E73 /* TableSeparatorViewCell.m in Sources */,
@@ -528,7 +555,6 @@
 				C4847D3A1BEA2934000EA5B3 /* UIImage+ImageEffects.m in Sources */,
 				C4847D5C1BEA2A26000EA5B3 /* TAAnimatedDotView.m in Sources */,
 				C4C3C1461BE9CD1D00AA1E73 /* TableContentViewCell.m in Sources */,
-				C4C3C12E1BE8DB9800AA1E73 /* StoryModel.m in Sources */,
 				C4C3C1431BE9CAC000AA1E73 /* MainTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

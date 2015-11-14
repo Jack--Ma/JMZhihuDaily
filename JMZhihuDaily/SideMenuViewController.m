@@ -6,13 +6,23 @@
 //  Copyright © 2015年 JackMa. All rights reserved.
 //
 
-#import "SideMenuViewController.h"
+#import <AVOSCloud/AVOSCloud.h>
+
 #import "AppDelegate.h"
+#import "SideMenuViewController.h"
 #import "HomeSideCell.h"
 #import "ContentSideCell.h"
 #import "ThemeViewController.h"
 
+#import "LoginViewController.h"
+#import "UserInfoViewController.h"
+
+#import "UserModel.h"
+
 @interface SideMenuViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UIButton *userAvator;
+@property (nonatomic, weak) IBOutlet UIButton *userName;
 
 @end
 
@@ -20,11 +30,32 @@
   GradientView *_backView;
 }
 
+#pragma mark - Login
+- (IBAction)doLogin:(id)sender {
+  if ([UserModel currentUser]) {
+    return;
+  }
+  LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+  [self presentViewController:loginViewController animated:YES completion:nil];
+}
+
 #pragma mark - init
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.userAvator.contentMode = UIViewContentModeCenter;
+  self.userAvator.layer.cornerRadius = 17;
+  self.userAvator.clipsToBounds = YES;
+  if ([UserModel currentUser]) {
+    [self.userAvator setImage:[UIImage imageNamed:@"avatarExample"] forState:UIControlStateNormal];
+    [self.userName setTitle:[NSString stringWithFormat:@"%@", [UserModel currentUser].username] forState:UIControlStateNormal];
+  } else {
+    [self.userAvator setImage:[UIImage imageNamed:@"noneHead"] forState:UIControlStateNormal];
+    [self.userName setTitle:@"未登录" forState:UIControlStateNormal];
+  }
+}
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-  
   //最下方的cell添加渐变的背景
   _backView = [[GradientView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45 - 50, self.view.frame.size.width, 50) type:TRANSPARENT_ANOTHER_GRADIENT_TYPE];
   [self.view addSubview:_backView];

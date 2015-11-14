@@ -644,9 +644,8 @@ const int FrontViewPositionNone = 0xff;
     _frontViewPosition = FrontViewPositionLeft;
     _rearViewPosition = FrontViewPositionLeft;
     _rightViewPosition = FrontViewPositionLeft;
-    //这里改动过
-    _rearViewRevealWidth = 225.0f;
-    _rearViewRevealOverdraw = 60.0f;
+    _rearViewRevealWidth = 200.0f;//这里改动过
+    _rearViewRevealOverdraw = 0.0f;//这里改动过
     _rearViewRevealDisplacement = 40.0f;
     _rightViewRevealWidth = 260.0f;
     _rightViewRevealOverdraw = 60.0f;

@@ -32,7 +32,7 @@
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-  
+
   //配置无限循环的scrollView
   _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 154) imagesGroup:nil];
 
@@ -185,8 +185,8 @@
     webViewController.newsId = [sid integerValue];
   } else {
     //过去几天情况
-    NSInteger index = (indexPath.row-10) % 20 - 1;
-    NSDictionary *story = [self getApp].contentStory[index];
+    NSInteger index = (indexPath.row-[self getApp].contentStory.count) % 20 - 1;
+    NSDictionary *story = [self getApp].pastContentStory[index];
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
   }

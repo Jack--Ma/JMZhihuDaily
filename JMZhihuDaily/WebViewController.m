@@ -37,7 +37,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+ 
   self.view.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
   self.webView.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1];
   _hasImage = YES;
@@ -310,6 +310,7 @@
   //生成动画初始位置
   CGAffineTransform offScreenUp = CGAffineTransformMakeTranslation(0, -self.view.frame.size.height);
   CGAffineTransform offScreenDown = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
+  
   //生成新的webView
   WebViewController *newWebViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
   UIView *newView = newWebViewController.view;
@@ -345,12 +346,13 @@
   [self.view addSubview:oldView];
   
   //将newWebView放在屏幕外并添加进主View中
+  [self addChildViewController:newWebViewController];
+  NSLog(@"\n%@\n%@\n%@", self.parentViewController, self, self.childViewControllers);
   newView.transform = offScreenUp;
   [self.view addSubview:newView];
-  [self addChildViewController:newWebViewController];
   
   //动画开始
-  [UIView animateWithDuration:0.2 animations:^{
+  [UIView animateWithDuration:0.5 animations:^{
     //oldView下滑出屏幕，newWebView进入屏幕
     oldView.transform = offScreenDown;
     newView.transform = CGAffineTransformIdentity;
