@@ -70,7 +70,7 @@
   [self refreshData];
   
   //添加左返回按钮和手势
-  self.navTitleLabel.text = self.name;
+  [self.navigationItem setTitle: self.name];
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
@@ -188,8 +188,8 @@
   UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   CGFloat offsetY = scrollView.contentOffset.y;
   
-  if (offsetY >= -64) {
-    CGFloat alpha = MIN(1, (64 + offsetY) / (64));
+  if (offsetY >= -66) {
+    CGFloat alpha = MIN(1, (66 + offsetY) / (66));
     //NavigationBar透明度渐变
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
   } else {

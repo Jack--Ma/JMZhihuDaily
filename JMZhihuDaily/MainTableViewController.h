@@ -10,6 +10,4 @@
 
 @interface MainTableViewController : UITableViewController
 
-@property (nonatomic, weak) IBOutlet UILabel *titleLabel;
-
 @end

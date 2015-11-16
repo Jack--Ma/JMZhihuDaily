@@ -28,6 +28,7 @@
 
 #import "SWRevealViewController.h"
 
+#import "UserModel.h"
 
 #pragma mark - StatusBar Helper Function
 
@@ -944,7 +945,7 @@ const int FrontViewPositionNone = 0xff;
 #pragma mark - Provided acction methods
 
 - (IBAction)revealToggle:(id)sender
-{    
+{
     [self revealToggleAnimated:YES];
 }
 
@@ -1876,6 +1877,10 @@ NSString * const SWSegueRightIdentifier = @"sw_right";
 {
     SWRevealViewController *rvc = [self.sourceViewController revealViewController];
     UIViewController *dvc = self.destinationViewController;
+  //这里修改过，目的是在未登录的情况下，点击头像或用户名不显示UserInfoView
+  if ([self.identifier isEqualToString:@"sw_user"] && ![UserModel currentUser]) {
+    return;
+  }
     [rvc pushFrontViewController:dvc animated:YES];
 }
 

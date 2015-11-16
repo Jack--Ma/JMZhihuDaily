@@ -33,20 +33,26 @@
 #pragma mark - Login
 - (IBAction)doLogin:(id)sender {
   if ([UserModel currentUser]) {
+    //已登录，直接跳转到个人信息界面
     return;
+  } else {
+    //未登录，进入登录界面
+    LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    [self presentViewController:loginViewController animated:YES completion:nil];
   }
-  LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
-  [self presentViewController:loginViewController animated:YES completion:nil];
 }
 
 #pragma mark - init
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  self.userAvator.contentMode = UIViewContentModeCenter;
+  //设置头像和用户名
+  self.userAvator.contentMode = UIViewContentModeScaleAspectFill;
   self.userAvator.layer.cornerRadius = 17;
   self.userAvator.clipsToBounds = YES;
   if ([UserModel currentUser]) {
-    [self.userAvator setImage:[UIImage imageNamed:@"avatarExample"] forState:UIControlStateNormal];
+    NSData *data = [[UserModel currentUser].avatar getData];
+    UIImage *image = [UIImage imageWithData:data];
+    [self.userAvator setImage:image forState:UIControlStateNormal];
     [self.userName setTitle:[NSString stringWithFormat:@"%@", [UserModel currentUser].username] forState:UIControlStateNormal];
   } else {
     [self.userAvator setImage:[UIImage imageNamed:@"noneHead"] forState:UIControlStateNormal];
@@ -56,12 +62,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+  
   //最下方的cell添加渐变的背景
   _backView = [[GradientView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45 - 50, self.view.frame.size.width, 50) type:TRANSPARENT_ANOTHER_GRADIENT_TYPE];
   [self.view addSubview:_backView];
   
   [self.view setBackgroundColor:[UIColor colorWithRed:19.0f/255.0f green:26.0f/255.0f blue:32.0f/255.0f alpha:1]];
   [self.tableView setBackgroundColor:[UIColor colorWithRed:19.0f/255.0f green:26.0f/255.0f blue:32.0f/255.0f alpha:1]];
+  
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.showsVerticalScrollIndicator = NO;
   self.tableView.dataSource = self;

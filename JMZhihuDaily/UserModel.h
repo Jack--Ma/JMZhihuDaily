@@ -9,9 +9,9 @@
 #import "AVUser.h"
 
 typedef enum : NSUInteger {
-  GenderUnkonwn=0,
-  GenderMale=1,
-  GenderFamale,
+  GenderUnkonwn = 0,
+  GenderMale = 1,
+  GenderFamale = 2,
 } GenderType;
 
 @interface UserModel : AVUser <AVSubclassing>

@@ -11,7 +11,6 @@
 @interface ThemeViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, weak) IBOutlet UILabel *navTitleLabel;
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *tid;

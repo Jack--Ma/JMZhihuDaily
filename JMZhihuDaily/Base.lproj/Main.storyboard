@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15C27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eXd-MP-BBG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eXd-MP-BBG">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -10,7 +10,7 @@
         <!--Main Table View Controller-->
         <scene sceneID="pL5-vA-nHl">
             <objects>
-                <tableViewController id="jRX-aJ-ssE" customClass="MainTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="mainTableViewController" id="jRX-aJ-ssE" customClass="MainTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eiI-CG-gLM">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,33 +93,13 @@
                             <outlet property="delegate" destination="jRX-aJ-ssE" id="uqN-Mu-zHL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tR6-TH-Bh4">
-                        <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="wOQ-Of-UDX">
-                            <rect key="frame" x="180" y="6" width="240" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="今日热点" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aqA-eB-1GG">
-                                    <rect key="frame" x="8" y="4" width="224" height="21"/>
-                                    <animations/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <animations/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="titleLabel" destination="aqA-eB-1GG" id="4dM-3T-fP1"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="tR6-TH-Bh4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIM-XS-9AX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1463" y="368"/>
         </scene>
-        <!--Theme View Controller-->
+        <!--主题日报-->
         <scene sceneID="hPG-5L-3gZ">
             <objects>
                 <viewController id="jgd-Qo-9Rh" customClass="ThemeViewController" sceneMemberID="viewController">
@@ -254,26 +234,8 @@
                             <constraint firstItem="Tih-an-qB0" firstAttribute="centerX" secondItem="iVu-ZO-A9p" secondAttribute="centerX" id="qbl-DE-TXQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="DXZ-Ph-WdZ">
-                        <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="Bff-BU-Jy3">
-                            <rect key="frame" x="180" y="6" width="240" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="主题日报" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VxE-WE-HLn">
-                                    <rect key="frame" x="8" y="4" width="224" height="21"/>
-                                    <animations/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <animations/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="主题日报" id="DXZ-Ph-WdZ"/>
                     <connections>
-                        <outlet property="navTitleLabel" destination="VxE-WE-HLn" id="ZDj-2r-aoa"/>
                         <outlet property="tableView" destination="Tih-an-qB0" id="ZYl-20-hMR"/>
                     </connections>
                 </viewController>
@@ -483,7 +445,7 @@
                                         </state>
                                         <connections>
                                             <action selector="doLogin:" destination="Gl0-oe-wWX" eventType="touchUpInside" id="qq2-8H-Wqh"/>
-                                            <segue destination="ZzW-f5-3aW" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="sRo-4b-7Ig"/>
+                                            <segue destination="ZzW-f5-3aW" kind="custom" identifier="sw_user" customClass="SWRevealViewControllerSeguePushController" id="sRo-4b-7Ig"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZp-2I-p2S">
@@ -496,7 +458,7 @@
                                         <state key="normal" image="noneHead"/>
                                         <connections>
                                             <action selector="doLogin:" destination="Gl0-oe-wWX" eventType="touchUpInside" id="eEx-FD-Ap8"/>
-                                            <segue destination="ZzW-f5-3aW" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="BlS-pb-b6W"/>
+                                            <segue destination="ZzW-f5-3aW" kind="custom" identifier="sw_user" customClass="SWRevealViewControllerSeguePushController" id="BlS-pb-b6W"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -696,6 +658,9 @@
                                     <constraint firstAttribute="height" constant="100" id="TLN-yB-Naw"/>
                                 </constraints>
                                 <state key="normal" image="noneHead"/>
+                                <connections>
+                                    <action selector="setAvatar:" destination="Njk-JW-jQ1" eventType="touchUpInside" id="lnB-q3-ZkT"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="bn5-D2-uDH">
                                 <rect key="frame" x="0.0" y="188" width="600" height="280"/>
@@ -718,7 +683,7 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iK6-qE-WWr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iK6-qE-WWr">
                                 <rect key="frame" x="40" y="493" width="520" height="50"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.6705882352941176" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1033,7 +998,7 @@
         <image name="weixin" width="150" height="150"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sRo-4b-7Ig"/>
         <segue reference="dZ5-WQ-SSl"/>
+        <segue reference="BlS-pb-b6W"/>
     </inferredMetricsTieBreakers>
 </document>

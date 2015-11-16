@@ -18,6 +18,7 @@
 		C406059C1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C406059B1BEB7B2C009A0DBA /* ThemeTextWithImageTableViewCell.m */; };
 		C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */; };
 		C40605A21BEB7B5D009A0DBA /* ThemeTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */; };
+		C42143601BF9BB51001D2072 /* DescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C421435F1BF9BB51001D2072 /* DescriptionViewController.m */; };
 		C45C93241BF5D4B2001D4B6F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C45C93231BF5D4B2001D4B6F /* LoginViewController.m */; };
 		C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */; };
 		C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D301BEA28D1000EA5B3 /* JSAnimatedImagesView.m */; };
@@ -72,6 +73,8 @@
 		C406059E1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeEditorTableViewCell.m; sourceTree = "<group>"; };
 		C40605A01BEB7B5D009A0DBA /* ThemeTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeTextTableViewCell.h; sourceTree = "<group>"; };
 		C40605A11BEB7B5D009A0DBA /* ThemeTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeTextTableViewCell.m; sourceTree = "<group>"; };
+		C421435E1BF9BB51001D2072 /* DescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescriptionViewController.h; sourceTree = "<group>"; };
+		C421435F1BF9BB51001D2072 /* DescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescriptionViewController.m; sourceTree = "<group>"; };
 		C45C93221BF5D4B2001D4B6F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		C45C93231BF5D4B2001D4B6F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C4847D2C1BEA250F000EA5B3 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Awesome.h"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				C45C93231BF5D4B2001D4B6F /* LoginViewController.m */,
 				C4037CAF1BF71FAF003D112B /* UserInfoViewController.h */,
 				C4037CB01BF71FAF003D112B /* UserInfoViewController.m */,
+				C421435E1BF9BB51001D2072 /* DescriptionViewController.h */,
+				C421435F1BF9BB51001D2072 /* DescriptionViewController.m */,
 				C4037CB31BF75A98003D112B /* UserInfoCell.h */,
 				C4037CB41BF75A98003D112B /* UserInfoCell.m */,
 			);
@@ -550,6 +555,7 @@
 				C45C93241BF5D4B2001D4B6F /* LoginViewController.m in Sources */,
 				C4847D4D1BEA297E000EA5B3 /* UIView+SDExtension.m in Sources */,
 				C4847D5D1BEA2A26000EA5B3 /* TADotView.m in Sources */,
+				C42143601BF9BB51001D2072 /* DescriptionViewController.m in Sources */,
 				C4C3C1491BE9CE0600AA1E73 /* TableSeparatorViewCell.m in Sources */,
 				C4847D5E1BEA2A26000EA5B3 /* TAPageControl.m in Sources */,
 				C4847D3A1BEA2934000EA5B3 /* UIImage+ImageEffects.m in Sources */,
