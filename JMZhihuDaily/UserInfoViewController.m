@@ -58,6 +58,9 @@
   //设置头像
   NSData *data = [[UserModel currentUser].avatar getData];
   UIImage *image = [UIImage imageWithData:data];
+  if (data == nil) {
+    image = [UIImage imageNamed:@"noneHead"];
+  }
   [self.avatarImageView setImage:image forState:UIControlStateNormal];
   self.avatarImageView.imageView.contentMode = UIViewContentModeScaleAspectFill;
   self.avatarImageView.layer.cornerRadius = 50;
@@ -219,6 +222,9 @@
       df.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
       df.dateFormat = @"yyyy'年'MM'月'dd'日'";
       cell.detailTextLabel.text = [df stringFromDate:[UserModel currentUser].birthday];
+      if ([UserModel currentUser].birthday == nil) {
+        cell.detailTextLabel.text = @"未设置";
+      }
     }
     if (indexPath.row == 3) {
       cell = [cell initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];

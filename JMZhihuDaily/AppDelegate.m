@@ -170,6 +170,17 @@ static NSOperationQueue *queue = nil;
   //统计应用启动情况
   [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
+  //获取用户信息
+  if ([UserModel currentUser]) {
+    AVQuery *query = [AVQuery queryWithClassName:@"_User"];
+    AVObject *post = [query getObjectWithId:[[UserModel currentUser] objectId]];
+    [UserModel currentUser].age = [[post objectForKey:@"age"] integerValue];
+    [UserModel currentUser].birthday = [post objectForKey:@"birthday"];
+    [UserModel currentUser].gender = [[post objectForKey:@"gender"] integerValue];
+    [UserModel currentUser].selfDescription = [post objectForKey:@"selfDescription"];
+    [UserModel currentUser].avatar = [post objectForKey:@"avatar"];
+  }
+  
   queue = [[NSOperationQueue alloc] init];
   self.firstDisplay = YES;
   

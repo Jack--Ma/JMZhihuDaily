@@ -35,6 +35,7 @@
 		C4847D5D1BEA2A26000EA5B3 /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D581BEA2A26000EA5B3 /* TADotView.m */; };
 		C4847D5E1BEA2A26000EA5B3 /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D5A1BEA2A26000EA5B3 /* TAPageControl.m */; };
 		C4847D621BEA2A94000EA5B3 /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D611BEA2A94000EA5B3 /* MSWeakTimer.m */; };
+		C48FF4E31BFABB8800D98096 /* JMCoreAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C48FF4E21BFABB8800D98096 /* JMCoreAnimation.m */; };
 		C4C3C10C1BE895C500AA1E73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10B1BE895C500AA1E73 /* main.m */; };
 		C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */; };
 		C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1131BE895C500AA1E73 /* Main.storyboard */; };
@@ -107,6 +108,8 @@
 		C4847D5A1BEA2A26000EA5B3 /* TAPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAPageControl.m; path = Framework/SDCycleScrollView/PageControl/TAPageControl.m; sourceTree = "<group>"; };
 		C4847D601BEA2A94000EA5B3 /* MSWeakTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSWeakTimer.h; path = Framework/MSWeakTimer/MSWeakTimer.h; sourceTree = "<group>"; };
 		C4847D611BEA2A94000EA5B3 /* MSWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSWeakTimer.m; path = Framework/MSWeakTimer/MSWeakTimer.m; sourceTree = "<group>"; };
+		C48FF4E11BFABB8800D98096 /* JMCoreAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCoreAnimation.h; sourceTree = "<group>"; };
+		C48FF4E21BFABB8800D98096 /* JMCoreAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCoreAnimation.m; sourceTree = "<group>"; };
 		C4C3C1071BE895C500AA1E73 /* 知乎日报.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "知乎日报.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4C3C10B1BE895C500AA1E73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -294,6 +297,15 @@
 			name = MSWeakTimer;
 			sourceTree = "<group>";
 		};
+		C48FF4E41BFABF7700D98096 /* JMCoreAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				C48FF4E11BFABB8800D98096 /* JMCoreAnimation.h */,
+				C48FF4E21BFABB8800D98096 /* JMCoreAnimation.m */,
+			);
+			name = JMCoreAnimation;
+			sourceTree = "<group>";
+		};
 		C4C3C0FE1BE895C500AA1E73 = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +368,7 @@
 		C4C3C1371BE9A87100AA1E73 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				C48FF4E41BFABF7700D98096 /* JMCoreAnimation */,
 				C4847D4E1BEA299F000EA5B3 /* GradientView */,
 				C4847D3F1BEA2970000EA5B3 /* SDCycleScrollView */,
 				C4847D3B1BEA2938000EA5B3 /* ParallaxHeaderView */,
@@ -547,6 +560,7 @@
 				C4F15D361BEEE09000108D55 /* LaunchViewController.m in Sources */,
 				C4037CB51BF75A98003D112B /* UserInfoCell.m in Sources */,
 				C4058A811BE9D76C00FCD01C /* ContentSideCell.m in Sources */,
+				C48FF4E31BFABB8800D98096 /* JMCoreAnimation.m in Sources */,
 				C4847D491BEA297E000EA5B3 /* NSData+SDDataCache.m in Sources */,
 				C406059F1BEB7B43009A0DBA /* ThemeEditorTableViewCell.m in Sources */,
 				C4C3C10C1BE895C500AA1E73 /* main.m in Sources */,

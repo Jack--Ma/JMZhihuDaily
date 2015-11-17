@@ -52,6 +52,9 @@
   if ([UserModel currentUser]) {
     NSData *data = [[UserModel currentUser].avatar getData];
     UIImage *image = [UIImage imageWithData:data];
+    if (data == nil) {
+      image = [UIImage imageNamed:@"noneHead"];
+    }
     [self.userAvator setImage:image forState:UIControlStateNormal];
     [self.userName setTitle:[NSString stringWithFormat:@"%@", [UserModel currentUser].username] forState:UIControlStateNormal];
   } else {
