@@ -32,7 +32,7 @@
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-  
+
   //配置无限循环的scrollView
   _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 154) imagesGroup:nil];
 
@@ -68,19 +68,14 @@
     
     //加入进主View视图
     [self.view addSubview:launchView];
-    self.navigationItem.titleView.hidden = YES;
     
     //加载第二页的动画
     [UIView animateWithDuration:2.5 animations:^{
       launchView.alpha = 1;
     } completion:^(BOOL finished) {
-      [UIView animateWithDuration:0.2 animations:^{
-        launchView.alpha = 0;
-        self.navigationItem.titleView.hidden = NO;
-        [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
-      } completion:^(BOOL finished) {
-        [launchView removeFromSuperview];
-      }];
+      [self.navigationItem setTitle:@"今日热点"];
+      [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
+      [launchView removeFromSuperview];
     }];
     [self getApp].firstDisplay = NO;
   } else {
@@ -184,9 +179,10 @@
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
   } else {
-    //过去几天情况
-    NSInteger index = (indexPath.row-10) % 20 - 1;
-    NSDictionary *story = [self getApp].contentStory[index];
+    //过去几天情况，这里有问题，没有考虑前几天每天内容数量不同
+    NSInteger i = (indexPath.row-[self getApp].contentStory.count) / 20;
+    NSInteger index = (indexPath.row-[self getApp].contentStory.count) % 20 - 1 + i * 20 - i;
+    NSDictionary *story = [self getApp].pastContentStory[index];
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
   }
@@ -204,9 +200,7 @@
   webViewController.transitioningDelegate = _animator;
   
    //跳转界面
-  [self presentViewController:webViewController animated:YES completion:^{
-//    NSLog(@"webViewController");
-  }];
+  [self presentViewController:webViewController animated:YES completion:nil];
 }
 #pragma mark - SDCycleScrollViewDelegate & ParallaxHeaderViewDelegate
 //collectionView点击事件
@@ -256,11 +250,11 @@
   //依据contentOffsetY设置titleView的标题
   for (int i = 1; i < [self getApp].offsetYNumber.count; i++) {
     if (offsetY < [[self getApp].offsetYNumber[0] intValue]) {
-      self.titleLabel.text = [self getApp].offsetYValue[0];
+      [self.navigationItem setTitle:[self getApp].offsetYValue[0]];
       return;
     }
     if (offsetY > [[self getApp].offsetYNumber[3-i] intValue]) {
-      self.titleLabel.text = [self getApp].offsetYValue[4-i];
+      [self.navigationItem setTitle:[self getApp].offsetYValue[4-i]];
       return;
     }
   }

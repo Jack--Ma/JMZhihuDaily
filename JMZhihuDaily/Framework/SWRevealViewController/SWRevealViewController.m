@@ -28,6 +28,7 @@
 
 #import "SWRevealViewController.h"
 
+#import "UserModel.h"
 
 #pragma mark - StatusBar Helper Function
 
@@ -644,9 +645,8 @@ const int FrontViewPositionNone = 0xff;
     _frontViewPosition = FrontViewPositionLeft;
     _rearViewPosition = FrontViewPositionLeft;
     _rightViewPosition = FrontViewPositionLeft;
-    //这里改动过
-    _rearViewRevealWidth = 225.0f;
-    _rearViewRevealOverdraw = 60.0f;
+    _rearViewRevealWidth = 200.0f;//这里改动过
+    _rearViewRevealOverdraw = 0.0f;//这里改动过
     _rearViewRevealDisplacement = 40.0f;
     _rightViewRevealWidth = 260.0f;
     _rightViewRevealOverdraw = 60.0f;
@@ -945,7 +945,7 @@ const int FrontViewPositionNone = 0xff;
 #pragma mark - Provided acction methods
 
 - (IBAction)revealToggle:(id)sender
-{    
+{
     [self revealToggleAnimated:YES];
 }
 
@@ -1877,6 +1877,10 @@ NSString * const SWSegueRightIdentifier = @"sw_right";
 {
     SWRevealViewController *rvc = [self.sourceViewController revealViewController];
     UIViewController *dvc = self.destinationViewController;
+  //这里修改过，目的是在未登录的情况下，点击头像或用户名不显示UserInfoView
+  if ([self.identifier isEqualToString:@"sw_user"] && ![UserModel currentUser]) {
+    return;
+  }
     [rvc pushFrontViewController:dvc animated:YES];
 }
 

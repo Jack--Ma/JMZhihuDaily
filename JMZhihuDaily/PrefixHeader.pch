@@ -21,5 +21,6 @@
 #import "SWRevealViewController.h"
 #import "UIImage+ImageEffects.h"
 #import "ZFModalTransitionAnimator.h"
+#import "JMCoreAnimation.h"
 
 #endif /* PrefixHeader_pch */

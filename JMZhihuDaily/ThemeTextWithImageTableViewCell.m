@@ -19,6 +19,10 @@
   UIView *btmLine = [[UIView alloc] initWithFrame:CGRectMake(15, 91, self.frame.size.width-30, 1)];
   btmLine.backgroundColor = [UIColor colorWithRed:245.0f/255.0f green:245.0f/255.0f blue:245.0f/155.0f alpha:1];
   [self.contentView addSubview:btmLine];
+  
+  //图片格式
+  self.themeImageView.contentMode = UIViewContentModeScaleAspectFit;
+  self.themeImageView.clipsToBounds = YES;
 }
 
 @end
