@@ -9,7 +9,6 @@
 #import <AFNetworking/AFNetworking.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "WebViewController.h"
-#import "AppDelegate.h"
 
 @interface WebViewController () <UIScrollViewDelegate, UIWebViewDelegate, ParallaxHeaderViewDelegate>
 
@@ -319,26 +318,26 @@
   if (self.isThemeStory == NO) {
     //不是theme中的文章
     self.index--;
-    if (self.index < [self getApp].contentStory.count) {
+    if (self.index < [StoryModel shareStory].contentStory.count) {
       //当前为今日的内容，上一篇也为今日的文章
       newWebViewController.index = self.index;
-      newWebViewController.newsId = [[self getApp].contentStory[self.index][@"id"] integerValue];
-    } else if (self.index == [self getApp].contentStory.count) {
+      newWebViewController.newsId = [[StoryModel shareStory].contentStory[self.index][@"id"] integerValue];
+    } else if (self.index == [StoryModel shareStory].contentStory.count) {
       //当前为前一天的第一篇
       newWebViewController.index = self.index - 1;
-      newWebViewController.newsId = [[self getApp].contentStory[self.index-1][@"id"] integerValue];
+      newWebViewController.newsId = [[StoryModel shareStory].contentStory[self.index-1][@"id"] integerValue];
     } else {
       //当前是过去三天的内容（除了昨天的第一篇）前一篇为过去三天的内容
-      NSInteger newIndex = self.index - [self getApp].contentStory.count;
+      NSInteger newIndex = self.index - [StoryModel shareStory].contentStory.count;
       NSInteger day = newIndex / 20;//day表示当前文章是哪一天的，0=昨天，1=前天...
       newWebViewController.index = newIndex - 1 - day;
-      newWebViewController.newsId = [[self getApp].pastContentStory[newIndex-1-day][@"id"] integerValue];
+      newWebViewController.newsId = [[StoryModel shareStory].pastContentStory[newIndex-1-day][@"id"] integerValue];
     }
   } else {
     //是theme中的文章
     self.index--;
     newWebViewController.index = self.index;
-    newWebViewController.newsId = [[self getApp].themeContent[self.index][@"id"] integerValue];
+    newWebViewController.newsId = [[StoryModel shareStory].themeContent[self.index][@"id"] integerValue];
   }
   
   //生成原View截图添加到主View上
@@ -364,10 +363,6 @@
     [oldView removeFromSuperview];
   }];
 }
-- (AppDelegate*)getApp {
-  return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
 //多次加载上一篇后，这个方法一直存在，且新的webView不加载自己的此方法，而是最底层View的这个方法
 //！！！奇哉怪也
 - (UIStatusBarStyle)preferredStatusBarStyle {

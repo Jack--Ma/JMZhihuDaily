@@ -36,6 +36,7 @@
 		C4847D5E1BEA2A26000EA5B3 /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D5A1BEA2A26000EA5B3 /* TAPageControl.m */; };
 		C4847D621BEA2A94000EA5B3 /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D611BEA2A94000EA5B3 /* MSWeakTimer.m */; };
 		C48FF4E31BFABB8800D98096 /* JMCoreAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C48FF4E21BFABB8800D98096 /* JMCoreAnimation.m */; };
+		C4AC31C91BFB44B800B85C2F /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AC31C71BFB44B800B85C2F /* StoryModel.m */; };
 		C4C3C10C1BE895C500AA1E73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10B1BE895C500AA1E73 /* main.m */; };
 		C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */; };
 		C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1131BE895C500AA1E73 /* Main.storyboard */; };
@@ -110,6 +111,8 @@
 		C4847D611BEA2A94000EA5B3 /* MSWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSWeakTimer.m; path = Framework/MSWeakTimer/MSWeakTimer.m; sourceTree = "<group>"; };
 		C48FF4E11BFABB8800D98096 /* JMCoreAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCoreAnimation.h; sourceTree = "<group>"; };
 		C48FF4E21BFABB8800D98096 /* JMCoreAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCoreAnimation.m; sourceTree = "<group>"; };
+		C4AC31C71BFB44B800B85C2F /* StoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryModel.m; sourceTree = "<group>"; };
+		C4AC31C81BFB44B800B85C2F /* StoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryModel.h; sourceTree = "<group>"; };
 		C4C3C1071BE895C500AA1E73 /* 知乎日报.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "知乎日报.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4C3C10B1BE895C500AA1E73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -335,8 +338,8 @@
 				C4C3C1271BE8A91900AA1E73 /* Model */,
 				C4F15D331BEEE05600108D55 /* LaunchViewController */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
-				C40605961BEB7937009A0DBA /* ThemeViewController */,
 				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
+				C40605961BEB7937009A0DBA /* ThemeViewController */,
 				C4037CB21BF7241B003D112B /* UserViewController */,
 				C4C3C1371BE9A87100AA1E73 /* Framework */,
 				C4C3C1131BE895C500AA1E73 /* Main.storyboard */,
@@ -361,6 +364,8 @@
 			children = (
 				C4037CAA1BF616AB003D112B /* UserModel.h */,
 				C4037CAB1BF616AB003D112B /* UserModel.m */,
+				C4AC31C81BFB44B800B85C2F /* StoryModel.h */,
+				C4AC31C71BFB44B800B85C2F /* StoryModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -573,6 +578,7 @@
 				C4C3C1491BE9CE0600AA1E73 /* TableSeparatorViewCell.m in Sources */,
 				C4847D5E1BEA2A26000EA5B3 /* TAPageControl.m in Sources */,
 				C4847D3A1BEA2934000EA5B3 /* UIImage+ImageEffects.m in Sources */,
+				C4AC31C91BFB44B800B85C2F /* StoryModel.m in Sources */,
 				C4847D5C1BEA2A26000EA5B3 /* TAAnimatedDotView.m in Sources */,
 				C4C3C1461BE9CD1D00AA1E73 /* TableContentViewCell.m in Sources */,
 				C4C3C1431BE9CAC000AA1E73 /* MainTableViewController.m in Sources */,

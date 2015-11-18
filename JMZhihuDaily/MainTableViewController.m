@@ -8,7 +8,6 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MainTableViewController.h"
-#import "AppDelegate.h"
 #import "TableContentViewCell.h"
 #import "TableSeparatorViewCell.h"
 #import "WebViewController.h"
@@ -18,7 +17,7 @@
 @end
 
 @implementation MainTableViewController {
-  int _number[256];
+  int _number[256];//每一行的cell是否被点击
   
   ZFModalTransitionAnimator *_animator;
   SDCycleScrollView *_cycleScrollView;
@@ -27,6 +26,7 @@
 #pragma mark - 初始化相关函数
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   //SWRevealViewController提供了一个叫 revealViewController()的方法来从任何子控制器中拿到父控制器 SWRevealViewController；它还提供了一个叫 revealToggle: 的方法来显示或隐藏菜单栏，最后我们添加了一个手势。
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
@@ -56,7 +56,7 @@
   [self.tableView setTableHeaderView:headerSubview];
   
   //是第一次加载
-  if ([self getApp].firstDisplay) {
+  if ([StoryModel shareStory].firstDisplay) {
     //生成第二启动页背景
     UIView *launchView = [[UIView alloc] initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, self.view.frame.size.height)];
     launchView.alpha = 0.99;
@@ -77,7 +77,7 @@
       [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
       [launchView removeFromSuperview];
     }];
-    [self getApp].firstDisplay = NO;
+    [StoryModel shareStory].firstDisplay = NO;
   } else {
     [self updateData];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
@@ -100,7 +100,7 @@
 
 #pragma mark - tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  NSInteger num = [self getApp].contentStory.count + 60;
+  NSInteger num = [StoryModel shareStory].contentStory.count + 60;
   for (int i = 0; i < num; i++) {
     _number[i] = 0;
   }
@@ -108,7 +108,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSInteger pastIndex = indexPath.row - [self getApp].contentStory.count;
+  NSInteger pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
   if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
     return 44.0f;
   }
@@ -117,10 +117,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   //今日内容的设置
-  if (indexPath.row < [self getApp].contentStory.count) {
+  if (indexPath.row < [StoryModel shareStory].contentStory.count) {
     TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
-    NSDictionary *data = [self getApp].contentStory[indexPath.row];
-
+    NSDictionary *data = [StoryModel shareStory].contentStory[indexPath.row];
     if (_number[indexPath.row]) {
       cell.titleLabel.textColor = [UIColor lightGrayColor];
     } else {
@@ -133,20 +132,17 @@
     return cell;
   }
   //分隔cell内容的设置
-  NSInteger pastIndex = indexPath.row - [self getApp].contentStory.count;
+  NSInteger pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
   if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
     TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
-    NSArray *data = [self getApp].offsetYValue;
-    if ([data count] == 1) {
-      return cell;
-    }
+    NSArray *data = [StoryModel shareStory].offsetYValue;
     cell.dateLabel.text = data[pastIndex / 20 + 1];
     return cell;
   }
   //过去三天内容的设置
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
-  NSDictionary *data = [self getApp].pastContentStory[pastIndex - pastIndex/20 - 1];
-  
+  NSDictionary *data = [StoryModel shareStory].pastContentStory[pastIndex - pastIndex/20 - 1];
+
   if (_number[indexPath.row]) {
     cell.titleLabel.textColor = [UIColor lightGrayColor];
   } else {
@@ -173,16 +169,16 @@
   webViewController.index = indexPath.row;
   
   //找到对应newsID
-  if (indexPath.row < [self getApp].contentStory.count) {
+  if (indexPath.row < [StoryModel shareStory].contentStory.count) {
     //当天情况
-    NSDictionary *story = [self getApp].contentStory[indexPath.row];
+    NSDictionary *story = [StoryModel shareStory].contentStory[indexPath.row];
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
   } else {
     //过去几天情况，这里有问题，没有考虑前几天每天内容数量不同
-    NSInteger i = (indexPath.row-[self getApp].contentStory.count) / 20;
-    NSInteger index = (indexPath.row-[self getApp].contentStory.count) % 20 - 1 + i * 20 - i;
-    NSDictionary *story = [self getApp].pastContentStory[index];
+    NSInteger i = (indexPath.row-[StoryModel shareStory].contentStory.count) / 20;
+    NSInteger index = (indexPath.row-[StoryModel shareStory].contentStory.count) % 20 - 1 + i * 20 - i;
+    NSDictionary *story = [StoryModel shareStory].pastContentStory[index];
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
   }
@@ -220,12 +216,10 @@
   
   //设置webView
   webViewController.transitioningDelegate = _animator;
-  webViewController.newsId = [[self getApp].topStory[index][@"id"] integerValue];
+  webViewController.newsId = [[StoryModel shareStory].topStory[index][@"id"] integerValue];
   webViewController.isTopStory = YES;
   
-  [self presentViewController:webViewController animated:YES completion:^{
-//    NSLog(@"webViewController");
-  }];
+  [self presentViewController:webViewController animated:YES completion:nil];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -248,13 +242,13 @@
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
   }
   //依据contentOffsetY设置titleView的标题
-  for (int i = 1; i < [self getApp].offsetYNumber.count; i++) {
-    if (offsetY < [[self getApp].offsetYNumber[0] intValue]) {
-      [self.navigationItem setTitle:[self getApp].offsetYValue[0]];
+  for (int i = 1; i < [StoryModel shareStory].offsetYNumber.count; i++) {
+    if (offsetY < [[StoryModel shareStory].offsetYNumber[0] intValue]) {
+      [self.navigationItem setTitle:[StoryModel shareStory].offsetYValue[0]];
       return;
     }
-    if (offsetY > [[self getApp].offsetYNumber[3-i] intValue]) {
-      [self.navigationItem setTitle:[self getApp].offsetYValue[4-i]];
+    if (offsetY > [[StoryModel shareStory].offsetYNumber[3-i] intValue]) {
+      [self.navigationItem setTitle:[StoryModel shareStory].offsetYValue[4-i]];
       return;
     }
   }
@@ -268,9 +262,10 @@
 - (void)updateData {
   NSMutableArray *temp1 = [NSMutableArray arrayWithCapacity:5];
   NSMutableArray *temp2 = [NSMutableArray arrayWithCapacity:5];
+  
   for (int i = 0; i < 5; i++) {
-    [temp1 addObject:[self getApp].topStory[i][@"image"]];
-    [temp2 addObject:[self getApp].topStory[i][@"title"]];
+    [temp1 addObject:[StoryModel shareStory].topStory[i][@"image"]];
+    [temp2 addObject:[StoryModel shareStory].topStory[i][@"title"]];
   }
   [_cycleScrollView setImageURLStringsGroup:temp1];
   [_cycleScrollView setTitlesGroup:temp2];
@@ -279,11 +274,6 @@
 }
 
 #pragma mark - 一些全局设置函数
-//获取总代理
-- (AppDelegate *)getApp {
-  return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
 //拓展NavigationController以设置StatusBar
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.navigationController.topViewController;

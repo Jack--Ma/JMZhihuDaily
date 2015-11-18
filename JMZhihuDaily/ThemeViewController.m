@@ -6,15 +6,14 @@
 //  Copyright © 2015年 JackMa. All rights reserved.
 //
 
+#import <AFNetworking/AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #import "ThemeViewController.h"
-#import "AppDelegate.h"
 #import "ThemeEditorTableViewCell.h"
 #import "ThemeTextWithImageTableViewCell.h"
 #import "ThemeTextTableViewCell.h"
 #import "WebViewController.h"
-
-#import <AFNetworking/AFNetworking.h>
-#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface ThemeViewController () <UITableViewDelegate, UITableViewDataSource, ParallaxHeaderViewDelegate>
 
@@ -40,7 +39,7 @@
     NSArray *storyData = data[@"stories"];
     _editors = [[NSArray alloc] initWithArray:data[@"editors"] copyItems:YES];
     
-    [self getApp].themeContent = [storyData copy];
+    [StoryModel shareStory].themeContent = [storyData copy];
     //更新背景图片
     [_navImageView sd_setImageWithURL:data[@"background"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
       _themeSubview.blurViewImage = image;
@@ -49,7 +48,7 @@
     
     [self.tableView reloadData];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"%@", error);
+    NSLog(@"%@", [error userInfo]);
     return;
   }];
   [operation start];
@@ -64,7 +63,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   //清空原数据
-  [self getApp].themeContent = nil;
+  [StoryModel shareStory].themeContent = nil;
   
   //拿到新数据
   [self refreshData];
@@ -103,10 +102,7 @@
 
 #pragma mark - UITableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  if ([self getApp].themeContent == nil) {
-    return 0;
-  }
-  return [self getApp].themeContent.count + 1;
+  return [StoryModel shareStory].themeContent.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -131,8 +127,7 @@
     return cell;
   }
   //当前对应的story
-  NSDictionary *tempThemeStory = ([self getApp].themeContent)[indexPath.row-1];
-//  _selectedIndex = [NSMutableArray arrayWithCapacity:[self getApp].themeContent.count];
+  NSDictionary *tempThemeStory = ([StoryModel shareStory].themeContent)[indexPath.row-1];
   if (tempThemeStory[@"images"][0]) {
     //存在图片情况
     ThemeTextWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"themeTextWithImageTableViewCell"];
@@ -174,7 +169,7 @@
   WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
   webViewController.index = indexPath.row - 1;
   webViewController.isThemeStory = YES;
-  webViewController.newsId = [[self getApp].themeContent[indexPath.row-1][@"id"] integerValue];
+  webViewController.newsId = [[StoryModel shareStory].themeContent[indexPath.row-1][@"id"] integerValue];
   
   [self.navigationController pushViewController:webViewController animated:YES];
 }
@@ -188,8 +183,8 @@
   UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   CGFloat offsetY = scrollView.contentOffset.y;
   
-  if (offsetY >= -66) {
-    CGFloat alpha = MIN(1, (66 + offsetY) / (66));
+  if (offsetY >= -64) {
+    CGFloat alpha = MIN(1, (64 + offsetY) / (64));
     //NavigationBar透明度渐变
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
   } else {
@@ -202,11 +197,6 @@
   [self.tableView setContentOffset:CGPointMake(0.0f, -95.0f)];
 }
 #pragma mark - 一些全局设置函数
-//获取总代理
-- (AppDelegate *)getApp {
-  return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
 //拓展NavigationController以设置StatusBar
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;

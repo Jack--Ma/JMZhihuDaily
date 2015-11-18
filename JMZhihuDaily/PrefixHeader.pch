@@ -22,5 +22,6 @@
 #import "UIImage+ImageEffects.h"
 #import "ZFModalTransitionAnimator.h"
 #import "JMCoreAnimation.h"
+#import "StoryModel.h"
 
 #endif /* PrefixHeader_pch */

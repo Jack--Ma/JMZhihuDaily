@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
   //如果已有下载好的文字则使用
   if ([[NSUserDefaults standardUserDefaults] objectForKey:@"launchTextKey"]) {
     self.text.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"launchTextKey"];

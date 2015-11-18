@@ -14,152 +14,8 @@
 #define AVOSCloudAppID  @"uSM1CbTx40OXA9r3BmhGMlj7"
 #define AVOSCloudAppKey @"BT076YAKsGX6qkemmdVAya6d"
 
-static NSOperationQueue *queue = nil;
-
-@interface AppDelegate ()
-
-@end
-
 @implementation AppDelegate{
 
-}
-
-#pragma mark - about data
-//获取数据函数
-- (void)getTodayData {
-  NSString *urlString = @"http://news-at.zhihu.com/api/4/news/latest";
-  NSURL *url = [NSURL URLWithString:urlString];
-  NSURLRequest *request = [NSURLRequest requestWithURL:url];
-  
-  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  operation.responseSerializer = [AFJSONResponseSerializer serializer];
-  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-    //本日头条和文章列表
-    NSDictionary *data = responseObject;
-    
-    self.topStory = [[NSMutableArray alloc] initWithArray:data[@"top_stories"] copyItems:YES];
-    self.contentStory = [[NSMutableArray alloc] initWithArray:data[@"stories"] copyItems:YES];
-
-    self.offsetYNumber = [[NSMutableArray alloc] initWithCapacity:1];
-    self.offsetYValue = [[NSMutableArray alloc] initWithCapacity:1];
-    [self.offsetYNumber addObject:@(self.contentStory.count * 93 + 120)];
-    [self.offsetYValue addObject:@"今日热点"];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"todayDataGet" object:nil];
-    [self getPastData];
-    
-  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"%@", error);
-    return;
-  }];
-  
-  [queue addOperation:operation];
-}
-- (void)getPastData {
-  NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-  fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
-  fmt.dateFormat = @"yyyyMMdd";
-  /*
-   *昨天的数据获取
-   */
-  NSString *aDayBefore = [fmt stringFromDate:[NSDate date]];
-  NSString *urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", aDayBefore];
-  NSURL *url = [NSURL URLWithString:urlString];
-  NSURLRequest *request = [NSURLRequest requestWithURL:url];
-  
-  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  operation.responseSerializer = [AFJSONResponseSerializer serializer];
-  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-    NSDictionary *data = responseObject;
-    //取得文章列表数据
-    NSArray *contentStoryData = data[@"stories"];
-    //昨天日期cell数据
-    NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]], @"昨天"];
-    //昨天的contentStoty
-    self.pastContentStory = [[NSMutableArray alloc] initWithArray:contentStoryData copyItems:YES];
-    self.pastContentStoryNumber = [[NSMutableArray alloc] initWithCapacity:1];
-    [self.pastContentStoryNumber addObject:@(contentStoryData.count)];
-    //设置昨天Y坐标的长度和昨天的标题
-    [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 44 + 93 * contentStoryData.count)];
-    [self.offsetYValue addObject:tempDateString];
-    /*
-     *前天的数据获取
-     */
-    NSString *twoDayDefore = [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]];
-    NSString  *urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", twoDayDefore];
-    NSURL  *url = [NSURL URLWithString:urlString];
-    NSURLRequest  *request = [NSURLRequest requestWithURL:url];
-    
-    AFHTTPRequestOperation *operation1 = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    operation1.responseSerializer = [AFJSONResponseSerializer serializer];
-    [operation1 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-      NSDictionary *data = responseObject;
-      //取得文章列表数据
-      NSArray *contentStoryData = data[@"stories"];
-      //前一天日期cell数据
-      NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]], @"前天"];
-      //将前天的内容加入pastContentStory
-      [self.pastContentStory addObjectsFromArray:contentStoryData];
-      [self.pastContentStoryNumber addObject:@(contentStoryData.count)];
-      //设置前天Y坐标的长度和前天的标题
-      [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 44 + 93 * contentStoryData.count)];
-      [self.offsetYValue addObject:tempDateString];
-      /*
-       *大前天的数据获取
-       */
-      NSString *threeDayDefore = [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]];
-      NSString  *urlString = [NSString stringWithFormat:@"http://news.at.zhihu.com/api/4/news/before/%@", threeDayDefore];
-      NSURL  *url = [NSURL URLWithString:urlString];
-      NSURLRequest  *request = [NSURLRequest requestWithURL:url];
-      
-      AFHTTPRequestOperation *operation2 = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-      operation2.responseSerializer = [AFJSONResponseSerializer serializer];
-      [operation2 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        NSDictionary *data = responseObject;
-        //取得文章列表数据
-        NSArray *contentStoryData = data[@"stories"];
-        //前一天日期cell数据
-        NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*3]], @"大前天"];
-        //将前天的内容加入pastContentStory
-        [self.pastContentStory addObjectsFromArray:contentStoryData];
-        [self.pastContentStoryNumber addObject:@(contentStoryData.count)];
-        //设置前天Y坐标的长度和前天的标题
-        [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
-        [self.offsetYValue addObject:tempDateString];
-      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
-        return;
-      }];
-      [queue addOperation:operation2];
-    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-      NSLog(@"%@", error);
-      return;
-    }];
-    [queue addOperation:operation1];
-  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"%@", error);
-    return;
-  }];
-  [queue addOperation: operation];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"pastDataGet" object:nil];
-}
-- (void)getThemesData{
-  NSString *urlString = @"http://news-at.zhihu.com/api/4/themes";
-  NSURL *url = [NSURL URLWithString:urlString];
-  NSURLRequest *request = [NSURLRequest requestWithURL:url];
-  
-  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  operation.responseSerializer = [AFJSONResponseSerializer serializer];
-  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-    NSArray *data = responseObject[@"others"];
-    self.themes = [[NSMutableArray alloc] initWithArray:data copyItems:YES];
-  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-    NSLog(@"%@", error);
-    return;
-  }];
-  
-  [queue addOperation:operation];
 }
 
 #pragma mark -
@@ -167,6 +23,7 @@ static NSOperationQueue *queue = nil;
   //设置AVOSCloud
   [UserModel registerSubclass];
   [AVOSCloud setApplicationId:AVOSCloudAppID clientKey:AVOSCloudAppKey];
+  
   //统计应用启动情况
   [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
@@ -181,12 +38,8 @@ static NSOperationQueue *queue = nil;
     [UserModel currentUser].avatar = [post objectForKey:@"avatar"];
   }
   
-  queue = [[NSOperationQueue alloc] init];
-  self.firstDisplay = YES;
-  
-  [self getTodayData];
-  [self getThemesData];
-  [queue waitUntilAllOperationsAreFinished];
+  //单例获取本日所有内容
+  [[StoryModel shareStory] getData];
   return YES;
 }
 

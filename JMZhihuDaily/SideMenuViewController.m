@@ -8,7 +8,6 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 
-#import "AppDelegate.h"
 #import "SideMenuViewController.h"
 #import "HomeSideCell.h"
 #import "ContentSideCell.h"
@@ -81,10 +80,6 @@
 }
 
 #pragma mark - other function
-- (AppDelegate *)getApp {
-  return [[UIApplication sharedApplication] delegate];
-}
-
 //设置StatusBar
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
@@ -92,16 +87,16 @@
 
 #pragma mark - tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [self getApp].themes.count + 1 + 1;
+  return [StoryModel shareStory].themes.count + 1 + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 0) {
     HomeSideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeSideCell"];
     return cell;
-  } else if (indexPath.row <= [self getApp].themes.count) {
+  } else if (indexPath.row <= [StoryModel shareStory].themes.count) {
     ContentSideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contentSideCell"];
-    cell.contentTitleLabel.text = [self getApp].themes[indexPath.row-1][@"name"];
+    cell.contentTitleLabel.text = [StoryModel shareStory].themes[indexPath.row-1][@"name"];
     return cell;
   }
   //最后一行cell无法点击,由于上方加了渐变图片
@@ -119,8 +114,8 @@
   if (row != 0) {
     UINavigationController *nav = segue.destinationViewController;
     ThemeViewController *themeViewController = (ThemeViewController *)nav.topViewController;
-    themeViewController.name = [self getApp].themes[row-1][@"name"];
-    themeViewController.tid = [self getApp].themes[row-1][@"id"];
+    themeViewController.name = [StoryModel shareStory].themes[row-1][@"name"];
+    themeViewController.tid = [StoryModel shareStory].themes[row-1][@"id"];
   }
 
 }

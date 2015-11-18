@@ -45,7 +45,7 @@
 {
     //根据传入的参数确定frame
     ParallaxHeaderView *headerView = [[ParallaxHeaderView alloc] initWithFrame:CGRectMake(0, 0, headerSize.width, headerSize.height)];
-    
+
     //初始化设置并返回
     [headerView initialThemeSetupForCustomSubView:subView andImage:blurViewImageParam ];
     return headerView;
@@ -115,7 +115,7 @@
     {
         frame.origin.y = offset.y;
         self.imageScrollView.frame = frame;
-        self.clipsToBounds = NO;
+        self.clipsToBounds = YES;//这里修改过，原来是NO，会出现上滑时header界面的图片无法完全隐藏的问题
     }
     else if (offset.y < -95) {
         [self.delegate lockDirection];
@@ -123,15 +123,18 @@
     else
     {
         CGFloat delta = 0.0f;
-        CGRect rect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        
+//      CGRect rect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    //原来的上一行有问题，不管什么分辨率得到的width都为600.0f，结果就是图片遭到放大
+    //所以在这里我修改成blurImage的宽度，或者subView的宽度，高度不能改变！！！
+        CGRect rect = CGRectMake(0, 0, self.subView.frame.size.width, self.frame.size.height);
+
         delta = offset.y;
         rect.origin.y += delta;
         rect.size.height -= delta;
-        
+    
         //调整透明度实现模糊渐变
         self.bluredImageView.alpha =  (95+offset.y) / 95;
-        
+    
         self.imageScrollView.frame = rect;
         self.clipsToBounds = NO;
     }
@@ -160,7 +163,7 @@
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     scrollView.backgroundColor = [UIColor whiteColor];
     self.imageScrollView = scrollView;
-    
+  
     //设置内容层的自动布局并存储
     subView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.subView = subView;
@@ -192,7 +195,7 @@
         UIImage *screenShot = [self.blurViewImage applyBlurWithRadius:5 tintColor:nil saturationDeltaFactor:1.0 maskImage:nil];
         self.bluredImageView.image = screenShot;
     }
-    
+
     //self.bluredImageView.image = screenShot;
     //self.bluredImageView.image = self.blurViewImage;
 }
