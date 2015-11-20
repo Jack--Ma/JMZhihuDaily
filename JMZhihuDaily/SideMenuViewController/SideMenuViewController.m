@@ -101,7 +101,9 @@
   }
   //最后一行cell无法点击,由于上方加了渐变图片
   ContentSideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contentSideCell"];
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   cell.contentTitleLabel.text = @"更多日报内容";
+  cell.userInteractionEnabled = NO;//设置不可点击
   return cell;
 }
 
@@ -111,7 +113,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
   NSInteger row = self.tableView.indexPathForSelectedRow.row;
-  if (row != 0) {
+  if (row != 0 && row != [StoryModel shareStory].themes.count+1) {
     UINavigationController *nav = segue.destinationViewController;
     ThemeViewController *themeViewController = (ThemeViewController *)nav.topViewController;
     themeViewController.name = [StoryModel shareStory].themes[row-1][@"name"];

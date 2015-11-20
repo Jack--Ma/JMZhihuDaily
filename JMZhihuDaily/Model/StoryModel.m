@@ -31,7 +31,9 @@ static NSOperationQueue *queue = nil;
     self.offsetYValue = [[NSMutableArray alloc] initWithCapacity:1];
     [self.offsetYNumber addObject:@(self.contentStory.count * 93 + 120)];
     [self.offsetYValue addObject:@"今日热点"];
-    
+    [self.offsetYValue addObject:@"昨日内容"];
+    [self.offsetYValue addObject:@"前日内容"];
+    [self.offsetYValue addObject:@"大前日内容"];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"todayDataGet" object:nil];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"%@", error);
@@ -58,12 +60,12 @@ static NSOperationQueue *queue = nil;
     //取得文章列表数据
     NSArray *contentStoryData = data[@"stories"];
     //昨天日期cell数据
-    NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]], @"昨天"];
+//    NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400]], @"昨天"];
     //昨天的contentStoty
     self.pastContentStory = [[NSMutableArray alloc] initWithArray:contentStoryData copyItems:YES];
     //设置昨天Y坐标的长度和昨天的标题
     [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 44 + 93 * contentStoryData.count)];
-    [self.offsetYValue addObject:tempDateString];
+//    [self.offsetYValue addObject:tempDateString];
     /*
      *前天的数据获取
      */
@@ -79,12 +81,12 @@ static NSOperationQueue *queue = nil;
       //取得文章列表数据
       NSArray *contentStoryData = data[@"stories"];
       //前一天日期cell数据
-      NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]], @"前天"];
+//      NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*2]], @"前天"];
       //将前天的内容加入pastContentStory
       [self.pastContentStory addObjectsFromArray:contentStoryData];
       //设置前天Y坐标的长度和前天的标题
       [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 44 + 93 * contentStoryData.count)];
-      [self.offsetYValue addObject:tempDateString];
+//      [self.offsetYValue addObject:tempDateString];
       /*
        *大前天的数据获取
        */
@@ -100,12 +102,12 @@ static NSOperationQueue *queue = nil;
         //取得文章列表数据
         NSArray *contentStoryData = data[@"stories"];
         //前一天日期cell数据
-        NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*3]], @"大前天"];
+//        NSString *tempDateString = [NSString stringWithFormat:@"%@ %@", [fmt stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-86400*3]], @"大前天"];
         //将前天的内容加入pastContentStory
         [self.pastContentStory addObjectsFromArray:contentStoryData];
         //设置前天Y坐标的长度和前天的标题
         [self.offsetYNumber addObject:@([self.offsetYNumber.lastObject integerValue] + 30 + 93 * contentStoryData.count)];
-        [self.offsetYValue addObject:tempDateString];
+//        [self.offsetYValue addObject:tempDateString];
       } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
         NSLog(@"%@", error);
         return;

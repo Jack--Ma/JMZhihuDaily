@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FrameAccessor.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-JMZhihuDaily.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>09A334C3CCC3C81273265AFF73E01611</key>
+		<key>35F29EE54BAAE0EF3E56F34596D9DAD8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4062176CDEE75730AF4423F9362DA58E</key>
+		<key>4CE5F97A246D88E20901D813B3CFC96E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>5352D432641F0656C90741034E32F31E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BFD2BE15E76743FA53E24FB860AC44F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCPullRefreshViewController.h"
 
-@interface ThemeViewController : UIViewController
+@interface ThemeViewController : SCPullRefreshViewController
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 

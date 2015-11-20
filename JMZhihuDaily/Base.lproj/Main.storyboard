@@ -236,7 +236,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="主题日报" id="DXZ-Ph-WdZ"/>
                     <connections>
-                        <outlet property="tableView" destination="Tih-an-qB0" id="ZYl-20-hMR"/>
+                        <outlet property="tableView" destination="Tih-an-qB0" id="4dT-hq-xP0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qmu-g2-kD5" userLabel="First Responder" sceneMemberID="firstResponder"/>

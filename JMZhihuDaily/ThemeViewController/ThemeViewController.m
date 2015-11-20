@@ -22,6 +22,10 @@
 @implementation ThemeViewController {
   UIImageView *_navImageView;
   ParallaxHeaderView *_themeSubview;
+  DACircularProgressView *_refreshImageView;
+  UIImageView *_loadingImageView;
+  BOOL _isDragging;
+  BOOL _isLoading;
   
   NSMutableArray *_selectedIndex;
   NSArray *_editors;
@@ -74,6 +78,23 @@
   leftButton.tintColor = [UIColor whiteColor];
   [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+
+  //配置下拉刷新的View
+  _refreshImageView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(self.view.width/2-10, 60, 20, 20)];
+  _refreshImageView.roundedCorners = 10;
+  _refreshImageView.trackTintColor = [UIColor clearColor];
+  _refreshImageView.progressTintColor = [UIColor whiteColor];
+  
+  //设置下拉后刷新的旋转动画
+  UIImage *loadingImage = [UIImage imageNamed:@"Loading"];
+  loadingImage = [loadingImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  _loadingImageView = [[UIImageView alloc] initWithImage:loadingImage];
+  _loadingImageView.frame = _refreshImageView.frame;
+  _loadingImageView.tintColor = [UIColor whiteColor];
+  _loadingImageView.hidden = YES;
+  _loadingImageView.layer.allowsEdgeAntialiasing = YES;
+  _isDragging = NO;
+  _isLoading = NO;
   
   //设置nav的背景图片_navImageView
   _navImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
@@ -88,6 +109,8 @@
   //将ParallaxView设置为tableHeaderView，主View添加tableView
   self.tableView.tableHeaderView = _themeSubview;
   [self.view addSubview:self.tableView];
+  [_navImageView addSubview:_refreshImageView];
+  [_navImageView addSubview:_loadingImageView];
   
   //设置背景透明
   [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
@@ -98,6 +121,15 @@
   self.tableView.dataSource = self;
   self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
   self.tableView.showsVerticalScrollIndicator = NO;
+  
+  self.thisTableView = self.tableView;
+
+
+  __weak typeof(SCPullRefreshViewController) *weakSelf = self;
+  self.loadMoreBlock = ^{
+    __strong typeof(SCPullRefreshViewController) *strongSelf = weakSelf;
+    [strongSelf performSelector:@selector(endLoadMore) withObject:strongSelf afterDelay:2.0];
+  };
 }
 
 #pragma mark - UITableView
@@ -176,14 +208,34 @@
 
 #pragma mark - ParallaxHeaderViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  //先执行父类的scrollViewDidScroll方法
+  [super scrollViewDidScroll:scrollView];
   //Parallax效果
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
   [header layoutThemeHeaderViewForScrollViewOffset:scrollView.contentOffset];
-  //NavBar透明度渐变
   UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   CGFloat offsetY = scrollView.contentOffset.y;
   
+  //若isLoading为YES则加载Loading动画
+  if (_isLoading) {
+    _isLoading = NO;
+    _loadingImageView.hidden = NO;
+    _refreshImageView.hidden = YES;
+    [_loadingImageView.layer addAnimation:[self createRotationAnimation] forKey:@"LoadingAnimation"];
+  }
+  //下拉到刷新点，并且已经手已经放开，则设置_isLoading
+  if (offsetY  >= -125.0 && offsetY <= -110.0 && !_isDragging) {
+    _isLoading = YES;
+  }
+  //下拉时显示刷新View动画
+  if (offsetY <= -64.0) {
+    CGFloat i = -(offsetY+64.0) / (125.0-64.0);
+    _refreshImageView.hidden = NO;
+    [_refreshImageView setProgress:i animated:YES];
+  }
+  
   if (offsetY >= -64) {
+    _refreshImageView.hidden = YES;
     CGFloat alpha = MIN(1, (64 + offsetY) / (64));
     //NavigationBar透明度渐变
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
@@ -192,9 +244,41 @@
   }
 }
 
+//记录下拉时状态
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  _isDragging = NO;
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+  _isDragging = YES;
+}
+
+//滑动极限
 - (void)lockDirection {
-  //滑动极限
-  [self.tableView setContentOffset:CGPointMake(0.0f, -95.0f)];
+  [self.tableView setContentOffset:CGPointMake(0.0f, -125.0f)];
+}
+
+- (CAAnimation *)createRotationAnimation {
+  CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+  [rotationAnimation setValue:@"LoadingAnimation" forKey:@"id"];
+  rotationAnimation.fromValue = [NSNumber numberWithFloat:0];
+  rotationAnimation.toValue = [NSNumber numberWithFloat:M_PI * 2];
+  rotationAnimation.duration = 0.8f;
+  rotationAnimation.repeatCount = 3;
+  rotationAnimation.speed = 1.0f;
+  rotationAnimation.removedOnCompletion = YES;
+  rotationAnimation.delegate = self;
+  
+  return rotationAnimation;
+}
+- (void)animationDidStart:(CAAnimation *)anim {
+  [self.tableView reloadData];
+}
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  if (flag) {
+    _refreshImageView.hidden = NO;
+    _loadingImageView.hidden = YES;
+    [_loadingImageView.layer removeAllAnimations];
+  }
 }
 #pragma mark - 一些全局设置函数
 //拓展NavigationController以设置StatusBar

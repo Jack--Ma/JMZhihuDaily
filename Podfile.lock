@@ -21,6 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - AVOSCloud (3.1.6.2)
+  - FrameAccessor (2.0)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -28,11 +29,13 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - AVOSCloud
+  - FrameAccessor
   - SDWebImage (~> 3.7)
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   AVOSCloud: a3cd4fd18e2eba50de63c490cbd59fd8892fddee
+  FrameAccessor: 443a13e58e23a10ff22180da0897b28c3f6abf66
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
 COCOAPODS: 0.38.2

@@ -21,6 +21,11 @@
   
   ZFModalTransitionAnimator *_animator;
   SDCycleScrollView *_cycleScrollView;
+  
+  DACircularProgressView *_refreshImageView;
+  UIImageView *_loadingImageView;
+  BOOL _isDragging;//手指是否从屏幕上拿走
+  BOOL _isLoading;//是否加载loadingImageView;
 }
 
 #pragma mark - 初始化相关函数
@@ -33,6 +38,23 @@
   leftButton.tintColor = [UIColor whiteColor];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
+  //配置下拉刷新的View
+  _refreshImageView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(self.view.width/2-10, 60, 20, 20)];
+  _refreshImageView.roundedCorners = 10;
+  _refreshImageView.trackTintColor = [UIColor clearColor];
+  _refreshImageView.progressTintColor = [UIColor whiteColor];
+  
+  //配置下拉后刷新的旋转动画
+  UIImage *loadingImage = [UIImage imageNamed:@"Loading"];
+  loadingImage = [loadingImage imageWithRenderingMode:(UIImageRenderingModeAlwaysTemplate)];
+  _loadingImageView = [[UIImageView alloc] initWithImage:loadingImage];
+  _loadingImageView.frame = _refreshImageView.frame;
+  _loadingImageView.tintColor = [UIColor whiteColor];
+  _loadingImageView.hidden = YES;
+  _loadingImageView.layer.allowsEdgeAntialiasing = YES;//旋转是美化边缘，防止出现锯齿
+  _isDragging = NO;
+  _isLoading = NO;
+  
   //配置无限循环的scrollView
   _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 154) imagesGroup:nil];
 
@@ -54,8 +76,10 @@
   
   //将ParallaxView设置为tableHeaderView
   [self.tableView setTableHeaderView:headerSubview];
+  [_cycleScrollView addSubview:_refreshImageView];
+  [_cycleScrollView addSubview:_loadingImageView];
   
-  //是第一次加载
+  //是第一次加载先加载启动动画
   if ([StoryModel shareStory].firstDisplay) {
     //生成第二启动页背景
     UIView *launchView = [[UIView alloc] initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, self.view.frame.size.height)];
@@ -93,6 +117,12 @@
   self.tableView.showsVerticalScrollIndicator = NO;//取消竖直上右侧的滚动条
   self.tableView.rowHeight = UITableViewAutomaticDimension;//ios8后加入的动态调整cell高度
   self.tableView.estimatedRowHeight = 50;
+  
+//  __weak typeof(JMPullRefreshTableViewController) *weakSelf = self;
+//  self.loadMoreBlock = ^{
+//    __strong typeof(JMPullRefreshTableViewController) *strongSelf = weakSelf;
+//    [strongSelf performSelector:@selector(endLoadMore) withObject:strongSelf afterDelay:2.0];
+//  };
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:@"todayDataGet" object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:@"pastDataGet" object:nil];
@@ -223,15 +253,35 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//  [super scrollViewDidScroll:scrollView];
   //Parallax效果
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
   [header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
-  //NavBar及titleLabel透明度渐变
   UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   CGFloat offsetY = scrollView.contentOffset.y;
   CGFloat prelude = 90;
   
+  //若isLoading为YES则加载Loading动画
+  if (_isLoading) {
+    _isLoading = NO;
+    _loadingImageView.hidden = NO;
+    _refreshImageView.hidden = YES;
+    [_loadingImageView.layer addAnimation:[self createRotationAnimation] forKey:@"LoadingAnimation"];
+  }
+  //下拉到刷新点，并且已经手已经放开，则设置_isLoading
+  if (offsetY >= -125.0 && offsetY <= -110.0 && !_isDragging) {
+    _isLoading = YES;
+  }
+  //下拉时显示刷新图标，这里的offsetY从-64.0开始
+  if (offsetY <= -64.0) {
+    CGFloat i = -(scrollView.contentOffsetY+64.0) / (125.0 - 64.0);
+    _refreshImageView.hidden = NO;
+    [_refreshImageView setProgress:i animated:YES];
+  }
+  
+  //NavBar及titleLabel透明度渐变
   if (offsetY >= -64) {
+    _refreshImageView.hidden = YES;
     CGFloat alpha = MIN(1, (64 + offsetY) / (64 + prelude));
     //titleLabel透明度渐变
     ((SDCycleScrollView *)header.subviews[0].subviews[0]).titleLabelAlpha = 1 - alpha;
@@ -254,11 +304,20 @@
   }
   
 }
+
+//记录下拉时状态
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  _isDragging = NO;
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+  _isDragging = YES;
+}
+
 //根据scrollView修改tableView偏移量
 - (void)lockDirection {
-  [self.tableView setContentOffset:CGPointMake(0, -154)];
+  [self.tableView setContentOffset:CGPointMake(0, -125)];
 }
-#pragma mark - 获取数据
+#pragma mark - 其他函数
 - (void)updateData {
   NSMutableArray *temp1 = [NSMutableArray arrayWithCapacity:5];
   NSMutableArray *temp2 = [NSMutableArray arrayWithCapacity:5];
@@ -272,7 +331,30 @@
 
   [self.tableView reloadData];
 }
-
+- (CAAnimation *)createRotationAnimation {
+  
+  CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+  [rotationAnimation setValue:@"LoadingAnimation" forKey:@"id"];
+  rotationAnimation.fromValue = [NSNumber numberWithFloat:0];
+  rotationAnimation.toValue = [NSNumber numberWithFloat:M_PI * 2];
+  rotationAnimation.duration = 0.8f;
+  rotationAnimation.repeatCount = 3;
+  rotationAnimation.speed = 1.0f;
+  rotationAnimation.removedOnCompletion = YES;
+  rotationAnimation.delegate = self;
+  
+  return rotationAnimation;
+}
+- (void)animationDidStart:(CAAnimation *)anim {
+  [self.tableView reloadData];
+}
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  if (flag) {
+    _refreshImageView.hidden = NO;
+    _loadingImageView.hidden = YES;
+    [_loadingImageView.layer removeAllAnimations];
+  }
+}
 #pragma mark - 一些全局设置函数
 //拓展NavigationController以设置StatusBar
 - (UIViewController *)childViewControllerForStatusBarStyle {

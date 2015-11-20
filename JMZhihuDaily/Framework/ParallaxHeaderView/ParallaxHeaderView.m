@@ -62,7 +62,7 @@
 //        self.imageScrollView.frame = frame;
 //        self.clipsToBounds = YES;
     }
-    else if (offset.y < -154) {
+    else if (offset.y < -125.0) {//这里修改过，原来是154.0f
         //只是留个位置供接触到父ViewController的方法
         [self.delegate lockDirection];
     }
@@ -108,6 +108,7 @@
     
 }
 
+//下面的方法为了美观把原来的偏移量95.0改为了125.0
 - (void)layoutThemeHeaderViewForScrollViewOffset:(CGPoint)offset;
 {
     CGRect frame = self.imageScrollView.frame;
@@ -117,7 +118,7 @@
         self.imageScrollView.frame = frame;
         self.clipsToBounds = YES;//这里修改过，原来是NO，会出现上滑时header界面的图片无法完全隐藏的问题
     }
-    else if (offset.y < -95) {
+    else if (offset.y < -125) {
         [self.delegate lockDirection];
     }
     else
@@ -133,7 +134,7 @@
         rect.size.height -= delta;
     
         //调整透明度实现模糊渐变
-        self.bluredImageView.alpha =  (95+offset.y) / 95;
+        self.bluredImageView.alpha =  (125+offset.y) / 125;
     
         self.imageScrollView.frame = rect;
         self.clipsToBounds = NO;
