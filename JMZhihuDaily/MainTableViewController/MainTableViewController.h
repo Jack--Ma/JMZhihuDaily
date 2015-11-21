@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JMPullRefreshTableViewController.h"
 
-@interface MainTableViewController : UITableViewController
+//@interface MainTableViewController : UITableViewController
 
-//@interface MainTableViewController : JMPullRefreshTableViewController
+@interface MainTableViewController : JMPullRefreshTableViewController
 
 @end

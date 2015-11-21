@@ -37,7 +37,7 @@
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-
+  
   //配置下拉刷新的View
   _refreshImageView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(self.view.width/2-10, 60, 20, 20)];
   _refreshImageView.roundedCorners = 10;
@@ -118,11 +118,11 @@
   self.tableView.rowHeight = UITableViewAutomaticDimension;//ios8后加入的动态调整cell高度
   self.tableView.estimatedRowHeight = 50;
   
-//  __weak typeof(JMPullRefreshTableViewController) *weakSelf = self;
-//  self.loadMoreBlock = ^{
-//    __strong typeof(JMPullRefreshTableViewController) *strongSelf = weakSelf;
-//    [strongSelf performSelector:@selector(endLoadMore) withObject:strongSelf afterDelay:2.0];
-//  };
+  __weak typeof(JMPullRefreshTableViewController) *weakSelf = self;
+  self.loadMoreBlock = ^{
+    __strong typeof(JMPullRefreshTableViewController) *strongSelf = weakSelf;
+    [strongSelf performSelector:@selector(endLoadMore) withObject:strongSelf afterDelay:2.0];
+  };
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:@"todayDataGet" object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:@"pastDataGet" object:nil];
@@ -130,7 +130,7 @@
 
 #pragma mark - tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  NSInteger num = [StoryModel shareStory].contentStory.count + 60;
+  NSInteger num = [StoryModel shareStory].contentStory.count + [StoryModel shareStory].pastContentStory.count + [StoryModel shareStory].pastStoryNumber.count;
   for (int i = 0; i < num; i++) {
     _number[i] = 0;
   }
@@ -139,8 +139,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSInteger pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
-  if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
+  if (pastIndex == 0) {
     return 44.0f;
+  }
+  for (int i = 0; i < [StoryModel shareStory].pastStoryNumber.count-1; i++) {
+    pastIndex = pastIndex - [[StoryModel shareStory].pastStoryNumber[i] integerValue];
+    if (pastIndex == i+1) {
+      return 44.0f;
+    }
   }
   return 93.0f;
 }
@@ -163,23 +169,38 @@
   }
   //分隔cell内容的设置
   NSInteger pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
-  if (pastIndex == 0 || pastIndex == 20 || pastIndex == 40) {
+  NSArray *data = [StoryModel shareStory].offsetYValue;
+  if (pastIndex == 0) {
     TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
-    NSArray *data = [StoryModel shareStory].offsetYValue;
-    cell.dateLabel.text = data[pastIndex / 20 + 1];
+    cell.dateLabel.text = data[1];
     return cell;
   }
+  for (int i = 0; i < [StoryModel shareStory].pastStoryNumber.count-1; i++) {
+    pastIndex = pastIndex - [[StoryModel shareStory].pastStoryNumber[i] integerValue];
+    if (pastIndex == i+1) {
+      TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
+      cell.dateLabel.text = data[i+2];
+      return cell;
+    }
+  }
   //过去三天内容的设置
+  pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
-  NSDictionary *data = [StoryModel shareStory].pastContentStory[pastIndex - pastIndex/20 - 1];
+  NSDictionary *Dic = [StoryModel shareStory].pastContentStory[0];
 
+  int i = 1, j = 1;
+  for (; i < [StoryModel shareStory].pastStoryNumber.count; i++) {
+    pastIndex = pastIndex - [[StoryModel shareStory].pastStoryNumber[i-1] integerValue] - i + 1;
+    if (pastIndex > 0) { j++; }
+  }
+  Dic = [StoryModel shareStory].pastContentStory[indexPath.row - [StoryModel shareStory].contentStory.count - j];
   if (_number[indexPath.row]) {
     cell.titleLabel.textColor = [UIColor lightGrayColor];
   } else {
     cell.titleLabel.textColor = [UIColor blackColor];
   }
-  [cell.imagesView sd_setImageWithURL:data[@"images"][0]];
-  cell.titleLabel.text = data[@"title"];
+  [cell.imagesView sd_setImageWithURL:Dic[@"images"][0]];
+  cell.titleLabel.text = Dic[@"title"];
 
   return cell;
 }
@@ -253,7 +274,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//  [super scrollViewDidScroll:scrollView];
+  [super scrollViewDidScroll:scrollView];
   //Parallax效果
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
   [header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
@@ -317,6 +338,7 @@
 - (void)lockDirection {
   [self.tableView setContentOffset:CGPointMake(0, -125)];
 }
+
 #pragma mark - 其他函数
 - (void)updateData {
   NSMutableArray *temp1 = [NSMutableArray arrayWithCapacity:5];
@@ -328,8 +350,6 @@
   }
   [_cycleScrollView setImageURLStringsGroup:temp1];
   [_cycleScrollView setTitlesGroup:temp2];
-
-  [self.tableView reloadData];
 }
 - (CAAnimation *)createRotationAnimation {
   

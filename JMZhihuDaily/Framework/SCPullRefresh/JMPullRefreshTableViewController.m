@@ -41,6 +41,7 @@ static CGFloat const kRefreshHeight = 44.0f;
 }
 
 - (void)loadView {
+  [super loadView];
   // bubble animation
   self.tableFooterView = [[UIView alloc] initWithFrame:(CGRect){0, 0, kScreenWidth, 0}];
   self.loadMoreView = [[SCBubbleRefreshView alloc] initWithFrame:(CGRect){0, 0, kScreenWidth, 44}];
