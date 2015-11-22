@@ -23,5 +23,7 @@
 
 + (instancetype)shareStory;
 - (void)getData;
+- (void)refreshData;
+- (void)loadNewData;
 
 @end

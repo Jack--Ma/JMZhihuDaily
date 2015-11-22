@@ -93,6 +93,7 @@ static CGFloat const kRefreshHeight = 44.0f;
 
 #pragma mark - Public Methods
 - (void)beginLoadMore {
+  [[StoryModel shareStory] loadNewData];
   [self.loadMoreView beginRefreshing];
   
   self.isLoadingMore = YES;
@@ -117,6 +118,7 @@ static CGFloat const kRefreshHeight = 44.0f;
   
   [UIView animateWithDuration:0.2 animations:^{
     self.tableView.contentInsetBottom =  + self.tableViewInsertBottom;
+    [self.tableView reloadData];
   }];
   
 }

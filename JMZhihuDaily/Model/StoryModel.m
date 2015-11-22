@@ -10,6 +10,7 @@
 #import "StoryModel.h"
 
 static NSOperationQueue *queue = nil;
+static int dataNum = 0;
 
 @implementation StoryModel
 
@@ -20,6 +21,36 @@ static NSOperationQueue *queue = nil;
   [self getTodayData];
   [self getThemesData];
   [queue waitUntilAllOperationsAreFinished];
+}
+- (void)refreshData {
+  NSString *urlString = @"http://news-at.zhihu.com/api/4/news/latest";
+  NSURL *url = [NSURL URLWithString:urlString];
+  NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  
+  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+  operation.responseSerializer = [AFJSONResponseSerializer serializer];
+  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    //刷新本日头条和文章列表
+    NSDictionary *data = responseObject;
+    
+    self.topStory = [[NSMutableArray alloc] initWithArray:data[@"top_stories"] copyItems:YES];
+    self.contentStory = [[NSMutableArray alloc] initWithArray:data[@"stories"] copyItems:YES];
+  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    
+  }];
+  [operation start];
+}
+- (void)loadNewData {
+  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[self getRequest:dataNum]];
+  operation.responseSerializer = [AFJSONResponseSerializer serializer];
+  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    [self setPastStory:responseObject Index:dataNum+1];
+    dataNum++;
+  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    NSLog(@"%@", error);
+    return;
+  }];
+  [operation start];
 }
 #pragma mark - 私有方法
 - (void)getTodayData {
@@ -40,9 +71,8 @@ static NSOperationQueue *queue = nil;
     self.offsetYValue = [[NSMutableArray alloc] initWithCapacity:1];
     [self.offsetYNumber addObject:@(self.contentStory.count * 93 + 120)];
     [self.offsetYValue addObject:@"今日热点"];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"todayDataGet" object:nil];
     [self getPastData];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"todayDataGet" object:nil];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"%@", error);
     return;
@@ -51,27 +81,20 @@ static NSOperationQueue *queue = nil;
 }
 - (void)getPastData {
   //昨天的数据获取
-  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[self getRequest:0]];
+  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:[self getRequest:dataNum]];
   operation.responseSerializer = [AFJSONResponseSerializer serializer];
   [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-    [self setPastStory:responseObject Index:1];
+    [self setPastStory:responseObject Index:dataNum+1];
+    dataNum++;
     //前天的数据获取
-    AFHTTPRequestOperation *operation1 = [[AFHTTPRequestOperation alloc] initWithRequest:[self getRequest:1]];
+    AFHTTPRequestOperation *operation1 = [[AFHTTPRequestOperation alloc] initWithRequest:[self getRequest:dataNum]];
     operation1.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation1 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-      [self setPastStory:responseObject Index:2];
-       //大前天的数据获取
-      AFHTTPRequestOperation *operation2 = [[AFHTTPRequestOperation alloc] initWithRequest:[self getRequest:2]];
-      operation2.responseSerializer = [AFJSONResponseSerializer serializer];
-      [operation2 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        [self setPastStory:responseObject Index:3];
-        //发送pastDataGet通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"pastDataGet" object:nil];
-      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
-        return;
-      }];
-      [queue addOperation:operation2];
+      [self setPastStory:responseObject Index:dataNum+1];
+      dataNum++;
+      //发送pastDataGet通知
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"pastDataGet" object:nil];
+      
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
       NSLog(@"%@", error);
       return;

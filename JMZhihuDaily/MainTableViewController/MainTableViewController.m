@@ -118,6 +118,7 @@
   self.tableView.rowHeight = UITableViewAutomaticDimension;//ios8后加入的动态调整cell高度
   self.tableView.estimatedRowHeight = 50;
   
+  //设置最下端的上拉动画
   __weak typeof(JMPullRefreshTableViewController) *weakSelf = self;
   self.loadMoreBlock = ^{
     __strong typeof(JMPullRefreshTableViewController) *strongSelf = weakSelf;
@@ -186,14 +187,7 @@
   //过去三天内容的设置
   pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
-  NSDictionary *Dic = [StoryModel shareStory].pastContentStory[0];
-
-  int i = 1, j = 1;
-  for (; i < [StoryModel shareStory].pastStoryNumber.count; i++) {
-    pastIndex = pastIndex - [[StoryModel shareStory].pastStoryNumber[i-1] integerValue] - i + 1;
-    if (pastIndex > 0) { j++; }
-  }
-  Dic = [StoryModel shareStory].pastContentStory[indexPath.row - [StoryModel shareStory].contentStory.count - j];
+  NSDictionary *Dic = [StoryModel shareStory].pastContentStory[[self findPastStoryIndex:indexPath.row]];
   if (_number[indexPath.row]) {
     cell.titleLabel.textColor = [UIColor lightGrayColor];
   } else {
@@ -204,7 +198,16 @@
 
   return cell;
 }
-
+//从当前的index.row找到对用pastStory的序号
+- (NSInteger)findPastStoryIndex:(NSInteger)row {
+  NSInteger pastIndex = row - [StoryModel shareStory].contentStory.count;
+  int j = 1;
+  for (int i = 1; i < [StoryModel shareStory].pastStoryNumber.count; i++) {
+    pastIndex = pastIndex - [[StoryModel shareStory].pastStoryNumber[i-1] integerValue] - i + 1;
+    if (pastIndex > 0) { j++; }
+  }
+  return row - [StoryModel shareStory].contentStory.count - j;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
   if ([cell isKindOfClass:[TableSeparatorViewCell class]]) {
@@ -226,9 +229,8 @@
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
   } else {
-    //过去几天情况，这里有问题，没有考虑前几天每天内容数量不同
-    NSInteger i = (indexPath.row-[StoryModel shareStory].contentStory.count) / 20;
-    NSInteger index = (indexPath.row-[StoryModel shareStory].contentStory.count) % 20 - 1 + i * 20 - i;
+    //过去几天情况
+    NSInteger index = [self findPastStoryIndex:indexPath.row];
     NSDictionary *story = [StoryModel shareStory].pastContentStory[index];
     NSString *sid = [story objectForKey:@"id"];
     webViewController.newsId = [sid integerValue];
@@ -313,13 +315,14 @@
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
   }
   //依据contentOffsetY设置titleView的标题
+  NSInteger j = [StoryModel shareStory].pastStoryNumber.count;
   for (int i = 1; i < [StoryModel shareStory].offsetYNumber.count; i++) {
     if (offsetY < [[StoryModel shareStory].offsetYNumber[0] intValue]) {
       [self.navigationItem setTitle:[StoryModel shareStory].offsetYValue[0]];
       return;
     }
-    if (offsetY > [[StoryModel shareStory].offsetYNumber[3-i] intValue]) {
-      [self.navigationItem setTitle:[StoryModel shareStory].offsetYValue[4-i]];
+    if (offsetY > [[StoryModel shareStory].offsetYNumber[j-i] intValue]) {
+      [self.navigationItem setTitle:[StoryModel shareStory].offsetYValue[j+1-i]];
       return;
     }
   }
@@ -366,13 +369,15 @@
   return rotationAnimation;
 }
 - (void)animationDidStart:(CAAnimation *)anim {
-  [self.tableView reloadData];
+  [[StoryModel shareStory] refreshData];
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
   if (flag) {
     _refreshImageView.hidden = NO;
     _loadingImageView.hidden = YES;
     [_loadingImageView.layer removeAllAnimations];
+    [self updateData];
+    [self.tableView reloadData];
   }
 }
 #pragma mark - 一些全局设置函数

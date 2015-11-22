@@ -271,13 +271,14 @@
   return rotationAnimation;
 }
 - (void)animationDidStart:(CAAnimation *)anim {
-  [self.tableView reloadData];
+  
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
   if (flag) {
     _refreshImageView.hidden = NO;
     _loadingImageView.hidden = YES;
     [_loadingImageView.layer removeAllAnimations];
+    [self.tableView reloadData];
   }
 }
 #pragma mark - 一些全局设置函数
