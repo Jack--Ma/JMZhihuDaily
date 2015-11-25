@@ -41,7 +41,7 @@
   self.webView.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1];
   _hasImage = YES;
   _triggered = NO;
-  self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
   //避免因含有navBar而对scrollInsets做自动调整
   //避免ScrollView莫名其妙不能在viewController划到顶
   self.automaticallyAdjustsScrollViewInsets = NO;
@@ -62,9 +62,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  [self.navigationController.navigationBar setHidden:YES];
   [self loadWebView:self.newsId];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [self.navigationController.navigationBar setHidden:YES];
+}
 #pragma mark - webView
 - (void)loadWebView:(NSInteger)newsId {
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)newsId];
@@ -211,6 +216,7 @@
 
 #pragma mark - webHeaderView
 - (void)loadParallaxHeader:(NSString *)imageURL imageSource:(NSString *)imageSource titleString:(NSString *)titleString {
+  self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   //初始化图片
   _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 223)];
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -277,7 +283,7 @@
 
 - (void)loadNormalHeader {
   //更改statusBar的颜色
-  self.navigationController.navigationBar.hidden = YES;
+  _statusBarFlat = YES;
   self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
   [self setNeedsStatusBarAppearanceUpdate];
   self.statusBarBackground.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1.0f];

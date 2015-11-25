@@ -22,6 +22,8 @@
 
 @property (nonatomic, weak) IBOutlet UIButton *userAvator;
 @property (nonatomic, weak) IBOutlet UIButton *userName;
+@property (weak, nonatomic) IBOutlet UIButton *switchView;
+@property (weak, nonatomic) IBOutlet UIButton *switchButton;
 
 @end
 
@@ -41,12 +43,25 @@
   }
 }
 
+- (IBAction)setNightOrDay:(id)sender {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  temp = !temp;
+  if (!temp) {
+    [self.switchView setImage:[UIImage imageNamed:@"sun"] forState:UIControlStateNormal];
+    [self.switchButton setTitle:@"白天" forState:UIControlStateNormal];
+  } else {
+    [self.switchView setImage:[UIImage imageNamed:@"night"] forState:UIControlStateNormal];
+    [self.switchButton setTitle:@"夜间" forState:UIControlStateNormal];
+  }
+  [[NSUserDefaults standardUserDefaults] setBool:temp forKey:@"isDay"];
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"switchTheme" object:nil];
+}
 #pragma mark - init
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   //设置头像和用户名
   self.userAvator.contentMode = UIViewContentModeScaleAspectFill;
-  self.userAvator.layer.cornerRadius = 17;
+  self.userAvator.layer.cornerRadius = 17.5;
   self.userAvator.clipsToBounds = YES;
   if ([UserModel currentUser]) {
     NSData *data = [[UserModel currentUser].avatar getData];
@@ -60,6 +75,9 @@
     [self.userAvator setImage:[UIImage imageNamed:@"noneHead"] forState:UIControlStateNormal];
     [self.userName setTitle:@"未登录" forState:UIControlStateNormal];
   }
+  //设置白天夜晚切换的button
+  [self.switchView setTintColor:[UIColor lightGrayColor]];
+  
 }
 - (void)viewDidLoad {
   [super viewDidLoad];

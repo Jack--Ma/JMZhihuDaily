@@ -12,9 +12,14 @@
 
 - (void)awakeFromNib {
   [super awakeFromNib];
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
-  self.contentView.backgroundColor = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  if (temp) {
+    self.contentView.backgroundColor = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  } else {
+    self.contentView.backgroundColor = [UIColor grayColor];
+  }
 }
 
 @end

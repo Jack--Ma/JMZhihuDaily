@@ -14,6 +14,7 @@
 #import "ThemeTextWithImageTableViewCell.h"
 #import "ThemeTextTableViewCell.h"
 #import "WebViewController.h"
+#import "EditorsTableViewController.h"
 
 @interface ThemeViewController () <UITableViewDelegate, UITableViewDataSource, ParallaxHeaderViewDelegate>
 
@@ -60,6 +61,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   self.navigationController.navigationBar.hidden = NO;
 }
@@ -74,6 +76,7 @@
   
   //添加左返回按钮和手势
   [self.navigationItem setTitle: self.name];
+
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
@@ -186,24 +189,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 0) {
-    return;
+    EditorsTableViewController *editorsTableViewController = [EditorsTableViewController new];
+    editorsTableViewController.editors = _editors;
+    [self.navigationController pushViewController:editorsTableViewController animated:YES];
+  } else {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[ThemeTextTableViewCell class]]) {
+      ThemeTextTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+      cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+    } else {
+      ThemeTextWithImageTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+      cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+    }
+    //跳转到WebView
+    WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+    webViewController.index = indexPath.row - 1;
+    webViewController.isThemeStory = YES;
+    webViewController.newsId = [[StoryModel shareStory].themeContent[indexPath.row-1][@"id"] integerValue];
+    
+    [self.navigationController pushViewController:webViewController animated:YES];
   }
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
-  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-  if ([cell isKindOfClass:[ThemeTextTableViewCell class]]) {
-    ThemeTextTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
-  } else {
-    ThemeTextWithImageTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
-  }
-  //跳转到WebView
-  WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
-  webViewController.index = indexPath.row - 1;
-  webViewController.isThemeStory = YES;
-  webViewController.newsId = [[StoryModel shareStory].themeContent[indexPath.row-1][@"id"] integerValue];
-  
-  [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 #pragma mark - ParallaxHeaderViewDelegate
@@ -270,9 +276,7 @@
   
   return rotationAnimation;
 }
-- (void)animationDidStart:(CAAnimation *)anim {
-  
-}
+
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
   if (flag) {
     _refreshImageView.hidden = NO;

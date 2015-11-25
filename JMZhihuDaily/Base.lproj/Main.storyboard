@@ -486,14 +486,45 @@
                                             <constraint firstAttribute="width" constant="225" id="z4z-O1-GeJ"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W77-uf-OsC">
+                                        <rect key="frame" x="140" y="8" width="30" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="EjL-VT-MfY"/>
+                                            <constraint firstAttribute="width" constant="30" id="NAC-Wm-AVZ"/>
+                                        </constraints>
+                                        <state key="normal" title="夜间">
+                                            <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setNightOrDay:" destination="Gl0-oe-wWX" eventType="touchUpInside" id="EKD-cx-33F"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6F-ar-oJD">
+                                        <rect key="frame" x="110" y="10" width="25" height="25"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="Ghv-3H-5gL"/>
+                                            <constraint firstAttribute="width" constant="25" id="uu0-mQ-dKE"/>
+                                        </constraints>
+                                        <state key="normal" image="night"/>
+                                        <connections>
+                                            <action selector="setNightOrDay:" destination="Gl0-oe-wWX" eventType="touchUpInside" id="3Yx-Co-wzi"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="7Wp-sF-Gqp"/>
                                     <constraint firstItem="iqu-ZX-Py2" firstAttribute="top" secondItem="2YG-yS-dRg" secondAttribute="top" id="OA9-yA-8uX"/>
+                                    <constraint firstItem="W77-uf-OsC" firstAttribute="leading" secondItem="k6F-ar-oJD" secondAttribute="trailing" constant="5" id="hWN-Gd-Q3o"/>
                                     <constraint firstItem="iqu-ZX-Py2" firstAttribute="leading" secondItem="2YG-yS-dRg" secondAttribute="leading" id="iVJ-2A-7wg"/>
+                                    <constraint firstItem="k6F-ar-oJD" firstAttribute="centerY" secondItem="iqu-ZX-Py2" secondAttribute="centerY" id="lff-80-87T"/>
+                                    <constraint firstItem="W77-uf-OsC" firstAttribute="leading" secondItem="iqu-ZX-Py2" secondAttribute="trailing" constant="-85" id="n28-xh-lfZ"/>
+                                    <constraint firstItem="W77-uf-OsC" firstAttribute="leading" secondItem="k6F-ar-oJD" secondAttribute="trailing" constant="5" id="p4P-mU-f3Y"/>
                                     <constraint firstAttribute="bottom" secondItem="iqu-ZX-Py2" secondAttribute="bottom" id="yn8-5B-pdT"/>
+                                    <constraint firstItem="W77-uf-OsC" firstAttribute="centerY" secondItem="iqu-ZX-Py2" secondAttribute="centerY" id="zaH-rB-YSt"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a1l-qe-5DH">
@@ -629,6 +660,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="switchButton" destination="W77-uf-OsC" id="CVk-qo-Bjd"/>
+                        <outlet property="switchView" destination="k6F-ar-oJD" id="pzm-10-8uX"/>
                         <outlet property="tableView" destination="a1l-qe-5DH" id="puT-ec-b0F"/>
                         <outlet property="userAvator" destination="nZp-2I-p2S" id="oXN-Bm-Aod"/>
                         <outlet property="userName" destination="FoG-bg-9JT" id="hJS-KU-xgs"/>
@@ -1021,6 +1054,7 @@
         <image name="DemoLaunchImage" width="1080" height="1920"/>
         <image name="Logo" width="311" height="154"/>
         <image name="home" width="128" height="128"/>
+        <image name="night" width="98" height="98"/>
         <image name="noneHead" width="110" height="110"/>
         <image name="placeHolder" width="448" height="90"/>
         <image name="placeHolderB" width="452" height="250"/>

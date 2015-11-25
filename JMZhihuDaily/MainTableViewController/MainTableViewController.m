@@ -21,9 +21,12 @@
   
   ZFModalTransitionAnimator *_animator;
   SDCycleScrollView *_cycleScrollView;
+  UIView *_nightModeView;//放置在_cycleScrollView上的夜间模式遮蔽罩
+  CGFloat _navBarAlpha;//记录navBar背景颜色alpha值
   
   DACircularProgressView *_refreshImageView;
   UIImageView *_loadingImageView;
+  
   BOOL _isDragging;//手指是否从屏幕上拿走
   BOOL _isLoading;//是否加载loadingImageView;
 }
@@ -117,6 +120,7 @@
   self.tableView.showsVerticalScrollIndicator = NO;//取消竖直上右侧的滚动条
   self.tableView.rowHeight = UITableViewAutomaticDimension;//ios8后加入的动态调整cell高度
   self.tableView.estimatedRowHeight = 50;
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   //设置最下端的上拉动画
   __weak typeof(JMPullRefreshTableViewController) *weakSelf = self;
@@ -127,6 +131,7 @@
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:@"todayDataGet" object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:@"pastDataGet" object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchTheme) name:@"switchTheme" object:nil];
 }
 
 #pragma mark - tableView
@@ -153,16 +158,27 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   //今日内容的设置
   if (indexPath.row < [StoryModel shareStory].contentStory.count) {
     TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
     NSDictionary *data = [StoryModel shareStory].contentStory[indexPath.row];
-    if (_number[indexPath.row]) {
-      cell.titleLabel.textColor = [UIColor lightGrayColor];
+    [cell awakeFromNib];
+    if (temp) {
+      //白天
+      if (_number[indexPath.row]) {
+        cell.titleLabel.textColor = [UIColor lightGrayColor];
+      } else {
+        cell.titleLabel.textColor = [UIColor blackColor];
+      }
     } else {
-      cell.titleLabel.textColor = [UIColor blackColor];
+      //夜间
+      if (_number[indexPath.row]) {
+        cell.titleLabel.textColor = [UIColor grayColor];
+      } else {
+        cell.titleLabel.textColor = [UIColor lightGrayColor];
+      }
     }
-    
     [cell.imagesView sd_setImageWithURL:data[@"images"][0]];
     cell.titleLabel.text = data[@"title"];
     
@@ -174,6 +190,7 @@
   if (pastIndex == 0) {
     TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
     cell.dateLabel.text = data[1];
+    [cell awakeFromNib];
     return cell;
   }
   for (int i = 0; i < [StoryModel shareStory].pastStoryNumber.count-1; i++) {
@@ -181,18 +198,31 @@
     if (pastIndex == i+1) {
       TableSeparatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableSeparatorViewCell"];
       cell.dateLabel.text = data[i+2];
+      [cell awakeFromNib];
       return cell;
     }
   }
   //过去三天内容的设置
   pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
+  [cell awakeFromNib];
   NSDictionary *Dic = [StoryModel shareStory].pastContentStory[[self findPastStoryIndex:indexPath.row]];
-  if (_number[indexPath.row]) {
-    cell.titleLabel.textColor = [UIColor lightGrayColor];
+  if (temp) {
+    //白天
+    if (_number[indexPath.row]) {
+      cell.titleLabel.textColor = [UIColor lightGrayColor];
+    } else {
+      cell.titleLabel.textColor = [UIColor blackColor];
+    }
   } else {
-    cell.titleLabel.textColor = [UIColor blackColor];
+    //夜间
+    if (_number[indexPath.row]) {
+      cell.titleLabel.textColor = [UIColor grayColor];
+    } else {
+      cell.titleLabel.textColor = [UIColor lightGrayColor];
+    }
   }
+
   [cell.imagesView sd_setImageWithURL:Dic[@"images"][0]];
   cell.titleLabel.text = Dic[@"title"];
 
@@ -280,7 +310,13 @@
   //Parallax效果
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
   [header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  if (temp) {
+    color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  } else {
+    color = [UIColor grayColor];
+  }
   CGFloat offsetY = scrollView.contentOffset.y;
   CGFloat prelude = 90;
   
@@ -306,6 +342,7 @@
   if (offsetY >= -64) {
     _refreshImageView.hidden = YES;
     CGFloat alpha = MIN(1, (64 + offsetY) / (64 + prelude));
+    _navBarAlpha = alpha;
     //titleLabel透明度渐变
     ((SDCycleScrollView *)header.subviews[0].subviews[0]).titleLabelAlpha = 1 - alpha;
     [((UICollectionView *)header.subviews[0].subviews[0].subviews[0]) reloadData];
@@ -343,6 +380,33 @@
 }
 
 #pragma mark - 其他函数
+- (void)switchTheme {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  
+  //设置图片遮蔽罩
+  [_nightModeView removeFromSuperview];
+  _nightModeView = [[UIView alloc] initWithFrame:_cycleScrollView.frame];
+  _nightModeView.backgroundColor = [UIColor blackColor];
+  _nightModeView.alpha = 0.2;
+  _nightModeView.userInteractionEnabled = NO;
+  if (temp) {
+    [_nightModeView removeFromSuperview];
+  } else {
+    [_cycleScrollView addSubview:_nightModeView];
+  }
+  
+  //设置navBar背景颜色
+  UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  if (temp) {
+    color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  } else {
+    color = [UIColor grayColor];
+  }
+  [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:_navBarAlpha]];
+  
+  [self.tableView reloadData];
+}
+
 - (void)updateData {
   NSMutableArray *temp1 = [NSMutableArray arrayWithCapacity:5];
   NSMutableArray *temp2 = [NSMutableArray arrayWithCapacity:5];

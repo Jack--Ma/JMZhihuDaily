@@ -32,7 +32,16 @@ static int dataNum = 0;
   [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
     //刷新本日头条和文章列表
     NSDictionary *data = responseObject;
-    
+    //修正偏移量
+    NSInteger oldStoryNum = self.contentStory.count;
+    NSArray *newStory = [NSArray arrayWithArray:data[@"stories"]];
+    NSInteger newStoryNum = newStory.count;
+    int j = (int)(newStoryNum - oldStoryNum);
+    for (int i = 0; i < self.offsetYNumber.count; i++) {
+      NSInteger temp = [self.offsetYNumber[i] integerValue];
+      temp += j * 93.0f;
+      self.offsetYNumber[i] = @(temp);
+    }
     self.topStory = [[NSMutableArray alloc] initWithArray:data[@"top_stories"] copyItems:YES];
     self.contentStory = [[NSMutableArray alloc] initWithArray:data[@"stories"] copyItems:YES];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {

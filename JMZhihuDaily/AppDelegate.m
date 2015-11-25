@@ -37,9 +37,12 @@
     [UserModel currentUser].selfDescription = [post objectForKey:@"selfDescription"];
     [UserModel currentUser].avatar = [post objectForKey:@"avatar"];
   }
-  
+
   //单例获取本日所有内容
   [[StoryModel shareStory] getData];
+  
+  //设置应用启动默认白天模式
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isDay"];
   return YES;
 }
 
