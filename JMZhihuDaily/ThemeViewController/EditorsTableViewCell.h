@@ -10,6 +10,8 @@
 
 @interface EditorsTableViewCell : UITableViewCell
 
-- (id)initWithAvatar:(NSString *)avatar andName:(NSString *)name andDetail:(NSString *)detail;
+@property (nonatomic, strong) NSString *avatar;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *detail;
 
 @end

@@ -10,7 +10,7 @@
 #import "UserInfoViewController.h"
 #import "UserModel.h"
 
-@interface DescriptionViewController () <UITextViewDelegate>
+@interface DescriptionViewController () <UITextViewDelegate, UITextInputTraits>
 
 @end
 
@@ -89,10 +89,18 @@
 #pragma mark - init
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  if (temp) {
+    self.view.backgroundColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
+    _textView.textColor = [UIColor blackColor];
+  } else {
+    self.view.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:69.0f/255.0f green:68.0f/255.0f blue:72.0f/255.0f alpha:1.0f]];
+    _textView.textColor = [UIColor lightGrayColor];
+  }
   
   //设置navBav格式
-  [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
   self.automaticallyAdjustsScrollViewInsets = NO;
   
   //设置返回button，手势，确定button和title
@@ -116,6 +124,12 @@
   _textView.scrollEnabled = NO;
   _textView.delegate = self;
   _textView.returnKeyType = UIReturnKeyDone;
+  _textView.keyboardAppearance = UIKeyboardAppearanceDark;
+  if (temp) {
+    _textView.keyboardAppearance = UIKeyboardAppearanceLight;
+  } else {
+    _textView.keyboardAppearance = UIKeyboardAppearanceDark;
+  }
   [self.view addSubview:_textView];
   [_textView becomeFirstResponder];
   

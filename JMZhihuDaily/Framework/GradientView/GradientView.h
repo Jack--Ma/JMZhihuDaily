@@ -18,4 +18,6 @@
 - (id)initWithFrame:(CGRect)frame type:(int) type;
 - (void) insertTwiceTransparentGradient;
 - (void) insertTransparentGradient;
+- (void) refreshView;
+
 @end

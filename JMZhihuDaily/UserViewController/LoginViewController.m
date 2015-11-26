@@ -22,6 +22,7 @@
 @end
 
 @implementation LoginViewController {
+  UIView *_nightModeView;
   BOOL _inOrOut;//YES表示登录
 }
 
@@ -128,6 +129,19 @@
 #pragma mark - init
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  //夜间添加黑色遮光罩
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  [_nightModeView removeFromSuperview];
+  _nightModeView = [[UIView alloc] initWithFrame:self.view.frame];
+  _nightModeView.backgroundColor = [UIColor blackColor];
+  _nightModeView.alpha = 0.2;
+  _nightModeView.userInteractionEnabled = NO;
+  if (temp) {
+    [_nightModeView removeFromSuperview];
+  } else {
+    [self.view addSubview:_nightModeView];
+  }
   
   UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:(UIBarButtonItemStylePlain) target:self action:@selector(doCancel)];
   [self.navigationItem setLeftBarButtonItem:leftBarButton animated:YES];

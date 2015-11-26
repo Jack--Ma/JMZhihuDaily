@@ -11,30 +11,20 @@
 
 @interface EditorsTableViewCell ()
 
-@property (nonatomic, strong) NSString *avatar;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *detail;
-
 @end
 
-@implementation EditorsTableViewCell
-
-- (id)initWithAvatar:(NSString *)avatar andName:(NSString *)name andDetail:(NSString *)detail {
-  self = [super init];
-  self.avatar = avatar;
-  self.name = name;
-  self.detail = detail;
-  [self awakeFromNib];
-  return self;
+@implementation EditorsTableViewCell {
+  UIView *_btmLine;
 }
 
 - (void)awakeFromNib {
-  self.selectionStyle = UITableViewCellSelectionStyleGray;
-  
+  self.selectionStyle = UITableViewCellSelectionStyleNone;
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+
   //分割线
-  UIImageView *separatorLine = [[UIImageView alloc] initWithFrame:CGRectMake(10, 49.5, [UIScreen mainScreen].bounds.size.width-10, 0.5)];
-  [separatorLine setBackgroundColor:[UIColor lightGrayColor]];
-  [self.contentView addSubview:separatorLine];
+  [_btmLine removeFromSuperview];
+  _btmLine = [[UIImageView alloc] initWithFrame:CGRectMake(10, 49.5, [UIScreen mainScreen].bounds.size.width-10, 0.5)];
+  [self.contentView addSubview:_btmLine];
   
   //头像
   UIImageView *avatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 6, 38, 38)];
@@ -62,6 +52,15 @@
   [arrow setTintColor:[UIColor lightGrayColor]];
   [arrow setImage:[UIImage imageNamed:@"switch"]];
   [self.contentView addSubview:arrow];
+  
+  if (temp) {
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    [_btmLine setBackgroundColor:[UIColor lightGrayColor]];
+  } else {
+    [label1 setTextColor:[UIColor whiteColor]];
+    self.contentView.backgroundColor = [UIColor colorWithRed:52.0/255.0 green:51.0/255.0 blue:55.0/255.0 alpha:1];
+    [_btmLine setBackgroundColor:[UIColor colorWithRed:49.0/255.0 green:48.0/255.0 blue:52.0/255.0 alpha:1]];
+  }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

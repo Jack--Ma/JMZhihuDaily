@@ -23,8 +23,12 @@
 @implementation ThemeViewController {
   UIImageView *_navImageView;
   ParallaxHeaderView *_themeSubview;
+  UIView *_nightModeView;
+  CGFloat _navBarAlpha;
+  
   DACircularProgressView *_refreshImageView;
   UIImageView *_loadingImageView;
+  
   BOOL _isDragging;
   BOOL _isLoading;
   
@@ -127,12 +131,15 @@
   
   self.thisTableView = self.tableView;
 
-
+  //设置底部的上拉加载新内容
   __weak typeof(SCPullRefreshViewController) *weakSelf = self;
   self.loadMoreBlock = ^{
     __strong typeof(SCPullRefreshViewController) *strongSelf = weakSelf;
     [strongSelf performSelector:@selector(endLoadMore) withObject:strongSelf afterDelay:2.0];
   };
+  
+  //设置主题变更观察
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchTheme) name:@"switchTheme" object:nil];
 }
 
 #pragma mark - UITableView
@@ -148,8 +155,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   if (indexPath.row == 0) {
     ThemeEditorTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"themeEditorTableViewCell"];
+    [cell awakeFromNib];
     for (int i = 0; i < _editors.count; i++) {
       //加入小编们的头像
       UIImageView *avatar = [[UIImageView alloc] initWithFrame:CGRectMake(62+37*i, 12.5, 20, 20)];
@@ -166,10 +175,19 @@
   if (tempThemeStory[@"images"][0]) {
     //存在图片情况
     ThemeTextWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"themeTextWithImageTableViewCell"];
-    if (_selectedIndex[indexPath.row-1]) {
-      cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+    [cell awakeFromNib];
+    if (temp) {
+      if (_selectedIndex[indexPath.row-1]) {
+        cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      } else {
+        cell.themeTitleLabel.textColor = [UIColor blackColor];
+      }
     } else {
-      cell.themeTitleLabel.textColor = [UIColor blackColor];
+      if (_selectedIndex[indexPath.row-1]) {
+        cell.themeTitleLabel.textColor = [UIColor darkGrayColor];
+      } else {
+        cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      }
     }
     cell.themeTitleLabel.text = tempThemeStory[@"title"];
     [cell.themeImageView sd_setImageWithURL:[NSURL URLWithString:tempThemeStory[@"images"][0]]];
@@ -177,10 +195,19 @@
   } else {
     //不存在图片情况
     ThemeTextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"themeTextTableViewCell"];
-    if (_selectedIndex[indexPath.row-1]) {
-      cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+    [cell awakeFromNib];
+    if (temp) {
+      if (_selectedIndex[indexPath.row-1]) {
+        cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      } else {
+        cell.themeTitleLabel.textColor = [UIColor blackColor];
+      }
     } else {
-      cell.themeTitleLabel.textColor = [UIColor blackColor];
+      if (_selectedIndex[indexPath.row-1]) {
+        cell.themeTitleLabel.textColor = [UIColor darkGrayColor];
+      } else {
+        cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      }
     }
     cell.themeTitleLabel.text = tempThemeStory[@"title"];
     return cell;
@@ -188,6 +215,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  
   if (indexPath.row == 0) {
     EditorsTableViewController *editorsTableViewController = [EditorsTableViewController new];
     editorsTableViewController.editors = _editors;
@@ -196,10 +225,18 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[ThemeTextTableViewCell class]]) {
       ThemeTextTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-      cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      if (temp) {
+        cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      } else {
+        cell.themeTitleLabel.textColor = [UIColor darkGrayColor];
+      }
     } else {
       ThemeTextWithImageTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-      cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      if (temp) {
+        cell.themeTitleLabel.textColor = [UIColor lightGrayColor];
+      } else {
+        cell.themeTitleLabel.textColor = [UIColor darkGrayColor];
+      }
     }
     //跳转到WebView
     WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
@@ -214,12 +251,18 @@
 
 #pragma mark - ParallaxHeaderViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   //先执行父类的scrollViewDidScroll方法
   [super scrollViewDidScroll:scrollView];
   //Parallax效果
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
   [header layoutThemeHeaderViewForScrollViewOffset:scrollView.contentOffset];
-  UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  UIColor *color;
+  if (temp) {
+    color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  } else {
+    color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
+  }
   CGFloat offsetY = scrollView.contentOffset.y;
   
   //若isLoading为YES则加载Loading动画
@@ -243,6 +286,7 @@
   if (offsetY >= -64) {
     _refreshImageView.hidden = YES;
     CGFloat alpha = MIN(1, (64 + offsetY) / (64));
+    _navBarAlpha = alpha;
     //NavigationBar透明度渐变
     [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
   } else {
@@ -286,6 +330,32 @@
   }
 }
 #pragma mark - 一些全局设置函数
+- (void)switchTheme {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  
+  //设置图片遮蔽罩
+  [_nightModeView removeFromSuperview];
+  _nightModeView = [[UIView alloc] initWithFrame:_navImageView.frame];
+  _nightModeView.backgroundColor = [UIColor blackColor];
+  _nightModeView.alpha = 0.2;
+  _nightModeView.userInteractionEnabled = NO;
+  if (temp) {
+    [_nightModeView removeFromSuperview];
+  } else {
+    [_navImageView addSubview:_nightModeView];
+  }
+  //设置navBar背景颜色
+  UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  if (temp) {
+    color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  } else {
+    color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
+  }
+  [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:_navBarAlpha]];
+  
+  [self.tableView reloadData];
+}
+
 //拓展NavigationController以设置StatusBar
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;

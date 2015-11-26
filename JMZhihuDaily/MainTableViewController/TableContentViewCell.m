@@ -23,8 +23,8 @@
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
     _btmLine.backgroundColor = [UIColor colorWithRed:228.0f/255.0f green:228.0f/255.0f blue:228.0f/155.0f alpha:1];
   } else {
-    [self.contentView setBackgroundColor:[UIColor darkGrayColor]];
-    _btmLine.backgroundColor = [UIColor lightGrayColor];
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:51.0/255.0 blue:55.0/255.0 alpha:1]];
+    _btmLine.backgroundColor = [UIColor colorWithRed:49.0/255.0 green:48.0/255.0 blue:52.0/255.0 alpha:1];
   }
   [self.contentView addSubview:_btmLine];
   //图片格式设置

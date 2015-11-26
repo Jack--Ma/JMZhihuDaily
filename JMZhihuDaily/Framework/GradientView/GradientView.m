@@ -8,7 +8,9 @@
 
 #import "GradientView.h"
 
-@implementation GradientView
+@implementation GradientView {
+  CAGradientLayer *_headerLayer;
+}
 
 - (id)initWithFrame:(CGRect)frame type:(int) type{
     self = [super initWithFrame:frame];
@@ -38,6 +40,9 @@
     return self;
 }
 
+- (void) refreshView {
+  [self insertAnotherTransparentGradient];
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -56,31 +61,43 @@
     NSNumber *stopTwo = [NSNumber numberWithFloat:1.0];
     NSArray *locations = [NSArray arrayWithObjects:stopOne, stopTwo, nil];
     //crate gradient layer
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+  [_headerLayer removeFromSuperlayer];
+    _headerLayer = [CAGradientLayer layer];
     
-    headerLayer.colors = colors;
-    headerLayer.locations = locations;
-    headerLayer.frame = self.bounds;
+    _headerLayer.colors = colors;
+    _headerLayer.locations = locations;
+    _headerLayer.frame = self.bounds;
     
-    [self.layer insertSublayer:headerLayer atIndex:0];
+    [self.layer insertSublayer:_headerLayer atIndex:0];
 }
 
 //Transparent Gradient Layer
 - (void) insertAnotherTransparentGradient {
-    UIColor *colorOne = [UIColor colorWithRed:(19/255.0)  green:(26/255.0)  blue:(32/255.0)  alpha:0.0];
-    UIColor *colorTwo = [UIColor colorWithRed:(19/255.0)  green:(26/255.0)  blue:(32/255.0)  alpha:1.0];
+//    UIColor *colorOne = [UIColor colorWithRed:(19/255.0)  green:(26/255.0)  blue:(32/255.0)  alpha:0.0];
+//    UIColor *colorTwo = [UIColor colorWithRed:(19/255.0)  green:(26/255.0)  blue:(32/255.0)  alpha:1.0];
+  //这里修改过
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  UIColor *colorTwo, *colorOne;
+  if (temp) {
+    colorTwo = [UIColor colorWithRed:(32/255.0)  green:(42/255.0)  blue:(52/255.0)  alpha:1.0];
+    colorOne = [UIColor colorWithRed:(32/255.0)  green:(42/255.0)  blue:(52/255.0)  alpha:0.0];
+  } else {
+    colorTwo = [UIColor colorWithRed:(31/255.0)  green:(30/255.0)  blue:(34/255.0)  alpha:1.0];
+    colorOne = [UIColor colorWithRed:(31/255.0)  green:(30/255.0)  blue:(34/255.0)  alpha:0.0];
+  }
     NSArray *colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, colorTwo.CGColor, nil];
     NSNumber *stopOne = [NSNumber numberWithFloat:0.0];
     NSNumber *stopTwo = [NSNumber numberWithFloat:1.0];
     NSArray *locations = [NSArray arrayWithObjects:stopOne, stopTwo, nil];
     //crate gradient layer
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+  [_headerLayer removeFromSuperlayer];
+    _headerLayer = [CAGradientLayer layer];
     
-    headerLayer.colors = colors;
-    headerLayer.locations = locations;
-    headerLayer.frame = self.bounds;
+    _headerLayer.colors = colors;
+    _headerLayer.locations = locations;
+    _headerLayer.frame = self.bounds;
     
-    [self.layer insertSublayer:headerLayer atIndex:0];
+    [self.layer insertSublayer:_headerLayer atIndex:0];
 }
 
 //Transparent Gradient Layer
@@ -98,13 +115,14 @@
     NSArray *locations = [NSArray arrayWithObjects:stopOne, stopTwo, stopThree, stopFour, nil];
     
     //crate gradient layer
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+  [_headerLayer removeFromSuperlayer];
+    _headerLayer = [CAGradientLayer layer];
     
-    headerLayer.colors = colors;
-    headerLayer.locations = locations;
-    headerLayer.frame = self.bounds;
+    _headerLayer.colors = colors;
+    _headerLayer.locations = locations;
+    _headerLayer.frame = self.bounds;
     
-    [self.layer insertSublayer:headerLayer atIndex:0];
+    [self.layer insertSublayer:_headerLayer atIndex:0];
 }
 
 //color gradient layer
@@ -119,12 +137,13 @@
     
     NSArray *locations = [NSArray arrayWithObjects:stopOne, stopTwo, nil];
     
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
-    headerLayer.colors = colors;
-    headerLayer.locations = locations;
-    headerLayer.frame = self.bounds;
+  [_headerLayer removeFromSuperlayer];
+    _headerLayer = [CAGradientLayer layer];
+    _headerLayer.colors = colors;
+    _headerLayer.locations = locations;
+    _headerLayer.frame = self.bounds;
     
-    [self.layer insertSublayer:headerLayer above:0];
+    [self.layer insertSublayer:_headerLayer above:0];
     
 }
 

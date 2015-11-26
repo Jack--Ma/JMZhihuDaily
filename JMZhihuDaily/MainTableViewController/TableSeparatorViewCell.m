@@ -18,7 +18,7 @@
   if (temp) {
     self.contentView.backgroundColor = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   } else {
-    self.contentView.backgroundColor = [UIColor grayColor];
+    self.contentView.backgroundColor = [UIColor colorWithRed:69.0/255.0 green:68.0/255.0 blue:71.0/255.0 alpha:1];
   }
 }
 

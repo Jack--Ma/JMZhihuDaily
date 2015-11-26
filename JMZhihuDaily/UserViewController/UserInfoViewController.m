@@ -30,15 +30,14 @@
 #pragma mark - init
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self switchTheme];
   [self.tableView reloadData];
 }
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
   
   //设置navBav格式
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-  [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
   
   //设置返回button和title
   UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
@@ -54,6 +53,7 @@
   self.tableView.dataSource = self;
   self.tableView.scrollEnabled = NO;
   self.tableView.showsVerticalScrollIndicator = NO;
+  self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
   
   //设置头像
   NSData *data = [[UserModel currentUser].avatar getData];
@@ -65,6 +65,8 @@
   self.avatarImageView.imageView.contentMode = UIViewContentModeScaleAspectFill;
   self.avatarImageView.layer.cornerRadius = 50;
   self.avatarImageView.clipsToBounds = YES;
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchTheme) name:@"switchTheme" object:nil];
 }
 
 - (void)enterBack {
@@ -166,6 +168,21 @@
   }];
 }
 
+- (void)switchTheme {
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  if (temp) {
+    self.view.backgroundColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
+    self.tableView.backgroundColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
+    self.logoutButton.backgroundColor = [UIColor colorWithRed:19.0f/255.0f green:152.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+  } else {
+    self.view.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
+    self.tableView.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:69.0f/255.0f green:68.0f/255.0f blue:72.0f/255.0f alpha:1.0f]];
+    self.logoutButton.backgroundColor = [UIColor colorWithRed:69.0f/255.0f green:68.0f/255.0f blue:72.0f/255.0f alpha:1.0f];
+  }
+  [self.tableView reloadData];
+}
 #pragma mark - UITableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   if (section == 0) {
@@ -190,16 +207,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"userTableViewCell"];
+  UserInfoCell *cell = [[UserInfoCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];
+  [cell awakeFromNib];
   if (indexPath.section == 0) {
     if (indexPath.row == 0) {
-      cell = [cell initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];
       cell.selectionStyle = UITableViewCellSelectionStyleNone;
       cell.textLabel.text = @"昵称";
       cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [UserModel currentUser].username];
     }
     if (indexPath.row == 1) {
-      cell = [cell initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];
       cell.accessoryType = UITableViewCellAccessoryNone;
       cell.textLabel.text = @"性别";
       GenderType gender = [UserModel currentUser].gender;
@@ -215,7 +231,6 @@
       }
     }
     if (indexPath.row == 2) {
-      cell = [cell initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];
       cell.accessoryType = UITableViewCellAccessoryNone;
       cell.textLabel.text = @"生日";
       NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -227,7 +242,6 @@
       }
     }
     if (indexPath.row == 3) {
-      cell = [cell initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];
       cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
       cell.textLabel.text = @"签名";
       cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [UserModel currentUser].selfDescription];
@@ -236,7 +250,6 @@
     }
   }
   if (indexPath.section == 1) {
-    cell = [cell initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"userTableViewCell"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = @"密码";
     cell.detailTextLabel.text = @"修改密码";
@@ -286,7 +299,7 @@
     //暗色的背景
     _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
     _backView.backgroundColor = [UIColor blackColor];
-    _backView.alpha = 0.3;
+    _backView.alpha = 0.2;
     [_backView addGestureRecognizer:tap];
     
     //白色的背景选择框
@@ -342,7 +355,7 @@
     descriptionViewController.signature = cell.detailTextLabel.text;
     [self.navigationController pushViewController:descriptionViewController animated:YES];
   }
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 @end

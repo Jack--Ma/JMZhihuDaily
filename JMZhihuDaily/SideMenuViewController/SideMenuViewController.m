@@ -20,6 +20,9 @@
 
 @interface SideMenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, weak) IBOutlet UIImageView *headImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *footImageView;
+
 @property (nonatomic, weak) IBOutlet UIButton *userAvator;
 @property (nonatomic, weak) IBOutlet UIButton *userName;
 @property (weak, nonatomic) IBOutlet UIButton *switchView;
@@ -47,14 +50,24 @@
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   temp = !temp;
   if (!temp) {
+    [self.view setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.headImageView setTintColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.footImageView setTintColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
     [self.switchView setImage:[UIImage imageNamed:@"sun"] forState:UIControlStateNormal];
     [self.switchButton setTitle:@"白天" forState:UIControlStateNormal];
   } else {
+    [self.view setBackgroundColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
+    [self.headImageView setTintColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
+    [self.footImageView setTintColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
     [self.switchView setImage:[UIImage imageNamed:@"night"] forState:UIControlStateNormal];
     [self.switchButton setTitle:@"夜间" forState:UIControlStateNormal];
   }
   [[NSUserDefaults standardUserDefaults] setBool:temp forKey:@"isDay"];
   [[NSNotificationCenter defaultCenter] postNotificationName:@"switchTheme" object:nil];
+  [self.tableView reloadData];
+  [_backView refreshView];
 }
 #pragma mark - init
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,12 +96,17 @@
   [super viewDidLoad];
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   
+  //添加一条分割线
+  UIView *seperatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 125, 225, 1)];
+  seperatorView.backgroundColor = [UIColor colorWithRed:25.0f/255.0f green:35.0f/255.0f blue:45.0f/255.0f alpha:1];
+  [self.view addSubview:seperatorView];
+  
   //最下方的cell添加渐变的背景
   _backView = [[GradientView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45 - 50, self.view.frame.size.width, 50) type:TRANSPARENT_ANOTHER_GRADIENT_TYPE];
   [self.view addSubview:_backView];
   
-  [self.view setBackgroundColor:[UIColor colorWithRed:19.0f/255.0f green:26.0f/255.0f blue:32.0f/255.0f alpha:1]];
-  [self.tableView setBackgroundColor:[UIColor colorWithRed:19.0f/255.0f green:26.0f/255.0f blue:32.0f/255.0f alpha:1]];
+  [self.view setBackgroundColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
+  [self.tableView setBackgroundColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
   
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.showsVerticalScrollIndicator = NO;
@@ -111,14 +129,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 0) {
     HomeSideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeSideCell"];
+    [cell awakeFromNib];
     return cell;
   } else if (indexPath.row <= [StoryModel shareStory].themes.count) {
     ContentSideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contentSideCell"];
+    [cell awakeFromNib];
     cell.contentTitleLabel.text = [StoryModel shareStory].themes[indexPath.row-1][@"name"];
     return cell;
   }
   //最后一行cell无法点击,由于上方加了渐变图片
   ContentSideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contentSideCell"];
+  [cell awakeFromNib];
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
   cell.contentTitleLabel.text = @"更多日报内容";
   cell.userInteractionEnabled = NO;//设置不可点击

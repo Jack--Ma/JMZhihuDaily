@@ -19,10 +19,17 @@
 - (void)backToLastView {
   [self.navigationController popViewControllerAnimated:YES];
 }
+
 #pragma mark - 初始化
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f]];
+//  [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f]];
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  if (temp) {
+    self.tableView.backgroundColor = [UIColor whiteColor];
+  } else {
+    self.tableView.backgroundColor = [UIColor colorWithRed:52.0/255.0 green:51.0/255.0 blue:55.0/255.0 alpha:1];
+  }
 }
 
 - (void)viewDidLoad {
@@ -51,11 +58,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  EditorsTableViewCell *cell = [[EditorsTableViewCell alloc]
-                                initWithAvatar:self.editors[indexPath.row][@"avatar"]
-                                andName:self.editors[indexPath.row][@"name"]
-                                andDetail:self.editors[indexPath.row][@"bio"]];
-  
+  EditorsTableViewCell *cell = [[EditorsTableViewCell alloc] init];
+  cell.avatar = self.editors[indexPath.row][@"avatar"];
+  cell.name = self.editors[indexPath.row][@"name"];
+  cell.detail = self.editors[indexPath.row][@"bio"];
+  [cell awakeFromNib];
   return cell;
 }
 
@@ -70,15 +77,5 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   return 50.0f;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

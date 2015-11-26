@@ -174,7 +174,7 @@
     } else {
       //夜间
       if (_number[indexPath.row]) {
-        cell.titleLabel.textColor = [UIColor grayColor];
+        cell.titleLabel.textColor = [UIColor darkGrayColor];
       } else {
         cell.titleLabel.textColor = [UIColor lightGrayColor];
       }
@@ -217,7 +217,7 @@
   } else {
     //夜间
     if (_number[indexPath.row]) {
-      cell.titleLabel.textColor = [UIColor grayColor];
+      cell.titleLabel.textColor = [UIColor darkGrayColor];
     } else {
       cell.titleLabel.textColor = [UIColor lightGrayColor];
     }
@@ -246,7 +246,12 @@
   //记录已被选中的indexPath并改变其textColor
   TableContentViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
   _number[indexPath.row] = 1;
-  selectedCell.titleLabel.textColor = [UIColor lightGrayColor];
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  if (temp) {
+    selectedCell.titleLabel.textColor = [UIColor lightGrayColor];
+  } else {
+    selectedCell.titleLabel.textColor = [UIColor darkGrayColor];
+  }
   
   //新建webView
   WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
@@ -311,11 +316,11 @@
   ParallaxHeaderView *header = (ParallaxHeaderView *)self.tableView.tableHeaderView;
   [header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
-  UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  UIColor *color;
   if (temp) {
     color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   } else {
-    color = [UIColor grayColor];
+    color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
   }
   CGFloat offsetY = scrollView.contentOffset.y;
   CGFloat prelude = 90;
@@ -400,7 +405,7 @@
   if (temp) {
     color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   } else {
-    color = [UIColor grayColor];
+    color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
   }
   [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:_navBarAlpha]];
   
