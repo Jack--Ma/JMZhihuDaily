@@ -127,11 +127,15 @@
   _textView.keyboardAppearance = UIKeyboardAppearanceDark;
   if (temp) {
     _textView.keyboardAppearance = UIKeyboardAppearanceLight;
-  } else {
-    _textView.keyboardAppearance = UIKeyboardAppearanceDark;
   }
   [self.view addSubview:_textView];
   [_textView becomeFirstResponder];
+  
+  //夜间时设置textView为黑色背景白色字体
+  if (!temp) {
+    _textView.backgroundColor = [UIColor colorWithRed:69.0f/255.0f green:68.0f/255.0f blue:72.0f/255.0f alpha:1.0f];
+    _textView.textColor = [UIColor whiteColor];
+  }
   
   //设置字数统计Label
   _numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(_textView.frame.size.width-40, _textView.frame.size.height-35, 40, 35)];

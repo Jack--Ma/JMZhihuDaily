@@ -32,9 +32,10 @@
 
 @implementation SideMenuViewController {
   GradientView *_backView;
+  UIView *_rightView;
 }
 
-#pragma mark - Login
+#pragma mark - 私有方法
 - (IBAction)doLogin:(id)sender {
   if ([UserModel currentUser]) {
     //已登录，直接跳转到个人信息界面
@@ -69,6 +70,10 @@
   [self.tableView reloadData];
   [_backView refreshView];
 }
+
+- (void)takeSide {
+  
+}
 #pragma mark - init
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -90,7 +95,9 @@
   }
   //设置白天夜晚切换的button
   [self.switchView setTintColor:[UIColor lightGrayColor]];
-  
+  //设置点击右边界面返回
+  UITapGestureRecognizer *tap;
+  tap = [self.revealViewController tapGestureRecognizer];
 }
 - (void)viewDidLoad {
   [super viewDidLoad];

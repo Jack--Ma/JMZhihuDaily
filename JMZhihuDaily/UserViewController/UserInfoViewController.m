@@ -76,6 +76,10 @@
 
 #pragma mark - 视图点击事件
 - (IBAction)doLogout:(id)sender {
+  if (self.revealViewController.frontViewPosition == FrontViewPositionRight) {
+    [self.revealViewController revealToggleAnimated:YES];
+    return;
+  }
   UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"知乎日报" message:@"确定退出登录吗？" preferredStyle:UIAlertControllerStyleAlert];
   UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     [UserModel logOut];
@@ -92,6 +96,10 @@
 }
 
 - (IBAction)setAvatar:(id)sender {
+  if (self.revealViewController.frontViewPosition == FrontViewPositionRight) {
+    [self.revealViewController revealToggleAnimated:YES];
+    return;
+  }
   UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"设置头像" preferredStyle:UIAlertControllerStyleActionSheet];
   UIAlertAction *fromPic = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
