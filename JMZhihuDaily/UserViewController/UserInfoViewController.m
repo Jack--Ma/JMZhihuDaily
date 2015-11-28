@@ -12,6 +12,7 @@
 #import "UserModel.h"
 #import "DescriptionViewController.h"
 #import "MainTableViewController.h"
+#import "SetTableViewController.h"
 
 @interface UserInfoViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -40,11 +41,21 @@
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   
   //设置返回button和title
-  UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
-  leftBarButton.tintColor = [UIColor whiteColor];
-  [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-  [self.navigationItem setLeftBarButtonItem:leftBarButton];
-  [self.navigationItem setTitle:@"个人信息"];
+  if ([self.navigationController.viewControllers[0] isKindOfClass:[SetTableViewController class]]) {
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self action:@selector(backToLastView)];
+    leftBarButton.tintColor = [UIColor whiteColor];
+    //这里有问题，手势无效
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
+    [self.navigationItem setLeftBarButtonItem:leftBarButton];
+    [self.navigationItem setTitle:@"个人信息"];
+  } else {
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
+    leftBarButton.tintColor = [UIColor whiteColor];
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    [self.navigationItem setLeftBarButtonItem:leftBarButton];
+    [self.navigationItem setTitle:@"个人信息"];
+  }
   
   //圆角的登出button
   self.logoutButton.layer.cornerRadius = 8;
@@ -175,7 +186,9 @@
     [_whiteView removeFromSuperview];
   }];
 }
-
+- (void)backToLastView {
+  [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)switchTheme {
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   if (temp) {

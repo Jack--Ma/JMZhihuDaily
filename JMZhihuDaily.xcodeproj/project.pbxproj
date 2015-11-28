@@ -12,6 +12,9 @@
 		C4045B8E1BFDEE1200196582 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4045B8D1BFDEE1200196582 /* DACircularProgressView.m */; };
 		C41314DB1C02E637004A55CE /* EditorsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DA1C02E637004A55CE /* EditorsTableViewController.m */; };
 		C41314DE1C02EC17004A55CE /* EditorsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */; };
+		C46413B61C09CB4C008064E1 /* SwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */; };
+		C46413B91C09D187008064E1 /* SetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B81C09D187008064E1 /* SetTableViewCell.m */; };
+		C46413BC1C09DE73008064E1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413BB1C09DE73008064E1 /* ShareViewController.m */; };
 		C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */; };
 		C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D301BEA28D1000EA5B3 /* JSAnimatedImagesView.m */; };
 		C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D351BEA291C000EA5B3 /* ZFModalTransitionAnimator.m */; };
@@ -50,6 +53,8 @@
 		C48D70BB1BFF0266000DF7CA /* UserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D70B61BFF0266000DF7CA /* UserInfoCell.m */; };
 		C48D70BC1BFF0266000DF7CA /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D70B81BFF0266000DF7CA /* UserInfoViewController.m */; };
 		C48D70BF1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D70BE1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m */; };
+		C4A0EF9D1C083C2600894EE3 /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A0EF9C1C083C2600894EE3 /* SetTableViewController.m */; };
+		C4A0EFA01C08419800894EE3 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A0EF9F1C08419800894EE3 /* UserTableViewCell.m */; };
 		C4C3C10C1BE895C500AA1E73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10B1BE895C500AA1E73 /* main.m */; };
 		C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */; };
 		C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4C3C1131BE895C500AA1E73 /* Main.storyboard */; };
@@ -70,6 +75,12 @@
 		C41314DA1C02E637004A55CE /* EditorsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditorsTableViewController.m; path = ThemeViewController/EditorsTableViewController.m; sourceTree = "<group>"; };
 		C41314DC1C02EC17004A55CE /* EditorsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorsTableViewCell.h; path = ThemeViewController/EditorsTableViewCell.h; sourceTree = "<group>"; };
 		C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditorsTableViewCell.m; path = ThemeViewController/EditorsTableViewCell.m; sourceTree = "<group>"; };
+		C46413B41C09CB4C008064E1 /* SwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchTableViewCell.h; path = SetTableViewController/SwitchTableViewCell.h; sourceTree = "<group>"; };
+		C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwitchTableViewCell.m; path = SetTableViewController/SwitchTableViewCell.m; sourceTree = "<group>"; };
+		C46413B71C09D187008064E1 /* SetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetTableViewCell.h; path = SetTableViewController/SetTableViewCell.h; sourceTree = "<group>"; };
+		C46413B81C09D187008064E1 /* SetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetTableViewCell.m; path = SetTableViewController/SetTableViewCell.m; sourceTree = "<group>"; };
+		C46413BA1C09DE73008064E1 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = SetTableViewController/ShareViewController.h; sourceTree = "<group>"; };
+		C46413BB1C09DE73008064E1 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = SetTableViewController/ShareViewController.m; sourceTree = "<group>"; };
 		C4847D2C1BEA250F000EA5B3 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Awesome.h"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Awesome.m"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		C4847D2F1BEA28D1000EA5B3 /* JSAnimatedImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSAnimatedImagesView.h; path = Framework/JSAnimated/JSAnimatedImagesView.h; sourceTree = "<group>"; };
@@ -146,6 +157,10 @@
 		C48D70B81BFF0266000DF7CA /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoViewController.m; path = UserViewController/UserInfoViewController.m; sourceTree = "<group>"; };
 		C48D70BD1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMPullRefreshTableViewController.h; path = Framework/SCPullRefresh/JMPullRefreshTableViewController.h; sourceTree = "<group>"; };
 		C48D70BE1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMPullRefreshTableViewController.m; path = Framework/SCPullRefresh/JMPullRefreshTableViewController.m; sourceTree = "<group>"; };
+		C4A0EF9B1C083C2600894EE3 /* SetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetTableViewController.h; path = SetTableViewController/SetTableViewController.h; sourceTree = "<group>"; };
+		C4A0EF9C1C083C2600894EE3 /* SetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetTableViewController.m; path = SetTableViewController/SetTableViewController.m; sourceTree = "<group>"; };
+		C4A0EF9E1C08419800894EE3 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = SetTableViewController/UserTableViewCell.h; sourceTree = "<group>"; };
+		C4A0EF9F1C08419800894EE3 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = SetTableViewController/UserTableViewCell.m; sourceTree = "<group>"; };
 		C4C3C1071BE895C500AA1E73 /* 知乎日报.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "知乎日报.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4C3C10B1BE895C500AA1E73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -367,6 +382,23 @@
 			name = CAAnimationBlocks;
 			sourceTree = "<group>";
 		};
+		C4A0EF9A1C083BE200894EE3 /* SetTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C4A0EF9B1C083C2600894EE3 /* SetTableViewController.h */,
+				C4A0EF9C1C083C2600894EE3 /* SetTableViewController.m */,
+				C4A0EF9E1C08419800894EE3 /* UserTableViewCell.h */,
+				C4A0EF9F1C08419800894EE3 /* UserTableViewCell.m */,
+				C46413B41C09CB4C008064E1 /* SwitchTableViewCell.h */,
+				C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */,
+				C46413B71C09D187008064E1 /* SetTableViewCell.h */,
+				C46413B81C09D187008064E1 /* SetTableViewCell.m */,
+				C46413BA1C09DE73008064E1 /* ShareViewController.h */,
+				C46413BB1C09DE73008064E1 /* ShareViewController.m */,
+			);
+			name = SetTableViewController;
+			sourceTree = "<group>";
+		};
 		C4C3C0FE1BE895C500AA1E73 = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +431,7 @@
 				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
 				C40605961BEB7937009A0DBA /* ThemeViewController */,
 				C4037CB21BF7241B003D112B /* UserViewController */,
+				C4A0EF9A1C083BE200894EE3 /* SetTableViewController */,
 				C4C3C1371BE9A87100AA1E73 /* Framework */,
 				C4C3C1131BE895C500AA1E73 /* Main.storyboard */,
 				C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */,
@@ -628,11 +661,14 @@
 				C48D70841BFF0119000DF7CA /* SCBubbleRefreshView.m in Sources */,
 				C4847D511BEA29A8000EA5B3 /* GradientView.m in Sources */,
 				C48D70AF1BFF0229000DF7CA /* ThemeTextWithImageTableViewCell.m in Sources */,
+				C4A0EF9D1C083C2600894EE3 /* SetTableViewController.m in Sources */,
 				C4C3C1401BE9C71400AA1E73 /* SWRevealViewController.m in Sources */,
+				C46413B91C09D187008064E1 /* SetTableViewCell.m in Sources */,
 				C4847D491BEA297E000EA5B3 /* NSData+SDDataCache.m in Sources */,
 				C41314DE1C02EC17004A55CE /* EditorsTableViewCell.m in Sources */,
 				C48D708C1BFF0163000DF7CA /* UserModel.m in Sources */,
 				C4C3C10C1BE895C500AA1E73 /* main.m in Sources */,
+				C4A0EFA01C08419800894EE3 /* UserTableViewCell.m in Sources */,
 				C4C3C14E1BE9CF2000AA1E73 /* myUILabel.m in Sources */,
 				C4847D3E1BEA2964000EA5B3 /* ParallaxHeaderView.m in Sources */,
 				C48D70A41BFF0205000DF7CA /* SideMenuViewController.m in Sources */,
@@ -641,12 +677,14 @@
 				C4847D4D1BEA297E000EA5B3 /* UIView+SDExtension.m in Sources */,
 				C4847D5D1BEA2A26000EA5B3 /* TADotView.m in Sources */,
 				C4847D5E1BEA2A26000EA5B3 /* TAPageControl.m in Sources */,
+				C46413B61C09CB4C008064E1 /* SwitchTableViewCell.m in Sources */,
 				C4847D3A1BEA2934000EA5B3 /* UIImage+ImageEffects.m in Sources */,
 				C48D709A1BFF01CC000DF7CA /* TableContentViewCell.m in Sources */,
 				C48D707D1BFF010C000DF7CA /* CAAnimation+Blocks.m in Sources */,
 				C48D70921BFF019C000DF7CA /* PaletteViewController.m in Sources */,
 				C4847D5C1BEA2A26000EA5B3 /* TAAnimatedDotView.m in Sources */,
 				C48D708B1BFF0163000DF7CA /* StoryModel.m in Sources */,
+				C46413BC1C09DE73008064E1 /* ShareViewController.m in Sources */,
 				C48D70911BFF019C000DF7CA /* LaunchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
