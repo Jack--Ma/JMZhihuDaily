@@ -21,5 +21,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSDate *birthday;
 @property (nonatomic, assign) NSInteger age;
 @property (nonatomic, strong) NSString *selfDescription;
+@property (nonatomic, strong) NSMutableArray *articlesList;
 
 @end

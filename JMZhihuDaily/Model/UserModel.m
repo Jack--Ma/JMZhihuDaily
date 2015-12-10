@@ -10,9 +10,9 @@
 
 @implementation UserModel
 
-@dynamic avatar, gender, birthday, age, selfDescription;
+@dynamic avatar, gender, birthday, age, selfDescription, articlesList;
 
-+(NSString *)parseClassName {
++ (NSString *)parseClassName {
   return @"_User";
 }
 

@@ -29,6 +29,21 @@
   }
 }
 
+- (UIButton *)createShareButton: (CGRect)rect {
+  UIButton *button = [[UIButton alloc] initWithFrame:rect];
+  [button setBackgroundColor:[UIColor colorWithRed:160.0/255.0 green:237.0/255.0 blue:121.0/255.0 alpha:1.0]];
+  [button setTitle:@"分享到微信" forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  button.layer.cornerRadius = rect.size.height / 3.0;
+  button.layer.borderColor = [UIColor whiteColor].CGColor;
+  button.layer.borderWidth = 1.0f;
+  
+  return button;
+}
+
+- (void)weixinShare {
+  NSLog(@"分享到微信");
+}
 #pragma mark - 初始化
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -44,21 +59,16 @@
   [self.navigationItem setLeftBarButtonItem:leftBarButton];
   [self.navigationItem setTitle:@"分享"];
   
+  CGRect rect = CGRectMake(20, 84, self.view.width-40, 44);
+  UIButton *weixin = [self createShareButton:rect];
+  [weixin addTarget:self action:@selector(weixinShare) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:weixin];
+  
   [self switchTheme];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -34,7 +34,7 @@
     NSString *detail = [UserModel currentUser].selfDescription;
     self.detailLabel.text = detail;
   } else {
-    self.nameLabel.text = @"我的资料";
+    self.nameLabel.text = @"点击登录";
     self.detailLabel.text = @"未登录";
   }
   self.avatarView.layer.cornerRadius = 30.0;

@@ -36,6 +36,8 @@
     [UserModel currentUser].gender = [[post objectForKey:@"gender"] integerValue];
     [UserModel currentUser].selfDescription = [post objectForKey:@"selfDescription"];
     [UserModel currentUser].avatar = [post objectForKey:@"avatar"];
+    NSArray *array = [post objectForKey:@"articlesList"];
+    [UserModel currentUser].articlesList = [NSMutableArray arrayWithArray:array];
   }
 
   //单例获取本日所有内容

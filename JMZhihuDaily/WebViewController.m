@@ -9,11 +9,14 @@
 #import <AFNetworking/AFNetworking.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "WebViewController.h"
+#import "UserModel.h"
 
 @interface WebViewController () <UIScrollViewDelegate, UIWebViewDelegate, ParallaxHeaderViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *collectButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *supportButton;
 
 @end
 
@@ -32,6 +35,8 @@
   BOOL _triggered;//检测下滑时手指是否按住屏幕
   BOOL _dragging;//检测手指是否在屏幕上滑动
   BOOL _statusBarFlat;
+  
+  BOOL _isCollected;
 }
 
 - (void)viewDidLoad {
@@ -62,13 +67,15 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [self.navigationController.navigationBar setHidden:YES];
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
   [self loadWebView:self.newsId];
+  [self loadFooterView:self.newsId];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [self.navigationController.navigationBar setHidden:YES];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 #pragma mark - webView
 - (void)loadWebView:(NSInteger)newsId {
@@ -307,6 +314,53 @@
     _refreshImageView.tintColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
     [self.webView.scrollView addSubview:_refreshImageView];
   }
+}
+
+#pragma mark - webFooterView
+- (void)loadFooterView:(NSInteger)newsId {
+  NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)newsId];
+  NSArray *array = [UserModel currentUser].articlesList;
+  _isCollected = NO;
+  
+  [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    NSString *string = (NSString *)obj;
+    self.collectButton.tintColor = [UIColor lightGrayColor];
+    if ([string isEqualToString:urlString]) {
+      self.collectButton.tintColor = [UIColor orangeColor];
+      _isCollected = YES;
+      *stop = YES;
+    }
+  }];
+}
+- (IBAction)backToLastView:(id)sender {
+  if (self.isThemeStory) {
+    [self.navigationController popViewControllerAnimated:YES];
+  } else {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }
+}
+- (IBAction)collectArticle:(id)sender {
+  NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)self.newsId];
+  NSMutableArray *array = [UserModel currentUser].articlesList;
+  if (_isCollected) {
+    self.collectButton.tintColor = [UIColor lightGrayColor];
+    [array removeObject:urlString];
+  } else {
+    self.collectButton.tintColor = [UIColor orangeColor];
+    [array addObject:urlString];
+  }
+  _isCollected = !_isCollected;
+  [[UserModel currentUser] setObject:array forKey:@"articlesList"];
+  [[UserModel currentUser] save];
+}
+- (IBAction)shareArticle:(id)sender {
+  
+}
+- (IBAction)supportArticle:(id)sender {
+  
+}
+- (IBAction)commentArticle:(id)sender {
+  
 }
 
 #pragma mark - 其他函数

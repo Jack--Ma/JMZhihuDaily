@@ -9,14 +9,22 @@
 #import "SetTableViewController.h"
 #import "SwitchTableViewCell.h"
 #import "SetTableViewCell.h"
-#import "UserInfoViewController.h"
 #import "ShareViewController.h"
+
+#import "UserModel.h"
+#import "UserInfoViewController.h"
+#import "LoginViewController.h"
 
 @interface SetTableViewController ()
 
 @end
 
 @implementation SetTableViewController
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -56,11 +64,11 @@
   [self.tableView reloadData];
 }
 - (void)showPicture:(id)sender {
-  UISwitch *switchch = sender;
+//  UISwitch *switchch = sender;
 
 }
 - (void)sendNotification:(id)sender {
-  UISwitch *switchch = sender;
+//  UISwitch *switchch = sender;
   
 }
 #pragma mark - Table view data source
@@ -118,22 +126,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.section == 0) {
-    UserInfoViewController *userInfoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"userInfoViewController"];;
-    [self.navigationController pushViewController:userInfoViewController animated:YES];
+    if ([UserModel currentUser]) {
+      UserInfoViewController *userInfoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"userInfoViewController"];;
+      [self.navigationController pushViewController:userInfoViewController animated:YES];
+    } else {
+      LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+      [self presentViewController:loginViewController animated:YES completion:nil];
+    }
+    
   } else if (indexPath.section == 2) {
     ShareViewController *shareViewController = [[ShareViewController alloc] init];
     [self.navigationController pushViewController:shareViewController animated:YES];
   }
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
