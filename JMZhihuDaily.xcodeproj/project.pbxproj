@@ -15,6 +15,12 @@
 		C46413B61C09CB4C008064E1 /* SwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */; };
 		C46413B91C09D187008064E1 /* SetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B81C09D187008064E1 /* SetTableViewCell.m */; };
 		C46413BC1C09DE73008064E1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413BB1C09DE73008064E1 /* ShareViewController.m */; };
+		C4790CF11C1A83D80000AE3F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4790CED1C1A83D80000AE3F /* libWeChatSDK.a */; };
+		C4790CF31C1A87F50000AE3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4790CF21C1A87F50000AE3F /* SystemConfiguration.framework */; };
+		C4790CF51C1A88270000AE3F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C4790CF41C1A88270000AE3F /* libz.tbd */; };
+		C4790CF71C1A88340000AE3F /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C4790CF61C1A88340000AE3F /* libsqlite3.0.tbd */; };
+		C4790CF91C1A88420000AE3F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C4790CF81C1A88420000AE3F /* libc++.tbd */; };
+		C4790CFC1C1ACEEE0000AE3F /* JMCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4790CFB1C1ACEEE0000AE3F /* JMCheckView.m */; };
 		C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */; };
 		C4847D311BEA28D1000EA5B3 /* JSAnimatedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D301BEA28D1000EA5B3 /* JSAnimatedImagesView.m */; };
 		C4847D361BEA291C000EA5B3 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4847D351BEA291C000EA5B3 /* ZFModalTransitionAnimator.m */; };
@@ -53,6 +59,7 @@
 		C48D70BB1BFF0266000DF7CA /* UserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D70B61BFF0266000DF7CA /* UserInfoCell.m */; };
 		C48D70BC1BFF0266000DF7CA /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D70B81BFF0266000DF7CA /* UserInfoViewController.m */; };
 		C48D70BF1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D70BE1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m */; };
+		C49A73F51C1A6DAA00AAB57A /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C49A73F41C1A6DAA00AAB57A /* CollectionViewController.m */; };
 		C4A0EF9D1C083C2600894EE3 /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A0EF9C1C083C2600894EE3 /* SetTableViewController.m */; };
 		C4A0EFA01C08419800894EE3 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A0EF9F1C08419800894EE3 /* UserTableViewCell.m */; };
 		C4C3C10C1BE895C500AA1E73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C3C10B1BE895C500AA1E73 /* main.m */; };
@@ -81,6 +88,16 @@
 		C46413B81C09D187008064E1 /* SetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetTableViewCell.m; path = SetTableViewController/SetTableViewCell.m; sourceTree = "<group>"; };
 		C46413BA1C09DE73008064E1 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = SetTableViewController/ShareViewController.h; sourceTree = "<group>"; };
 		C46413BB1C09DE73008064E1 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = SetTableViewController/ShareViewController.m; sourceTree = "<group>"; };
+		C4790CED1C1A83D80000AE3F /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = JMZhihuDaily/Framework/WeChat/libWeChatSDK.a; sourceTree = "<group>"; };
+		C4790CEE1C1A83D80000AE3F /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = JMZhihuDaily/Framework/WeChat/WechatAuthSDK.h; sourceTree = "<group>"; };
+		C4790CEF1C1A83D80000AE3F /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = JMZhihuDaily/Framework/WeChat/WXApi.h; sourceTree = "<group>"; };
+		C4790CF01C1A83D80000AE3F /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = JMZhihuDaily/Framework/WeChat/WXApiObject.h; sourceTree = "<group>"; };
+		C4790CF21C1A87F50000AE3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C4790CF41C1A88270000AE3F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		C4790CF61C1A88340000AE3F /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		C4790CF81C1A88420000AE3F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		C4790CFA1C1ACEEE0000AE3F /* JMCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMCheckView.h; path = Framework/JMFrameworks/JMCheckView.h; sourceTree = "<group>"; };
+		C4790CFB1C1ACEEE0000AE3F /* JMCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMCheckView.m; path = Framework/JMFrameworks/JMCheckView.m; sourceTree = "<group>"; };
 		C4847D2C1BEA250F000EA5B3 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Awesome.h"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		C4847D2D1BEA250F000EA5B3 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Awesome.m"; path = "Framework/AwesomeUINavigationBar/UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		C4847D2F1BEA28D1000EA5B3 /* JSAnimatedImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSAnimatedImagesView.h; path = Framework/JSAnimated/JSAnimatedImagesView.h; sourceTree = "<group>"; };
@@ -157,6 +174,8 @@
 		C48D70B81BFF0266000DF7CA /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoViewController.m; path = UserViewController/UserInfoViewController.m; sourceTree = "<group>"; };
 		C48D70BD1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMPullRefreshTableViewController.h; path = Framework/SCPullRefresh/JMPullRefreshTableViewController.h; sourceTree = "<group>"; };
 		C48D70BE1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMPullRefreshTableViewController.m; path = Framework/SCPullRefresh/JMPullRefreshTableViewController.m; sourceTree = "<group>"; };
+		C49A73F31C1A6DAA00AAB57A /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewController.h; path = CollectionViewController/CollectionViewController.h; sourceTree = "<group>"; };
+		C49A73F41C1A6DAA00AAB57A /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewController.m; path = CollectionViewController/CollectionViewController.m; sourceTree = "<group>"; };
 		C4A0EF9B1C083C2600894EE3 /* SetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetTableViewController.h; path = SetTableViewController/SetTableViewController.h; sourceTree = "<group>"; };
 		C4A0EF9C1C083C2600894EE3 /* SetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetTableViewController.m; path = SetTableViewController/SetTableViewController.m; sourceTree = "<group>"; };
 		C4A0EF9E1C08419800894EE3 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = SetTableViewController/UserTableViewCell.h; sourceTree = "<group>"; };
@@ -182,6 +201,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4790CF91C1A88420000AE3F /* libc++.tbd in Frameworks */,
+				C4790CF71C1A88340000AE3F /* libsqlite3.0.tbd in Frameworks */,
+				C4790CF51C1A88270000AE3F /* libz.tbd in Frameworks */,
+				C4790CF31C1A87F50000AE3F /* SystemConfiguration.framework in Frameworks */,
+				C4790CF11C1A83D80000AE3F /* libWeChatSDK.a in Frameworks */,
 				AD11BEF0BDF8D31F7EF3FAA1 /* libPods-JMZhihuDaily.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,6 +284,26 @@
 				C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */,
 			);
 			name = EditorsViewController;
+			sourceTree = "<group>";
+		};
+		C4790CEC1C1A837B0000AE3F /* WeChat */ = {
+			isa = PBXGroup;
+			children = (
+				C4790CED1C1A83D80000AE3F /* libWeChatSDK.a */,
+				C4790CEE1C1A83D80000AE3F /* WechatAuthSDK.h */,
+				C4790CEF1C1A83D80000AE3F /* WXApi.h */,
+				C4790CF01C1A83D80000AE3F /* WXApiObject.h */,
+			);
+			name = WeChat;
+			sourceTree = "<group>";
+		};
+		C4790CFD1C1ADC5A0000AE3F /* My Custom */ = {
+			isa = PBXGroup;
+			children = (
+				C4790CFA1C1ACEEE0000AE3F /* JMCheckView.h */,
+				C4790CFB1C1ACEEE0000AE3F /* JMCheckView.m */,
+			);
+			name = "My Custom";
 			sourceTree = "<group>";
 		};
 		C4847D2B1BEA24E7000EA5B3 /* AwsomeNavigationBar */ = {
@@ -382,6 +426,15 @@
 			name = CAAnimationBlocks;
 			sourceTree = "<group>";
 		};
+		C49A73F21C1A6D4900AAB57A /* CollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C49A73F31C1A6DAA00AAB57A /* CollectionViewController.h */,
+				C49A73F41C1A6DAA00AAB57A /* CollectionViewController.m */,
+			);
+			name = CollectionViewController;
+			sourceTree = "<group>";
+		};
 		C4A0EF9A1C083BE200894EE3 /* SetTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,7 +485,9 @@
 				C40605961BEB7937009A0DBA /* ThemeViewController */,
 				C4037CB21BF7241B003D112B /* UserViewController */,
 				C4A0EF9A1C083BE200894EE3 /* SetTableViewController */,
-				C4C3C1371BE9A87100AA1E73 /* Framework */,
+				C49A73F21C1A6D4900AAB57A /* CollectionViewController */,
+				C4790CFD1C1ADC5A0000AE3F /* My Custom */,
+				C4C3C1371BE9A87100AA1E73 /* Third Parties */,
 				C4C3C1131BE895C500AA1E73 /* Main.storyboard */,
 				C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */,
 				C4C3C11B1BE895C500AA1E73 /* Info.plist */,
@@ -461,7 +516,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		C4C3C1371BE9A87100AA1E73 /* Framework */ = {
+		C4C3C1371BE9A87100AA1E73 /* Third Parties */ = {
 			isa = PBXGroup;
 			children = (
 				C48D70791BFF0047000DF7CA /* SCPullRefresh */,
@@ -476,7 +531,7 @@
 				C4C3C14B1BE9CF1000AA1E73 /* MyUILabel */,
 				C4C3C13D1BE9C6F700AA1E73 /* SWRevealViewController */,
 			);
-			name = Framework;
+			name = "Third Parties";
 			sourceTree = "<group>";
 		};
 		C4C3C13D1BE9C6F700AA1E73 /* SWRevealViewController */ = {
@@ -524,6 +579,11 @@
 		CE02BEBD9FAFC6BE8B49A45B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C4790CF81C1A88420000AE3F /* libc++.tbd */,
+				C4790CF61C1A88340000AE3F /* libsqlite3.0.tbd */,
+				C4790CF41C1A88270000AE3F /* libz.tbd */,
+				C4790CF21C1A87F50000AE3F /* SystemConfiguration.framework */,
+				C4790CEC1C1A837B0000AE3F /* WeChat */,
 				5688F39C562A66E2926245DD /* libPods-JMZhihuDaily.a */,
 			);
 			name = Frameworks;
@@ -655,6 +715,7 @@
 				C48D70BA1BFF0266000DF7CA /* LoginViewController.m in Sources */,
 				C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */,
 				C4847D4C1BEA297E000EA5B3 /* SDCycleScrollView.m in Sources */,
+				C4790CFC1C1ACEEE0000AE3F /* JMCheckView.m in Sources */,
 				C4847D2E1BEA250F000EA5B3 /* UINavigationBar+Awesome.m in Sources */,
 				C4F15D3C1BEF443400108D55 /* WebViewController.m in Sources */,
 				C48D709B1BFF01CC000DF7CA /* TableSeparatorViewCell.m in Sources */,
@@ -671,6 +732,7 @@
 				C4A0EFA01C08419800894EE3 /* UserTableViewCell.m in Sources */,
 				C4C3C14E1BE9CF2000AA1E73 /* myUILabel.m in Sources */,
 				C4847D3E1BEA2964000EA5B3 /* ParallaxHeaderView.m in Sources */,
+				C49A73F51C1A6DAA00AAB57A /* CollectionViewController.m in Sources */,
 				C48D70A41BFF0205000DF7CA /* SideMenuViewController.m in Sources */,
 				C48D70AD1BFF0229000DF7CA /* ThemeEditorTableViewCell.m in Sources */,
 				C48D70851BFF0119000DF7CA /* SCCircularRefreshView.m in Sources */,
@@ -808,6 +870,10 @@
 				GCC_PREFIX_HEADER = "/Users/JackMa/Desktop/Objective-C/JMZhihuDaily/JMZhihuDaily/PrefixHeader.pch";
 				INFOPLIST_FILE = JMZhihuDaily/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JMZhihuDaily/Framework/WeChat",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -853,6 +919,10 @@
 				GCC_PREFIX_HEADER = "/Users/JackMa/Desktop/Objective-C/JMZhihuDaily/JMZhihuDaily/PrefixHeader.pch";
 				INFOPLIST_FILE = JMZhihuDaily/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JMZhihuDaily/Framework/WeChat",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

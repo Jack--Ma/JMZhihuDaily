@@ -122,12 +122,6 @@
   self.tableView.rowHeight = 50.5f;
 }
 
-#pragma mark - other function
-//设置StatusBar
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return [StoryModel shareStory].themes.count + 1 + 1;
@@ -167,4 +161,11 @@
   }
 
 }
+
+#pragma mark - other function
+//设置StatusBar
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
 @end

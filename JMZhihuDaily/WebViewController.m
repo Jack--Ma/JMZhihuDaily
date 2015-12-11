@@ -342,6 +342,17 @@
 - (IBAction)collectArticle:(id)sender {
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)self.newsId];
   NSMutableArray *array = [UserModel currentUser].articlesList;
+  if (!array) {
+    //array为空表示未登录
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"登录后才能收藏文章哦" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    return;
+  }
   if (_isCollected) {
     self.collectButton.tintColor = [UIColor lightGrayColor];
     [array removeObject:urlString];

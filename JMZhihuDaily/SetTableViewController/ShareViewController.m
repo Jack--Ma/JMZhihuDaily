@@ -7,8 +7,9 @@
 //
 
 #import "ShareViewController.h"
+#import "WXApi.h"
 
-@interface ShareViewController ()
+@interface ShareViewController () <WXApiDelegate>
 
 @end
 
@@ -31,8 +32,6 @@
 
 - (UIButton *)createShareButton: (CGRect)rect {
   UIButton *button = [[UIButton alloc] initWithFrame:rect];
-  [button setBackgroundColor:[UIColor colorWithRed:160.0/255.0 green:237.0/255.0 blue:121.0/255.0 alpha:1.0]];
-  [button setTitle:@"分享到微信" forState:UIControlStateNormal];
   [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   button.layer.cornerRadius = rect.size.height / 3.0;
   button.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -41,9 +40,34 @@
   return button;
 }
 
-- (void)weixinShare {
-  NSLog(@"分享到微信");
+#pragma mark - WX Share && WXApiDelegate
+- (void)weixinShare:(id)sender {
+  WXImageObject *imageObj = [WXImageObject object];
+  imageObj.imageUrl = @"http://ac-usm1cbtx.clouddn.com/TPdC2sIHcRbsSTarVKCTHEA.jpeg";
+  
+  WXWebpageObject *webObj = [WXWebpageObject object];
+  webObj.webpageUrl = @"http://ac-usm1cbtx.clouddn.com/TPdC2sIHcRbsSTarVKCTHEA.jpeg";
+  
+  WXMediaMessage *message = [WXMediaMessage message];
+  message.title = @"JM日报 看见世界";
+  message.description = @"看他人分享知识 经验 见解";
+  message.mediaObject = webObj;
+  UIImage *image = [UIImage imageNamed:@"app-icon-180"];
+  message.thumbData = UIImageJPEGRepresentation(image, 1.0);
+  
+  SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+  UIButton *temp = (UIButton *)sender;
+  if (temp.viewOrigin.y == 84.0) {
+    req.scene = WXSceneSession;
+  } else {
+    req.scene = WXSceneTimeline;
+  }
+  req.bText = NO;
+  req.message = message;
+
+  [WXApi sendReq:req];
 }
+
 #pragma mark - 初始化
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -59,10 +83,19 @@
   [self.navigationItem setLeftBarButtonItem:leftBarButton];
   [self.navigationItem setTitle:@"分享"];
   
-  CGRect rect = CGRectMake(20, 84, self.view.width-40, 44);
-  UIButton *weixin = [self createShareButton:rect];
-  [weixin addTarget:self action:@selector(weixinShare) forControlEvents:UIControlEventTouchUpInside];
+  //分享到微信朋友
+  UIButton *weixin = [self createShareButton:CGRectMake(20, 84, self.view.width-40, 44)];
+  [weixin setBackgroundColor:[UIColor colorWithRed:160.0/255.0 green:237.0/255.0 blue:121.0/255.0 alpha:1.0]];
+  [weixin setTitle:@"分享到微信" forState:UIControlStateNormal];
+  [weixin addTarget:self action:@selector(weixinShare:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:weixin];
+  
+  //分享到朋友圈
+  UIButton *weixinCircle = [self createShareButton:CGRectMake(20, 148, self.view.width-40, 44)];
+  [weixinCircle setBackgroundColor:[UIColor colorWithRed:160.0/255.0 green:237.0/255.0 blue:121.0/255.0 alpha:1.0]];
+  [weixinCircle setTitle:@"分享到朋友圈" forState:UIControlStateNormal];
+  [weixinCircle addTarget:self action:@selector(weixinShare:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:weixinCircle];
   
   [self switchTheme];
 }

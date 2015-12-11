@@ -10,9 +10,12 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AVOSCloud/AVOSCloud.h>
 #import "UserModel.h"
+#import "JMCheckView.h"
 
 #define AVOSCloudAppID  @"uSM1CbTx40OXA9r3BmhGMlj7"
 #define AVOSCloudAppKey @"BT076YAKsGX6qkemmdVAya6d"
+
+#define WeChatAppID @"wxd590c71b8bdb8dc3"
 
 @implementation AppDelegate{
 
@@ -39,13 +42,47 @@
     NSArray *array = [post objectForKey:@"articlesList"];
     [UserModel currentUser].articlesList = [NSMutableArray arrayWithArray:array];
   }
-
+  
+  //微信分享的设置
+  [WXApi registerApp:WeChatAppID];
+  
   //单例获取本日所有内容
   [[StoryModel shareStory] getData];
   
   //设置应用启动默认白天模式
   [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isDay"];
   return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+  return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (void)onResp:(BaseResp *)resp {
+  if (resp.errCode == 0) {
+    JMCheckView *checkView = [JMCheckView CheckInView:self.window];
+    checkView.text = @"分享成功";
+    [self.window addSubview:checkView];
+    checkView.alpha = 0.0f;
+    checkView.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+    
+    [UIView animateWithDuration:0.3 delay:0.7 options:(UIViewAnimationOptionLayoutSubviews) animations:^{
+      checkView.alpha = 1.0f;
+      checkView.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+      [UIView animateWithDuration:0.5 animations:^{
+        checkView.alpha = 0.0f;
+      } completion:^(BOOL finished) {
+        [checkView removeFromSuperview];
+      }];
+    }];
+  } else {
+    NSLog(@"%d", resp.errCode);
+  }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

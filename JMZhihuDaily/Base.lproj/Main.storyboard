@@ -89,7 +89,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIM-XS-9AX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="729" y="1222"/>
+            <point key="canvasLocation" x="945" y="2178"/>
         </scene>
         <!--主题日报-->
         <scene sceneID="hPG-5L-3gZ">
@@ -220,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qmu-g2-kD5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1471" y="368"/>
+            <point key="canvasLocation" x="1659" y="1416"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="qWG-JW-kZH">
@@ -311,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUj-M9-G0c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1471" y="1222"/>
+            <point key="canvasLocation" x="1659" y="2178"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="Vfw-ac-1Zz">
@@ -333,7 +333,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="30F-Sh-69u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-708" y="368"/>
+            <point key="canvasLocation" x="-782" y="862"/>
         </scene>
         <!--Launch View Controller-->
         <scene sceneID="JDY-F3-pzz">
@@ -384,7 +384,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DbO-2K-uki" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1381" y="368"/>
+            <point key="canvasLocation" x="-782" y="104"/>
         </scene>
         <!--Palette View Controller-->
         <scene sceneID="RZP-OG-LfN">
@@ -421,7 +421,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0X-4G-S2W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1381" y="-371"/>
+            <point key="canvasLocation" x="-782" y="-653"/>
         </scene>
         <!--Side Menu View Controller-->
         <scene sceneID="5NY-Ic-rxN">
@@ -446,27 +446,17 @@
                                             <constraint firstAttribute="height" constant="126" id="iuR-ZO-9qT"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vU5-Iz-CHE">
-                                        <rect key="frame" x="22" y="99" width="30" height="26"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZp-2I-p2S">
+                                        <rect key="frame" x="25" y="30" width="35" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="fva-Lc-x6d"/>
-                                            <constraint firstAttribute="width" constant="30" id="gbF-gi-wT6"/>
+                                            <constraint firstAttribute="height" constant="35" id="uFk-bc-dyS"/>
+                                            <constraint firstAttribute="width" constant="35" id="y50-4i-Q8s"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                        <state key="normal" title="收藏">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vW7-Ba-cys">
-                                        <rect key="frame" x="86" y="99" width="30" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="8h4-vl-0vL"/>
-                                            <constraint firstAttribute="width" constant="30" id="ReY-Bb-XqJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                        <state key="normal" title="消息">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="normal" image="noneHead"/>
+                                        <connections>
+                                            <action selector="doLogin:" destination="Gl0-oe-wWX" eventType="touchUpInside" id="eEx-FD-Ap8"/>
+                                            <segue destination="ZzW-f5-3aW" kind="custom" identifier="sw_user" customClass="SWRevealViewControllerSeguePushController" id="BlS-pb-b6W"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FoG-bg-9JT">
                                         <rect key="frame" x="76" y="33" width="102" height="30"/>
@@ -483,35 +473,63 @@
                                             <segue destination="ZzW-f5-3aW" kind="custom" identifier="sw_user" customClass="SWRevealViewControllerSeguePushController" id="sRo-4b-7Ig"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZp-2I-p2S">
-                                        <rect key="frame" x="25" y="30" width="35" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="uFk-bc-dyS"/>
-                                            <constraint firstAttribute="width" constant="35" id="y50-4i-Q8s"/>
-                                        </constraints>
-                                        <state key="normal" image="noneHead"/>
-                                        <connections>
-                                            <action selector="doLogin:" destination="Gl0-oe-wWX" eventType="touchUpInside" id="eEx-FD-Ap8"/>
-                                            <segue destination="ZzW-f5-3aW" kind="custom" identifier="sw_user" customClass="SWRevealViewControllerSeguePushController" id="BlS-pb-b6W"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JA-3h-GQP">
-                                        <rect key="frame" x="90" y="77" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="qJQ-Te-ctF"/>
-                                            <constraint firstAttribute="width" constant="22" id="utm-GS-JK5"/>
-                                        </constraints>
-                                        <state key="normal" image="setting"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hq-VS-aOx">
                                         <rect key="frame" x="26" y="77" width="22" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="2fc-C2-J6o"/>
                                             <constraint firstAttribute="width" constant="22" id="O3z-wR-xPP"/>
                                         </constraints>
-                                        <state key="normal" image="setting"/>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="heart-love"/>
+                                        <connections>
+                                            <segue destination="iar-K0-ydi" kind="custom" identifier="sw_collect" customClass="SWRevealViewControllerSeguePushController" id="1PH-vj-GBs"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVK-L3-TtM">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vU5-Iz-CHE">
+                                        <rect key="frame" x="22" y="99" width="30" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="fva-Lc-x6d"/>
+                                            <constraint firstAttribute="width" constant="30" id="gbF-gi-wT6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <state key="normal" title="收藏">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JA-3h-GQP">
+                                        <rect key="frame" x="90" y="77" width="22" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="qJQ-Te-ctF"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="22" id="sSz-gL-B70"/>
+                                            <constraint firstAttribute="width" constant="22" id="utm-GS-JK5"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="recent-info"/>
+                                    </button>
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vW7-Ba-cys">
+                                        <rect key="frame" x="86" y="99" width="30" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="8h4-vl-0vL"/>
+                                            <constraint firstAttribute="width" constant="30" id="ReY-Bb-XqJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <state key="normal" title="消息">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhY-LQ-Iqj">
+                                        <rect key="frame" x="154" y="77" width="22" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="22" id="Vwd-pn-fZk"/>
+                                            <constraint firstAttribute="height" constant="22" id="cAx-gV-IiI"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="setting"/>
+                                        <connections>
+                                            <segue destination="aRK-t4-juJ" kind="custom" identifier="sw_set" customClass="SWRevealViewControllerSeguePushController" id="UYX-WC-2pC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVK-L3-TtM">
                                         <rect key="frame" x="150" y="99" width="30" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="ede-ws-WB8"/>
@@ -521,20 +539,6 @@
                                         <state key="normal" title="设置">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="aRK-t4-juJ" kind="custom" identifier="sw_set" customClass="SWRevealViewControllerSeguePushController" id="mXk-ps-peM"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhY-LQ-Iqj">
-                                        <rect key="frame" x="154" y="77" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="22" id="Vwd-pn-fZk"/>
-                                            <constraint firstAttribute="height" constant="22" id="cAx-gV-IiI"/>
-                                        </constraints>
-                                        <state key="normal" image="setting"/>
-                                        <connections>
-                                            <segue destination="aRK-t4-juJ" kind="custom" identifier="sw_set" customClass="SWRevealViewControllerSeguePushController" id="UYX-WC-2pC"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -742,7 +746,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v5I-J5-a14" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6" y="368"/>
+            <point key="canvasLocation" x="6" y="350"/>
         </scene>
         <!--User Info View Controller-->
         <scene sceneID="AJ5-EK-SwV">
@@ -821,7 +825,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fN2-mL-6CH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6" y="-1095"/>
+            <point key="canvasLocation" x="1659" y="-1013"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="5G0-Br-hwg">
+            <objects>
+                <viewController id="68x-Wy-UP5" customClass="CollectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2kk-ib-iGb"/>
+                        <viewControllerLayoutGuide type="bottom" id="PY3-Il-egD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Awi-GE-rjD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qGY-B7-tPq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R6V-iy-brH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1659" y="-172"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="363-mm-4iE">
@@ -1041,7 +1064,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8w4-oU-epY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-708" y="-371"/>
+            <point key="canvasLocation" x="6" y="-1013"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5ig-xU-MJ4">
@@ -1059,7 +1082,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="COy-tC-3CH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6" y="1222"/>
+            <point key="canvasLocation" x="-26" y="2178"/>
         </scene>
         <!--设置-->
         <scene sceneID="Z7j-lY-8ba">
@@ -1215,7 +1238,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L4C-uV-vdh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1471" y="-371"/>
+            <point key="canvasLocation" x="1659" y="593"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Rd-ef-GT6">
@@ -1233,7 +1256,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5kn-s4-65V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="757" y="368"/>
+            <point key="canvasLocation" x="945" y="1416"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Njy-Xb-quP">
@@ -1251,7 +1274,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dus-vT-6zs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6" y="-371"/>
+            <point key="canvasLocation" x="945" y="-1013"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GvV-Iz-a5v">
@@ -1269,12 +1292,31 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0yh-lt-OYk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="757" y="-371"/>
+            <point key="canvasLocation" x="945" y="593"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ieq-le-1xL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iar-K0-ydi" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Y5R-sW-zNJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="68x-Wy-UP5" kind="relationship" relationship="rootViewController" id="85N-DK-fSH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VAr-Wx-Kbm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="945" y="-172"/>
         </scene>
     </scenes>
     <resources>
         <image name="DemoLaunchImage" width="1080" height="1920"/>
         <image name="Logo" width="311" height="154"/>
+        <image name="heart-love" width="28" height="25"/>
         <image name="home" width="128" height="128"/>
         <image name="night" width="98" height="98"/>
         <image name="noneHead" width="110" height="110"/>
@@ -1282,14 +1324,14 @@
         <image name="placeHolderB" width="452" height="250"/>
         <image name="plus" width="128" height="128"/>
         <image name="qq" width="150" height="150"/>
-        <image name="setting" width="100" height="100"/>
+        <image name="recent-info" width="25" height="25"/>
+        <image name="setting" width="27" height="26"/>
         <image name="switch" width="128" height="128"/>
         <image name="weibo" width="150" height="150"/>
         <image name="weixin" width="150" height="150"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="04v-RH-TRn"/>
-        <segue reference="BlS-pb-b6W"/>
-        <segue reference="UYX-WC-2pC"/>
+        <segue reference="sRo-4b-7Ig"/>
+        <segue reference="dZ5-WQ-SSl"/>
     </inferredMetricsTieBreakers>
 </document>
