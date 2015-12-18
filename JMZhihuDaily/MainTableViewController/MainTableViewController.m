@@ -203,7 +203,7 @@
     }
   }
   //过去三天内容的设置
-  pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
+//  pastIndex = indexPath.row - [StoryModel shareStory].contentStory.count;
   TableContentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableContentViewCell"];
   [cell awakeFromNib];
   NSDictionary *Dic = [StoryModel shareStory].pastContentStory[[self findPastStoryIndex:indexPath.row]];
@@ -401,7 +401,7 @@
   }
   
   //设置navBar背景颜色
-  UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  UIColor *color;
   if (temp) {
     color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   } else {
@@ -423,6 +423,7 @@
   [_cycleScrollView setImageURLStringsGroup:temp1];
   [_cycleScrollView setTitlesGroup:temp2];
 }
+
 - (CAAnimation *)createRotationAnimation {
   
   CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
@@ -437,9 +438,11 @@
   
   return rotationAnimation;
 }
+
 - (void)animationDidStart:(CAAnimation *)anim {
   [[StoryModel shareStory] refreshData];
 }
+
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
   if (flag) {
     _refreshImageView.hidden = NO;
@@ -449,6 +452,7 @@
     [self.tableView reloadData];
   }
 }
+
 #pragma mark - 一些全局设置函数
 //拓展NavigationController以设置StatusBar
 - (UIViewController *)childViewControllerForStatusBarStyle {

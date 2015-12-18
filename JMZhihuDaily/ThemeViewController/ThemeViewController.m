@@ -344,7 +344,7 @@
     [_navImageView addSubview:_nightModeView];
   }
   //设置navBar背景颜色
-  UIColor *color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+  UIColor *color;
   if (temp) {
     color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
   } else {

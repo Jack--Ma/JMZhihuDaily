@@ -7,33 +7,55 @@
 //
 
 #import "CollectionViewController.h"
+#import "CollectionTableViewController.h"
+#import "CollectionCollectionViewController.h"
+#import "UserModel.h"
 
 @interface CollectionViewController ()
 
 @end
 
-@implementation CollectionViewController
+@implementation CollectionViewController {
+  CollectionTableViewController *_collectionTableViewController;
+  CollectionCollectionViewController *_collectionCollectionViewController;
+  
+  BOOL _isTable;
+}
 
 #pragma mark - 私有方法
 - (void)switchTheme {
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   if (temp) {
     self.view.backgroundColor = [UIColor whiteColor];
-//    self.tableView.backgroundColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
+    _collectionTableViewController.tableView.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
   } else {
     self.view.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
-//    self.tableView.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
+    _collectionTableViewController.tableView.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:69.0f/255.0f green:68.0f/255.0f blue:72.0f/255.0f alpha:1.0f]];
   }
-//  [self.tableView reloadData];
+  [_collectionTableViewController.tableView reloadData];
 }
 
 - (void)switchFormat {
-  
+  if (_isTable) {
+    [UIView animateWithDuration:0.3 animations:^{
+      [_collectionTableViewController.view setHidden:YES];
+    }];
+  } else {
+    [UIView animateWithDuration:0.3 animations:^{
+      [_collectionTableViewController.view setHidden:NO];
+    }];
+  }
+  _isTable = !_isTable;
 }
 
 #pragma mark - 初始化
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   //设置navBav格式
@@ -49,6 +71,11 @@
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
   [self.navigationItem setTitle:@"收藏"];
   
+  _collectionTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionTableViewController"];
+  [self addChildViewController:_collectionTableViewController];
+  [self.view addSubview:_collectionTableViewController.view];
+  _isTable = YES;
+  
   [self switchTheme];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchTheme) name:@"switchTheme" object:nil];
 }
@@ -57,15 +84,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

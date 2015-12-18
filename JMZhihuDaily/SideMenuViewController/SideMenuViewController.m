@@ -96,8 +96,7 @@
   //设置白天夜晚切换的button
   [self.switchView setTintColor:[UIColor lightGrayColor]];
   //设置点击右边界面返回
-  UITapGestureRecognizer *tap;
-  tap = [self.revealViewController tapGestureRecognizer];
+  [self.revealViewController tapGestureRecognizer];
 }
 - (void)viewDidLoad {
   [super viewDidLoad];

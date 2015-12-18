@@ -338,6 +338,7 @@
   } else {
     [self dismissViewControllerAnimated:YES completion:nil];
   }
+  [self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (IBAction)collectArticle:(id)sender {
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)self.newsId];
