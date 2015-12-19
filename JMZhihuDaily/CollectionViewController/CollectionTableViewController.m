@@ -14,25 +14,20 @@
 #import "UserModel.h"
 #import "WebViewController.h"
 
-static NSOperationQueue *queue;
-static NSMutableArray *imageArray;
-static NSMutableArray *idArray;
-static NSMutableArray *nameArray;
+NSOperationQueue *queue;
+NSMutableArray *imageArray;
+NSMutableArray *idArray;
+NSMutableArray *nameArray;
 
 @interface CollectionTableViewController ()
 
 @end
 
-@implementation CollectionTableViewController {
-
-}
+@implementation CollectionTableViewController
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   if (nameArray.count != [UserModel currentUser].articlesList.count) {
-    queue = [[NSOperationQueue alloc] init];
-    queue.maxConcurrentOperationCount = 1;
-    [queue waitUntilAllOperationsAreFinished];
     nameArray = [NSMutableArray arrayWithCapacity:0];
     imageArray = [NSMutableArray arrayWithCapacity:0];
     idArray = [NSMutableArray arrayWithCapacity:0];
@@ -43,6 +38,9 @@ static NSMutableArray *nameArray;
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  queue = [[NSOperationQueue alloc] init];
+  queue.maxConcurrentOperationCount = 1;
+  [queue waitUntilAllOperationsAreFinished];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,6 +126,7 @@ static NSMutableArray *nameArray;
       
       if (nameArray.count == [UserModel currentUser].articlesList.count) {
         [self.tableView reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshData" object:nil];
       }
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
       NSLog(@"%@", [error userInfo]);

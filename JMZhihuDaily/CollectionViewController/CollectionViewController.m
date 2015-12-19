@@ -28,24 +28,27 @@
   if (temp) {
     self.view.backgroundColor = [UIColor whiteColor];
     _collectionTableViewController.tableView.backgroundColor = [UIColor whiteColor];
+    _collectionCollectionViewController.collectionView.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
   } else {
     self.view.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
     _collectionTableViewController.tableView.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
+    _collectionCollectionViewController.collectionView.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:69.0f/255.0f green:68.0f/255.0f blue:72.0f/255.0f alpha:1.0f]];
   }
   [_collectionTableViewController.tableView reloadData];
+  [_collectionCollectionViewController.collectionView reloadData];
 }
 
 - (void)switchFormat {
   if (_isTable) {
-    [UIView animateWithDuration:0.3 animations:^{
-      [_collectionTableViewController.view setHidden:YES];
-    }];
+    [_collectionTableViewController.view setHidden:YES];
+    [_collectionCollectionViewController.collectionView reloadData];
+    [_collectionCollectionViewController.view setHidden:NO];
   } else {
-    [UIView animateWithDuration:0.3 animations:^{
-      [_collectionTableViewController.view setHidden:NO];
-    }];
+    [_collectionTableViewController.view setHidden:NO];
+    [_collectionTableViewController.tableView reloadData];
+    [_collectionCollectionViewController.view setHidden:YES];
   }
   _isTable = !_isTable;
 }
@@ -74,6 +77,10 @@
   _collectionTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionTableViewController"];
   [self addChildViewController:_collectionTableViewController];
   [self.view addSubview:_collectionTableViewController.view];
+  _collectionCollectionViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionColleViewController"];
+  [self addChildViewController:_collectionCollectionViewController];
+  [self.view addSubview:_collectionCollectionViewController.view];
+  _collectionCollectionViewController.view.hidden = YES;
   _isTable = YES;
   
   [self switchTheme];
@@ -85,4 +92,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end
