@@ -24,23 +24,13 @@ extern NSMutableArray *nameArray;
 
 @end
 
-@implementation CollectionCollectionViewController {
-//  NSIndexPath *_indexPath;
-}
-
-//- (void)viewDidAppear:(BOOL)animated {
-//  [super viewDidAppear:animated];
-//  if (nameArray.count != [UserModel currentUser].articlesList.count && _indexPath) {
-//    NSLog(@"%ld", _indexPath.row);
-//    NSIndexPath *indexPath = _indexPath;
-//    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-//  }
-//}
+@implementation CollectionCollectionViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
   [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:@"refreshData" object:nil];
+  self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0, 0, 0, 0);
 }
 
 - (void)didReceiveMemoryWarning {

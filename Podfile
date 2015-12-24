@@ -8,6 +8,7 @@ pod 'AFNetworking', '~> 2.0'
 pod 'SDWebImage', '~>3.7'
 pod 'AVOSCloud'
 pod 'FrameAccessor'
+pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
 
 end
 

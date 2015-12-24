@@ -16,6 +16,7 @@
 #define AVOSCloudAppKey @"BT076YAKsGX6qkemmdVAya6d"
 
 #define WeChatAppID @"wxd590c71b8bdb8dc3"
+#define WeiboAppID @"1369443078"
 
 @implementation AppDelegate{
 
@@ -43,9 +44,13 @@
     [UserModel currentUser].articlesList = [NSMutableArray arrayWithArray:array];
   }
   
-  //微信分享的设置
+  //注册微信分享
   [WXApi registerApp:WeChatAppID];
   
+  //注册微博分享
+//  [WeiboSDK enableDebugMode:YES];
+  [WeiboSDK registerApp:WeiboAppID];
+
   //单例获取本日所有内容
   [[StoryModel shareStory] getData];
   
@@ -54,34 +59,34 @@
   return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-  return [WXApi handleOpenURL:url delegate:self];
-}
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  return [WXApi handleOpenURL:url delegate:self];
+//  NSLog(@"%@", url);
+  if ([url.scheme isEqualToString:@"wxd590c71b8bdb8dc3"]) {
+    return [WXApi handleOpenURL:url delegate:self];
+  }
+  if ([url.scheme isEqualToString:@"wb1369443078"]) {
+    return [WeiboSDK handleOpenURL:url delegate:self];
+  }
+  return nil;
 }
 
 - (void)onResp:(BaseResp *)resp {
   if (resp.errCode == 0) {
-    JMCheckView *checkView = [JMCheckView CheckInView:self.window];
-    checkView.text = @"分享成功";
-    [self.window addSubview:checkView];
-    checkView.alpha = 0.0f;
-    checkView.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
-    
-    [UIView animateWithDuration:0.3 delay:0.7 options:(UIViewAnimationOptionLayoutSubviews) animations:^{
-      checkView.alpha = 1.0f;
-      checkView.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-      [UIView animateWithDuration:0.5 animations:^{
-        checkView.alpha = 0.0f;
-      } completion:^(BOOL finished) {
-        [checkView removeFromSuperview];
-      }];
-    }];
+    [self shareSuccess:@"分享成功"];
   } else {
-    NSLog(@"%d", resp.errCode);
+    NSLog(@"error: %d", resp.errCode);
+  }
+}
+
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request {
+  
+}
+
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response {
+  if (response.statusCode == 0) {
+    [self shareSuccess:@"分享成功"];
+  } else {
+    NSLog(@"error: %ld", (long)response.statusCode);
   }
 }
 
@@ -107,4 +112,22 @@
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)shareSuccess: (NSString *)title {
+  JMCheckView *checkView = [JMCheckView CheckInView:self.window];
+  checkView.text = title;
+  [self.window addSubview:checkView];
+  checkView.alpha = 0.0f;
+  checkView.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+  
+  [UIView animateWithDuration:0.2 delay:0.7 options:(UIViewAnimationOptionLayoutSubviews) animations:^{
+    checkView.alpha = 1.0f;
+    checkView.transform = CGAffineTransformIdentity;
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.3 delay:0.5 options:(UIViewAnimationOptionShowHideTransitionViews) animations:^{
+      checkView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+      [checkView removeFromSuperview];
+    }];
+  }];
+}
 @end

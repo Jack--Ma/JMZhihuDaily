@@ -10,13 +10,17 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "WebViewController.h"
 #import "UserModel.h"
+#import "ShareView.h"
 
-@interface WebViewController () <UIScrollViewDelegate, UIWebViewDelegate, ParallaxHeaderViewDelegate>
+#define PHONEHEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+@interface WebViewController () <UIScrollViewDelegate, UIWebViewDelegate, ParallaxHeaderViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *collectButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *supportButton;
+@property (nonatomic, weak) IBOutlet ShareView *shareView;
 
 @end
 
@@ -37,6 +41,12 @@
   BOOL _statusBarFlat;
   
   BOOL _isCollected;
+  BOOL _isShare;
+  UIView *_backView;
+  NSString *_articleTitle;
+  NSString *_articleImageURL;
+  UIImage *_articleImage;
+  NSString *_articleURL;
 }
 
 - (void)viewDidLoad {
@@ -63,7 +73,7 @@
   self.webView.delegate = self;
   self.webView.scrollView.delegate = self;
   self.webView.scrollView.clipsToBounds = NO;
-  self.webView.scrollView.showsVerticalScrollIndicator = NO;
+  self.webView.scrollView.showsVerticalScrollIndicator = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,6 +104,9 @@
     NSString *image = data[@"image"];
     NSString *imageSource = data[@"image_source"];
     NSString *titleString = data[@"title"];
+    _articleTitle = titleString;
+    _articleImageURL = image;
+    _articleURL = data[@"share_url"];
     if (image && imageSource && titleString) {
       _hasImage = YES;
       [self loadParallaxHeader:image imageSource:imageSource titleString:titleString];
@@ -227,7 +240,10 @@
   //初始化图片
   _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 223)];
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
-  [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL]];
+  [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    _articleImage = image;
+  }];
+//  [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL]];
   
   //保存初始frame
   _originalHeight = _imageView.frame.size.height;
@@ -331,6 +347,23 @@
       *stop = YES;
     }
   }];
+
+  //退出分享界面的手势
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeCancel)];
+  tap.delegate = self;
+  tap.cancelsTouchesInView = NO;
+  
+  //上层暗色背景
+  [_backView removeFromSuperview];
+  _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 44.0)];
+  _backView.backgroundColor = [UIColor blackColor];
+  _backView.alpha = 0.0;
+  [_backView addGestureRecognizer:tap];
+  
+  //分享界面
+  _isShare = NO;
+  self.shareView.hidden = YES;
+  self.shareView.transform = CGAffineTransformMakeTranslation(0, 194.0);//移出屏幕
 }
 - (IBAction)backToLastView:(id)sender {
   if (self.isThemeStory) {
@@ -366,7 +399,29 @@
   [[UserModel currentUser] save];
 }
 - (IBAction)shareArticle:(id)sender {
-  
+  self.shareView.articleTitle = _articleTitle;
+  self.shareView.articleImageURL = _articleImageURL;
+  self.shareView.articleImage = _articleImage;
+  self.shareView.articleURL = _articleURL;
+  if (!_isShare) {
+    //出现分享界面
+    [UIView animateWithDuration:0.3 animations:^{
+      _backView.alpha = 0.2;
+      self.shareView.hidden = NO;
+      self.shareView.transform = CGAffineTransformIdentity;
+    }];
+    [self.view insertSubview:_backView belowSubview:self.shareView];
+  } else {
+    //收回分享界面
+    [UIView animateWithDuration:0.3 animations:^{
+      self.shareView.transform = CGAffineTransformMakeTranslation(0, 194.0);
+      _backView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+      self.shareView.hidden = YES;
+      [_backView removeFromSuperview];
+    }];
+  }
+  _isShare = !_isShare;
 }
 - (IBAction)supportArticle:(id)sender {
   
@@ -374,7 +429,24 @@
 - (IBAction)commentArticle:(id)sender {
   
 }
-
+- (void)makeCancel {
+  //收回分享界面
+  [UIView animateWithDuration:0.3 animations:^{
+    self.shareView.transform = CGAffineTransformMakeTranslation(0, 194.0);
+    _backView.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    self.shareView.hidden = YES;
+    [_backView removeFromSuperview];
+  }];
+  _isShare = !_isShare;
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+  //当触摸在_backView范围内
+  if ([_backView isDescendantOfView:self.view]) {
+    return touch.view == _backView;
+  }
+  return YES;
+}
 #pragma mark - 其他函数
 - (void)loadNewArticle {
 //  NSLog(@"loadNewArticle");

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "838DF8AAB6B9ED31EA68E67F"
+               BlueprintIdentifier = "9BEB8C8095D50C0EC490B003"
                BuildableName = "libFrameAccessor.a"
                BlueprintName = "FrameAccessor"
                ReferencedContainer = "container:Pods.xcodeproj">

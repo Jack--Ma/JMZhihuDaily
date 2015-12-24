@@ -24,7 +24,7 @@
                                roundf(self.bounds.size.height - boxHeight)/2.0f, boxWidth, boxHeight);
   //绘制圆角矩形，提供原始矩形和边缘的角度
   UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:boxRect cornerRadius:10.0f];
-  [[UIColor colorWithWhite:0.3f alpha:0.5f] setFill];
+  [[UIColor colorWithWhite:0.3f alpha:1.0f] setFill];
   [roundedRect fill];
   
   //放入图片

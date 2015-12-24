@@ -13,6 +13,7 @@
 		C41314DB1C02E637004A55CE /* EditorsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DA1C02E637004A55CE /* EditorsTableViewController.m */; };
 		C41314DE1C02EC17004A55CE /* EditorsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */; };
 		C44F22121C2501A500725215 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44F22111C2501A500725215 /* CollectionViewCell.m */; };
+		C45F666A1C27E3BB001DEDC0 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = C45F66691C27E3BB001DEDC0 /* ShareView.m */; };
 		C46413B61C09CB4C008064E1 /* SwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */; };
 		C46413B91C09D187008064E1 /* SetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B81C09D187008064E1 /* SetTableViewCell.m */; };
 		C46413BC1C09DE73008064E1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413BB1C09DE73008064E1 /* ShareViewController.m */; };
@@ -87,6 +88,8 @@
 		C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditorsTableViewCell.m; path = ThemeViewController/EditorsTableViewCell.m; sourceTree = "<group>"; };
 		C44F22101C2501A500725215 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewCell.h; path = CollectionViewController/CollectionViewCell.h; sourceTree = "<group>"; };
 		C44F22111C2501A500725215 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewCell.m; path = CollectionViewController/CollectionViewCell.m; sourceTree = "<group>"; };
+		C45F66681C27E3BB001DEDC0 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
+		C45F66691C27E3BB001DEDC0 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		C46413B41C09CB4C008064E1 /* SwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchTableViewCell.h; path = SetTableViewController/SwitchTableViewCell.h; sourceTree = "<group>"; };
 		C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwitchTableViewCell.m; path = SetTableViewController/SwitchTableViewCell.m; sourceTree = "<group>"; };
 		C46413B71C09D187008064E1 /* SetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetTableViewCell.h; path = SetTableViewController/SetTableViewCell.h; sourceTree = "<group>"; };
@@ -493,6 +496,8 @@
 				C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */,
 				C4F15D3A1BEF443400108D55 /* WebViewController.h */,
 				C4F15D3B1BEF443400108D55 /* WebViewController.m */,
+				C45F66681C27E3BB001DEDC0 /* ShareView.h */,
+				C45F66691C27E3BB001DEDC0 /* ShareView.m */,
 				C4C3C1271BE8A91900AA1E73 /* Model */,
 				C4F15D331BEEE05600108D55 /* LaunchViewController */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
@@ -729,6 +734,7 @@
 				C48D70B01BFF0229000DF7CA /* ThemeViewController.m in Sources */,
 				C48D70A21BFF0205000DF7CA /* ContentSideCell.m in Sources */,
 				C48D70BA1BFF0266000DF7CA /* LoginViewController.m in Sources */,
+				C45F666A1C27E3BB001DEDC0 /* ShareView.m in Sources */,
 				C4C3C10F1BE895C500AA1E73 /* AppDelegate.m in Sources */,
 				C4847D4C1BEA297E000EA5B3 /* SDCycleScrollView.m in Sources */,
 				C4790CFC1C1ACEEE0000AE3F /* JMCheckView.m in Sources */,

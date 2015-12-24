@@ -20,6 +20,7 @@
   CollectionCollectionViewController *_collectionCollectionViewController;
   
   BOOL _isTable;
+  UIBarButtonItem *_rightBarButton;
 }
 
 #pragma mark - 私有方法
@@ -42,10 +43,12 @@
 
 - (void)switchFormat {
   if (_isTable) {
+    [_rightBarButton setImage:[UIImage imageNamed:@"collection"]];
     [_collectionTableViewController.view setHidden:YES];
     [_collectionCollectionViewController.collectionView reloadData];
     [_collectionCollectionViewController.view setHidden:NO];
   } else {
+    [_rightBarButton setImage:[UIImage imageNamed:@"menu"]];
     [_collectionTableViewController.view setHidden:NO];
     [_collectionTableViewController.tableView reloadData];
     [_collectionCollectionViewController.view setHidden:YES];
@@ -68,9 +71,9 @@
   UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftBarButton.tintColor = [UIColor whiteColor];
   [self.navigationItem setLeftBarButtonItem:leftBarButton];
-  UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:UIBarButtonItemStylePlain target:self action:@selector(switchFormat)];
-  rightBarButton.tintColor = [UIColor whiteColor];
-  [self.navigationItem setRightBarButtonItem:rightBarButton];
+  _rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:UIBarButtonItemStylePlain target:self action:@selector(switchFormat)];
+  _rightBarButton.tintColor = [UIColor whiteColor];
+  [self.navigationItem setRightBarButtonItem:_rightBarButton];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
   [self.navigationItem setTitle:@"收藏"];
   
