@@ -75,7 +75,7 @@
 - (void) insertAnotherTransparentGradient {
 //    UIColor *colorOne = [UIColor colorWithRed:(19/255.0)  green:(26/255.0)  blue:(32/255.0)  alpha:0.0];
 //    UIColor *colorTwo = [UIColor colorWithRed:(19/255.0)  green:(26/255.0)  blue:(32/255.0)  alpha:1.0];
-  //这里修改过
+  //这里修改过, 目的是白天夜间模式的切换
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   UIColor *colorTwo, *colorOne;
   if (temp) {

@@ -12,6 +12,8 @@
 		C4045B8E1BFDEE1200196582 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4045B8D1BFDEE1200196582 /* DACircularProgressView.m */; };
 		C41314DB1C02E637004A55CE /* EditorsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DA1C02E637004A55CE /* EditorsTableViewController.m */; };
 		C41314DE1C02EC17004A55CE /* EditorsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */; };
+		C4180BBF1C2C0A5500FD5683 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4180BBE1C2C0A5500FD5683 /* CommentsViewController.m */; };
+		C4180BC21C2D447900FD5683 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4180BC11C2D447900FD5683 /* CommentTableViewCell.m */; };
 		C44F22121C2501A500725215 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44F22111C2501A500725215 /* CollectionViewCell.m */; };
 		C45F666A1C27E3BB001DEDC0 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = C45F66691C27E3BB001DEDC0 /* ShareView.m */; };
 		C46413B61C09CB4C008064E1 /* SwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */; };
@@ -86,6 +88,10 @@
 		C41314DA1C02E637004A55CE /* EditorsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditorsTableViewController.m; path = ThemeViewController/EditorsTableViewController.m; sourceTree = "<group>"; };
 		C41314DC1C02EC17004A55CE /* EditorsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorsTableViewCell.h; path = ThemeViewController/EditorsTableViewCell.h; sourceTree = "<group>"; };
 		C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditorsTableViewCell.m; path = ThemeViewController/EditorsTableViewCell.m; sourceTree = "<group>"; };
+		C4180BBD1C2C0A5400FD5683 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
+		C4180BBE1C2C0A5500FD5683 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		C4180BC01C2D447900FD5683 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		C4180BC11C2D447900FD5683 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		C44F22101C2501A500725215 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewCell.h; path = CollectionViewController/CollectionViewCell.h; sourceTree = "<group>"; };
 		C44F22111C2501A500725215 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewCell.m; path = CollectionViewController/CollectionViewCell.m; sourceTree = "<group>"; };
 		C45F66681C27E3BB001DEDC0 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
@@ -298,6 +304,21 @@
 			name = EditorsViewController;
 			sourceTree = "<group>";
 		};
+		C4180BC31C2E322600FD5683 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				C4F15D3A1BEF443400108D55 /* WebViewController.h */,
+				C4F15D3B1BEF443400108D55 /* WebViewController.m */,
+				C45F66681C27E3BB001DEDC0 /* ShareView.h */,
+				C45F66691C27E3BB001DEDC0 /* ShareView.m */,
+				C4180BBD1C2C0A5400FD5683 /* CommentsViewController.h */,
+				C4180BBE1C2C0A5500FD5683 /* CommentsViewController.m */,
+				C4180BC01C2D447900FD5683 /* CommentTableViewCell.h */,
+				C4180BC11C2D447900FD5683 /* CommentTableViewCell.m */,
+			);
+			name = WebView;
+			sourceTree = "<group>";
+		};
 		C4790CEC1C1A837B0000AE3F /* WeChat */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,11 +515,8 @@
 			children = (
 				C4C3C10D1BE895C500AA1E73 /* AppDelegate.h */,
 				C4C3C10E1BE895C500AA1E73 /* AppDelegate.m */,
-				C4F15D3A1BEF443400108D55 /* WebViewController.h */,
-				C4F15D3B1BEF443400108D55 /* WebViewController.m */,
-				C45F66681C27E3BB001DEDC0 /* ShareView.h */,
-				C45F66691C27E3BB001DEDC0 /* ShareView.m */,
 				C4C3C1271BE8A91900AA1E73 /* Model */,
+				C4180BC31C2E322600FD5683 /* WebView */,
 				C4F15D331BEEE05600108D55 /* LaunchViewController */,
 				C4C3C14A1BE9CE0A00AA1E73 /* MainTableViewController */,
 				C4058A7B1BE9D4F200FCD01C /* SideViewController */,
@@ -721,11 +739,13 @@
 				C48D70861BFF0119000DF7CA /* SCPullRefreshViewController.m in Sources */,
 				C4847D4B1BEA297E000EA5B3 /* SDCollectionViewCell.m in Sources */,
 				C48D70B91BFF0266000DF7CA /* DescriptionViewController.m in Sources */,
+				C4180BBF1C2C0A5500FD5683 /* CommentsViewController.m in Sources */,
 				C4045B8E1BFDEE1200196582 /* DACircularProgressView.m in Sources */,
 				C48D70BF1BFF2BDA000DF7CA /* JMPullRefreshTableViewController.m in Sources */,
 				C48D70AE1BFF0229000DF7CA /* ThemeTextTableViewCell.m in Sources */,
 				C48D70BC1BFF0266000DF7CA /* UserInfoViewController.m in Sources */,
 				C48D70BB1BFF0266000DF7CA /* UserInfoCell.m in Sources */,
+				C4180BC21C2D447900FD5683 /* CommentTableViewCell.m in Sources */,
 				C41314DB1C02E637004A55CE /* EditorsTableViewController.m in Sources */,
 				C4847D621BEA2A94000EA5B3 /* MSWeakTimer.m in Sources */,
 				C4F3AEF21C1C02F100EEACA5 /* CollectionCollectionViewController.m in Sources */,

@@ -286,6 +286,7 @@
    //跳转界面
   [self presentViewController:webViewController animated:YES completion:nil];
 }
+
 #pragma mark - SDCycleScrollViewDelegate & ParallaxHeaderViewDelegate
 //collectionView点击事件
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
@@ -318,7 +319,7 @@
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   UIColor *color;
   if (temp) {
-    color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+    color = [UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
   } else {
     color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
   }
@@ -403,7 +404,7 @@
   //设置navBar背景颜色
   UIColor *color;
   if (temp) {
-    color = [UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f];
+    color = [UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
   } else {
     color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
   }

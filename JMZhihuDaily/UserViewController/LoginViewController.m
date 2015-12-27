@@ -113,6 +113,7 @@
     }];
   }];
 }
+
 #pragma mark - textFieldDelegate
 - (IBAction)nameEndEdit:(id)sender {
   [self.idTextField becomeFirstResponder];
@@ -145,13 +146,11 @@
   
   UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:(UIBarButtonItemStylePlain) target:self action:@selector(doCancel)];
   [self.navigationItem setLeftBarButtonItem:leftBarButton animated:YES];
-  
+  [leftBarButton setTitlePositionAdjustment:UIOffsetMake(15.0, 0.0) forBarMetrics:UIBarMetricsDefault];
+
   _inOrOut = YES;
   self.nameTextField.hidden = _inOrOut;
   self.loginButton.layer.cornerRadius = 8.0;
 }
-
-
-
 
 @end

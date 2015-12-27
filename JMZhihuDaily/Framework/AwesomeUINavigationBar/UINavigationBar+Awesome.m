@@ -28,7 +28,7 @@ static char overlayKey;
         [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
         self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, CGRectGetHeight(self.bounds) + 20)];
         self.overlay.userInteractionEnabled = NO;
-        self.overlay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+//        self.overlay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [self insertSubview:self.overlay atIndex:0];
     }
     self.overlay.backgroundColor = backgroundColor;

@@ -50,30 +50,32 @@
 - (IBAction)setNightOrDay:(id)sender {
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   temp = !temp;
-  if (!temp) {
-    [self.view setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
-    [self.tableView setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
-    [self.headImageView setTintColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
-    [self.footImageView setTintColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
-    [self.switchView setImage:[UIImage imageNamed:@"sun"] forState:UIControlStateNormal];
-    [self.switchButton setTitle:@"白天" forState:UIControlStateNormal];
-  } else {
+  [[NSUserDefaults standardUserDefaults] setBool:temp forKey:@"isDay"];
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"switchTheme" object:nil];
+  
+  [self switchTheme:temp];
+  [self.tableView reloadData];
+  [_backView refreshView];
+}
+
+- (void)switchTheme:(BOOL)temp {
+  if (temp) {
     [self.view setBackgroundColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
     [self.tableView setBackgroundColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
     [self.headImageView setTintColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
     [self.footImageView setTintColor:[UIColor colorWithRed:32.0f/255.0f green:42.0f/255.0f blue:52.0f/255.0f alpha:1]];
     [self.switchView setImage:[UIImage imageNamed:@"night"] forState:UIControlStateNormal];
     [self.switchButton setTitle:@"夜间" forState:UIControlStateNormal];
+  } else {
+    [self.view setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.headImageView setTintColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.footImageView setTintColor:[UIColor colorWithRed:31.0f/255.0f green:30.0f/255.0f blue:34.0f/255.0f alpha:1]];
+    [self.switchView setImage:[UIImage imageNamed:@"sun"] forState:UIControlStateNormal];
+    [self.switchButton setTitle:@"白天" forState:UIControlStateNormal];
   }
-  [[NSUserDefaults standardUserDefaults] setBool:temp forKey:@"isDay"];
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"switchTheme" object:nil];
-  [self.tableView reloadData];
-  [_backView refreshView];
 }
 
-- (void)takeSide {
-  
-}
 #pragma mark - init
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -119,6 +121,9 @@
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   self.tableView.rowHeight = 50.5f;
+  
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  [self switchTheme:temp];
 }
 
 #pragma mark - tableView

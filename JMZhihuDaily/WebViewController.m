@@ -11,6 +11,7 @@
 #import "WebViewController.h"
 #import "UserModel.h"
 #import "ShareView.h"
+#import "CommentsViewController.h"
 
 #define PHONEHEIGHT ([UIScreen mainScreen].bounds.size.height)
 
@@ -18,28 +19,32 @@
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UIView *statusBarBackground;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *collectButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *supportButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *collectButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *supportButton;
+@property (nonatomic ,weak) IBOutlet UIBarButtonItem *commentButtom;
 @property (nonatomic, weak) IBOutlet ShareView *shareView;
 
 @end
 
 @implementation WebViewController {
+  //webHeader相关
   ParallaxHeaderView *_webHeaderView;
   UIImageView *_imageView;
   CGFloat _originalHeight;
   myUILabel *_titleLabel;
   UILabel *_sourceLabel;
   GradientView *_blurView;
-  UIImageView *_refreshImageView;
+  UIImageView *_refreshImageView;//加载上一篇的箭头
+  UILabel *_refreshLabel;
   
-  
+  //webView相关
   BOOL _hasImage;
   BOOL _arrowState;//检测箭头方向
   BOOL _triggered;//检测下滑时手指是否按住屏幕
   BOOL _dragging;//检测手指是否在屏幕上滑动
   BOOL _statusBarFlat;
   
+  //webFooter相关
   BOOL _isCollected;
   BOOL _isShare;
   UIView *_backView;
@@ -47,6 +52,11 @@
   NSString *_articleImageURL;
   UIImage *_articleImage;
   NSString *_articleURL;
+  BOOL _isSupport;
+  NSInteger _supportCounts;
+  NSInteger _longCommentCount;
+  NSInteger _shortCommentCount;
+  ZFModalTransitionAnimator *_animator;
 }
 
 - (void)viewDidLoad {
@@ -64,7 +74,7 @@
   //避免wenScrollView的contentView过长，挡住底层View
   self.view.clipsToBounds = YES;
   
-  //隐藏默认返回button但保留左划返回
+  //隐藏默认返回button但保留左划返回，只在上一级存在navigation是有用
   self.navigationItem.hidesBackButton = YES;
   self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
@@ -74,6 +84,10 @@
   self.webView.scrollView.delegate = self;
   self.webView.scrollView.clipsToBounds = NO;
   self.webView.scrollView.showsVerticalScrollIndicator = YES;
+  
+  //夜间模式添加一个暗色图层
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  [self switchTheme: temp];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -87,6 +101,7 @@
   [super viewWillDisappear:animated];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
+
 #pragma mark - webView
 - (void)loadWebView:(NSInteger)newsId {
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)newsId];
@@ -237,13 +252,13 @@
 #pragma mark - webHeaderView
 - (void)loadParallaxHeader:(NSString *)imageURL imageSource:(NSString *)imageSource titleString:(NSString *)titleString {
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+  [_webHeaderView removeFromSuperview];
   //初始化图片
   _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 223)];
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
   [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     _articleImage = image;
   }];
-//  [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL]];
   
   //保存初始frame
   _originalHeight = _imageView.frame.size.height;
@@ -311,17 +326,19 @@
   [self setNeedsStatusBarAppearanceUpdate];
   self.statusBarBackground.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
   
-  UILabel *refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, -45, self.view.frame.size.width, 45)];
-  refreshLabel.text = @"载入上一篇";
+  [_refreshLabel removeFromSuperview];
+  _refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, -45, self.view.frame.size.width, 45)];
+  _refreshLabel.text = @"载入上一篇";
   if (self.index == 0) {
-    refreshLabel.text = @"已经是第一篇了";
-    refreshLabel.frame = CGRectMake(0, -45, self.view.frame.size.width, 45);
+    _refreshLabel.text = @"已经是第一篇了";
+    _refreshLabel.frame = CGRectMake(0, -45, self.view.frame.size.width, 45);
   }
-  refreshLabel.textAlignment = NSTextAlignmentCenter;
-  refreshLabel.textColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
-  refreshLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-  [self.webView.scrollView addSubview:refreshLabel];
+  _refreshLabel.textAlignment = NSTextAlignmentCenter;
+  _refreshLabel.textColor = [UIColor colorWithRed:215.0f/255.0f green:215.0f/255.0f blue:215.0f/255.0f alpha:1];
+  _refreshLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+  [self.webView.scrollView addSubview:_refreshLabel];
   
+  [_refreshImageView removeFromSuperview];
   if (self.index != 0) {
     //载入上一篇的图片
     _refreshImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-47, -30, 15, 15)];
@@ -334,6 +351,7 @@
 
 #pragma mark - webFooterView
 - (void)loadFooterView:(NSInteger)newsId {
+  //设置收藏button的颜色
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)newsId];
   NSArray *array = [UserModel currentUser].articlesList;
   _isCollected = NO;
@@ -353,17 +371,39 @@
   tap.delegate = self;
   tap.cancelsTouchesInView = NO;
   
-  //上层暗色背景
+  //点击分享后显示上层的暗色背景
   [_backView removeFromSuperview];
   _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 44.0)];
   _backView.backgroundColor = [UIColor blackColor];
   _backView.alpha = 0.0;
   [_backView addGestureRecognizer:tap];
   
-  //分享界面
+  //设置分享界面
   _isShare = NO;
   self.shareView.hidden = YES;
   self.shareView.transform = CGAffineTransformMakeTranslation(0, 194.0);//移出屏幕
+  
+  //设置点赞与评论button
+  _isSupport = NO;
+  NSString *extraString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/story-extra/%ld", (long)self.newsId];
+  NSURL *url = [NSURL URLWithString:extraString];
+  NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  
+  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+  operation.responseSerializer = [AFJSONResponseSerializer serializer];
+  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    NSDictionary *dic = (NSDictionary *)responseObject;
+    _supportCounts = [dic[@"popularity"] integerValue];
+    NSInteger commentCounts = [dic[@"comments"] integerValue];
+    _longCommentCount = [dic[@"long_comments"] integerValue];
+    _shortCommentCount = [dic[@"short_comments"] integerValue];
+    
+    [self.supportButton setTitle: [NSString stringWithFormat:@"赞%ld", _supportCounts]];
+    [self.commentButtom setTitle:[NSString stringWithFormat:@"评论%ld", (long)commentCounts]];
+  } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    NSLog(@"error: %@", [error userInfo]);
+  }];
+  [operation start];
 }
 - (IBAction)backToLastView:(id)sender {
   if (self.isThemeStory) {
@@ -424,13 +464,38 @@
   _isShare = !_isShare;
 }
 - (IBAction)supportArticle:(id)sender {
-  
+  if (_isSupport) {
+    _supportCounts--;
+    [self.supportButton setTitle:[NSString stringWithFormat:@"赞%ld", (long)_supportCounts]];
+    [self.supportButton setTintColor:[UIColor lightGrayColor]];
+  } else {
+    _supportCounts++;
+    [self.supportButton setTitle:[NSString stringWithFormat:@"赞%ld", (long)_supportCounts]];
+    [self.supportButton setTintColor:[UIColor orangeColor]];
+  }
+  _isSupport = !_isSupport;
 }
 - (IBAction)commentArticle:(id)sender {
+  CommentsViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
+  vc.longCommentCounts = _longCommentCount;
+  vc.shortCommentCounts = _shortCommentCount;
+  vc.newsId = self.newsId;
   
+  //类似push的动画效果，注意：_animator必须在全局声明，否则弹出的界面无法左滑返回
+  _animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:vc];
+  _animator.dragable = YES;
+  _animator.bounces = NO;
+  _animator.direction = ZFModalTransitonDirectionRight;
+  _animator.behindViewAlpha = 1.0;
+  _animator.behindViewScale = 1.0;
+  _animator.transitionDuration = 0.7;
+  
+  vc.transitioningDelegate = _animator;
+  
+  [self presentViewController:vc animated:YES completion:nil];
 }
+//收回分享界面
 - (void)makeCancel {
-  //收回分享界面
   [UIView animateWithDuration:0.3 animations:^{
     self.shareView.transform = CGAffineTransformMakeTranslation(0, 194.0);
     _backView.alpha = 0.0;
@@ -440,14 +505,25 @@
   }];
   _isShare = !_isShare;
 }
+//当触摸在_backView范围内，收回分享界面
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-  //当触摸在_backView范围内
   if ([_backView isDescendantOfView:self.view]) {
     return touch.view == _backView;
   }
   return YES;
 }
+
 #pragma mark - 其他函数
+- (void)switchTheme:(BOOL)temp {
+  if (!temp) {
+    //夜间下添加黑色图层
+    UIView *blackView = [[UIView alloc] initWithFrame:self.view.frame];
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.4;
+    blackView.userInteractionEnabled = NO;
+    [self.view addSubview:blackView];
+  }
+}
 - (void)loadNewArticle {
 //  NSLog(@"loadNewArticle");
   //生成动画初始位置

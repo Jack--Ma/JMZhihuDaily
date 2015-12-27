@@ -24,7 +24,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:1.0f/255.0f green:131.0f/255.0f blue:209.0f/255.0f alpha:1.0f]];
+  [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
 
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   if (temp) {

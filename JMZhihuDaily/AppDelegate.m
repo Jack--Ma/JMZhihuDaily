@@ -54,8 +54,9 @@
   //单例获取本日所有内容
   [[StoryModel shareStory] getData];
   
-  //设置应用启动默认白天模式
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isDay"];
+  //设置应用启动浏览模式
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  [[NSUserDefaults standardUserDefaults] setBool:temp forKey:@"isDay"];
   return YES;
 }
 
@@ -110,6 +111,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  [[NSUserDefaults standardUserDefaults] setBool:temp forKey:@"isDay"];
 }
 
 - (void)shareSuccess: (NSString *)title {
