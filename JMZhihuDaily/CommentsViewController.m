@@ -114,6 +114,23 @@
 }
 
 - (IBAction)comment:(id)sender {
+  JMCheckView *checkView = [JMCheckView CheckInView:self.view];
+  checkView.text = @"评论成功";
+  [self.view addSubview:checkView];
+  checkView.alpha = 0.0f;
+  checkView.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+  
+  [UIView animateWithDuration:0.2 animations:^{
+    checkView.alpha = 1.0f;
+    checkView.transform = CGAffineTransformIdentity;
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.3 delay:0.5 options:(UIViewAnimationOptionShowHideTransitionViews) animations:^{
+      checkView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+      [checkView removeFromSuperview];
+    }];
+  }];
+  self.textField.text = @"";
   [self.textField resignFirstResponder];
 }
 
@@ -141,24 +158,6 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-  NSLog(@"%@", textField.text);
-  JMCheckView *checkView = [JMCheckView CheckInView:self.view];
-  checkView.text = @"评论成功";
-  [self.view addSubview:checkView];
-  checkView.alpha = 0.0f;
-  checkView.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
-  
-  [UIView animateWithDuration:0.2 animations:^{
-    checkView.alpha = 1.0f;
-    checkView.transform = CGAffineTransformIdentity;
-  } completion:^(BOOL finished) {
-    [UIView animateWithDuration:0.3 delay:0.5 options:(UIViewAnimationOptionShowHideTransitionViews) animations:^{
-      checkView.alpha = 0.0f;
-    } completion:^(BOOL finished) {
-      [checkView removeFromSuperview];
-    }];
-  }];
-  self.textField.text = @"";
   [self.textField resignFirstResponder];
 }
 

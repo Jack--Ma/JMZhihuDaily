@@ -11,6 +11,21 @@ README in JMZhihuDaily
 引用https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-分析 知乎日报的API <br>
 感谢大神提供的API接口，才得以完成这个App
 
+提供测试帐号<br>
+帐号：jackma  密码：123456
+
+###JMZhihuDailt 1.2更新（2015.12.27）<br>
+* 实现文章界面夜间模式
+* 实现文章收藏功能，使用LeanCloud与帐号同步
+* 实现文章分享功能，支持分享到微信、微博、短信、邮件等
+* 实现文章点赞...其实只是在本地
+* 新增文章评论界面，包含短评、长评、以及发表评论功能...也只在本地
+* 修复Bug
+
+####下面是图片展示
+![](https://github.com/Jack--Ma/JMZhihuDaily/blob/master/Demo/Pic1.2-1.png)<br>
+
+***
 ###JMZhihuDaily 1.1更新（2015.12.11）<br>
 * 新增主文章列表、主题文章列表下拉刷新与上拉加载新内容功能
 * 新增用户登录与注册功能（使用LeanCloud）
