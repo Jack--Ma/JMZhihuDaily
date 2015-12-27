@@ -14,7 +14,7 @@ README in JMZhihuDaily
 提供测试帐号<br>
 帐号：jackma  密码：123456
 
-###JMZhihuDailt 1.2更新（2015.12.27）<br>
+###JMZhihuDaily 1.2更新（2015.12.27）<br>
 * 实现文章界面夜间模式
 * 实现文章收藏功能，使用LeanCloud与帐号同步
 * 实现文章分享功能，支持分享到微信、微博、短信、邮件等
