@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSString *text;
 
 + (instancetype)CheckInView:(UIView *)view;
-
+- (void)beginAnimation;
 
 @end

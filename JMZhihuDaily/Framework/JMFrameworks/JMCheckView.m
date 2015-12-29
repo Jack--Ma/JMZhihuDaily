@@ -41,4 +41,19 @@
   [self.text drawAtPoint:textPoint withAttributes:attributes];
 }
 
+- (void)beginAnimation {
+  self.alpha = 0.0f;
+  self.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+  
+  [UIView animateWithDuration:0.2 animations:^{
+    self.alpha = 1.0f;
+    self.transform = CGAffineTransformIdentity;
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.3 delay:0.5 options:(UIViewAnimationOptionShowHideTransitionViews) animations:^{
+      self.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+      [self removeFromSuperview];
+    }];
+  }];
+}
 @end

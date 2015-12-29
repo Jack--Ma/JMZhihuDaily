@@ -12,6 +12,7 @@
 #import "UserModel.h"
 #import "ShareView.h"
 #import "CommentsViewController.h"
+#import "ImageViewController.h"
 
 #define PHONEHEIGHT ([UIScreen mainScreen].bounds.size.height)
 
@@ -93,6 +94,9 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+  if (_webHeaderView) {
+    return;
+  }
   [self loadWebView:self.newsId];
   [self loadFooterView:self.newsId];
 }
@@ -130,7 +134,8 @@
       self.statusBarBackground.backgroundColor = [UIColor whiteColor];
       [self loadNormalHeader];
     }
-    NSString *html = [NSString stringWithFormat:@"<html><head><link rel=\"stylesheet\" href=%@></head><body>%@</body></html>", css, body];
+    NSString *js = [NSString stringWithFormat:@"<script type=\"text/javascript\">%@</script>", [NSString stringWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"ClickImage" withExtension:@"js"] encoding:NSUTF8StringEncoding error:nil]];
+    NSString *html = [NSString stringWithFormat:@"<html><head>%@<link rel=\"stylesheet\" href=%@></head><body>%@</body></html>", js, css, body];
     [self.webView loadHTMLString:html baseURL:nil];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"%@", error);
@@ -139,15 +144,42 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-  //暂时的处理方法，只允许查看文章内容 而不允许点击其中链接跳转，待修改
-  //修改后应为打开知乎客户端
-  if (!webView.request) {
-    return YES;
-  }
-  if (request != webView.request) {
+  //处理点击图片
+  if ([request.URL.pathExtension isEqualToString:@"jpg"] || [request.URL.pathExtension isEqualToString:@"png"]) {
+    ImageViewController *imageViewController = [[ImageViewController alloc] init];
+    imageViewController.imageURL = request.URL;
+    imageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:imageViewController animated:YES completion:nil];
     return NO;
   }
-  return YES;
+  //处理点击链接，about:blank表示加载这个webView，return YES表示加载
+  //其他情况均为点击链接，return NO表示不加载，之前进行Alert提示处理
+  if ([request.URL.absoluteString isEqualToString:@"about:blank"]) {
+    return YES;
+  } else {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"知乎日报" message:@"如何处理该链接？" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *copyAction = [UIAlertAction actionWithTitle:@"复制链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      [alertVC dismissViewControllerAnimated:YES completion:nil];
+      [UIPasteboard generalPasteboard].URL = request.URL;
+    }];
+    UIAlertAction *safariAction = [UIAlertAction actionWithTitle:@"使用Safari打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      [alertVC dismissViewControllerAnimated:YES completion:nil];
+      [[UIApplication sharedApplication] openURL:request.URL];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+      [alertVC dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertVC addAction:copyAction];
+    [alertVC addAction:safariAction];
+    [alertVC addAction:cancelAction];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+    return NO;
+  }
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+  [self.webView stringByEvaluatingJavaScriptFromString:@"setImageClickFunction()"];
 }
 
 - (void)lockDirection {
