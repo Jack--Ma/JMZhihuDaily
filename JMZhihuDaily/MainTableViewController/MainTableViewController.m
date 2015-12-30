@@ -37,8 +37,11 @@
 
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   //SWRevealViewController提供了一个叫 revealViewController()的方法来从任何子控制器中拿到父控制器 SWRevealViewController；它还提供了一个叫 revealToggle: 的方法来显示或隐藏菜单栏，最后我们添加了一个手势。
-  UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
+  UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:UIBarButtonItemStylePlain target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"up_arrow"] style:UIBarButtonItemStylePlain target:self action:@selector(backToTop)];
+  rightButton.tintColor = [UIColor whiteColor];
+  
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
   
   //配置下拉刷新的View
@@ -102,12 +105,14 @@
     } completion:^(BOOL finished) {
       [self.navigationItem setTitle:@"今日热点"];
       [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
+      [self.navigationItem setRightBarButtonItem:rightButton animated:NO];
       [launchView removeFromSuperview];
     }];
     [StoryModel shareStory].firstDisplay = NO;
   } else {
     [self updateData];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:NO];
+    [self.navigationItem setRightBarButtonItem:rightButton animated:NO];
   }
   
   //透明的NavigationBar
@@ -118,8 +123,6 @@
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   self.tableView.showsVerticalScrollIndicator = NO;//取消竖直上右侧的滚动条
-  self.tableView.rowHeight = UITableViewAutomaticDimension;//ios8后加入的动态调整cell高度
-  self.tableView.estimatedRowHeight = 50;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   //设置最下端的上拉动画
@@ -129,6 +132,7 @@
     [strongSelf performSelector:@selector(endLoadMore) withObject:strongSelf afterDelay:2.0];
   };
   
+  [self switchTheme];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:@"todayDataGet" object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:@"pastDataGet" object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchTheme) name:@"switchTheme" object:nil];
@@ -395,17 +399,17 @@
   _nightModeView.backgroundColor = [UIColor blackColor];
   _nightModeView.alpha = 0.2;
   _nightModeView.userInteractionEnabled = NO;
-  if (temp) {
-    [_nightModeView removeFromSuperview];
-  } else {
+  if (!temp) {
     [_cycleScrollView addSubview:_nightModeView];
   }
   
   //设置navBar背景颜色
   UIColor *color;
   if (temp) {
+    self.tableView.backgroundColor = [UIColor whiteColor];
     color = [UIColor colorWithRed:0.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
   } else {
+    self.tableView.backgroundColor = [UIColor colorWithRed:52.0f/255.0f green:51.0f/255.0f blue:55.0f/255.0f alpha:1.0f];
     color = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:71.0/255.0 alpha:1];
   }
   [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:_navBarAlpha]];
@@ -423,6 +427,11 @@
   }
   [_cycleScrollView setImageURLStringsGroup:temp1];
   [_cycleScrollView setTitlesGroup:temp2];
+}
+
+- (void)backToTop {
+  //-64为Table的Head修正量
+  [self.tableView setContentOffset:CGPointMake(0, -64) animated:YES];
 }
 
 - (CAAnimation *)createRotationAnimation {

@@ -15,11 +15,13 @@
 #import "ImageViewController.h"
 
 #define PHONEHEIGHT ([UIScreen mainScreen].bounds.size.height)
+#define ISDAY ([[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"])
 
 @interface WebViewController () <UIScrollViewDelegate, UIWebViewDelegate, ParallaxHeaderViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UIView *statusBarBackground;
+@property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *collectButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *supportButton;
 @property (nonatomic ,weak) IBOutlet UIBarButtonItem *commentButtom;
@@ -37,6 +39,7 @@
   GradientView *_blurView;
   UIImageView *_refreshImageView;//加载上一篇的箭头
   UILabel *_refreshLabel;
+  UIButton *_topImageButton;
   
   //webView相关
   BOOL _hasImage;
@@ -63,8 +66,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
  
-  self.view.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
-  self.webView.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1];
   _hasImage = YES;
   _triggered = NO;
 
@@ -87,14 +88,16 @@
   self.webView.scrollView.showsVerticalScrollIndicator = YES;
   
   //夜间模式添加一个暗色图层
-  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
-  [self switchTheme: temp];
+  [self switchTheme: ISDAY];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   if (_webHeaderView) {
+    return;
+  }
+  if (_isThemeStory) {
     return;
   }
   [self loadWebView:self.newsId];
@@ -179,7 +182,11 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-  [self.webView stringByEvaluatingJavaScriptFromString:@"setImageClickFunction()"];
+  if (!ISDAY) {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"change_color()"];
+    self.webView.scrollView.backgroundColor = [UIColor colorWithRed:52.0/255.0 green:51.0/255.0 blue:60.0/255.0 alpha:1.0];
+  }
+  [self.webView stringByEvaluatingJavaScriptFromString:@"set_image_click_function()"];
 }
 
 - (void)lockDirection {
@@ -227,7 +234,11 @@
     //调整statusBar颜色
     if (incrementY >= 203) {
       [UIView animateWithDuration:0.2 animations:^{
-        self.statusBarBackground.backgroundColor = [UIColor whiteColor];
+        if (ISDAY) {
+          self.statusBarBackground.backgroundColor = [UIColor whiteColor];
+        } else {
+          self.statusBarBackground.backgroundColor = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:76.0/255.0 alpha:1.0];
+        }
         _statusBarFlat = YES;
         [self setNeedsStatusBarAppearanceUpdate];
       }];
@@ -286,7 +297,7 @@
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
   [_webHeaderView removeFromSuperview];
   //初始化图片
-  _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 223)];
+  _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 225)];
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
   [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     _articleImage = image;
@@ -343,12 +354,22 @@
   [_imageView bringSubviewToFront:_titleLabel];
   [_imageView bringSubviewToFront:_sourceLabel];
   
-  //添加进ParallaxView
-  _webHeaderView = [ParallaxHeaderView parallaxWebHeaderViewWithSubView:_imageView forSize:CGSizeMake(self.view.frame.size.width, 223)];
+  //设置ParallaxView，加入到webView的scrollView中
+  _webHeaderView = [ParallaxHeaderView parallaxWebHeaderViewWithSubView:_imageView forSize:CGSizeMake(self.view.frame.size.width, 225)];
   _webHeaderView.delegate = self;
-  
-  //将parallaxHeaderView加入到webView中
   [self.webView.scrollView addSubview:_webHeaderView];
+  
+  //添加点击TopImage查看图片的button，并设置白天夜晚不同颜色
+  _topImageButton = [[UIButton alloc] initWithFrame:_blurView.frame];
+  _topImageButton.y -= 20.0;
+  [_topImageButton addTarget:self action:@selector(showTopImage) forControlEvents:UIControlEventTouchUpInside];
+  if (ISDAY) {
+    _topImageButton.backgroundColor = [UIColor clearColor];
+  } else {
+    _topImageButton.backgroundColor = [UIColor blackColor];
+    _topImageButton.alpha = 0.2;
+  }
+  [self.webView.scrollView addSubview:_topImageButton];
 }
 
 - (void)loadNormalHeader {
@@ -356,7 +377,11 @@
   _statusBarFlat = YES;
   self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
   [self setNeedsStatusBarAppearanceUpdate];
-  self.statusBarBackground.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:249.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
+  if (ISDAY) {
+    self.statusBarBackground.backgroundColor = [UIColor whiteColor];
+  } else {
+    self.statusBarBackground.backgroundColor = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:76.0/255.0 alpha:1.0];
+  }
   
   [_refreshLabel removeFromSuperview];
   _refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, -45, self.view.frame.size.width, 45)];
@@ -383,6 +408,11 @@
 
 #pragma mark - webFooterView
 - (void)loadFooterView:(NSInteger)newsId {
+  //设置toolBar的颜色
+  if (!ISDAY) {
+    self.toolBar.barTintColor = [UIColor colorWithRed:68.0/255.0 green:67.0/255.0 blue:76.0/255.0 alpha:1.0];
+  }
+  
   //设置收藏button的颜色
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)newsId];
   NSArray *array = [UserModel currentUser].articlesList;
@@ -437,13 +467,8 @@
   }];
   [operation start];
 }
-- (IBAction)backToLastView:(id)sender {
-  if (self.isThemeStory) {
-    [self.navigationController popViewControllerAnimated:YES];
-  } else {
-    [self dismissViewControllerAnimated:YES completion:nil];
-  }
-  [self.navigationController popToRootViewControllerAnimated:YES];
+- (IBAction)backToTop:(id)sender {
+  [self.webView.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 - (IBAction)collectArticle:(id)sender {
   NSString *urlString = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/news/%ld", (long)self.newsId];
@@ -546,15 +571,15 @@
 }
 
 #pragma mark - 其他函数
+- (void)showTopImage {
+  ImageViewController *imageViewController = [[ImageViewController alloc] init];
+  imageViewController.imageURL = [NSURL URLWithString:_articleImageURL];
+  imageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  [self presentViewController:imageViewController animated:YES completion:nil];
+}
+
 - (void)switchTheme:(BOOL)temp {
-  if (!temp) {
-    //夜间下添加黑色图层
-    UIView *blackView = [[UIView alloc] initWithFrame:self.view.frame];
-    blackView.backgroundColor = [UIColor blackColor];
-    blackView.alpha = 0.4;
-    blackView.userInteractionEnabled = NO;
-    [self.view addSubview:blackView];
-  }
+
 }
 - (void)loadNewArticle {
 //  NSLog(@"loadNewArticle");

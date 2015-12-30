@@ -54,8 +54,6 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:@"switchTheme" object:nil];
   
   [self switchTheme:temp];
-  [self.tableView reloadData];
-  [_backView refreshView];
 }
 
 - (void)switchTheme:(BOOL)temp {
@@ -74,11 +72,13 @@
     [self.switchView setImage:[UIImage imageNamed:@"sun"] forState:UIControlStateNormal];
     [self.switchButton setTitle:@"白天" forState:UIControlStateNormal];
   }
+  [self.tableView reloadData];
+  [_backView refreshView];
 }
 
 #pragma mark - init
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   //设置头像和用户名
   self.userAvator.contentMode = UIViewContentModeScaleAspectFill;
   self.userAvator.layer.cornerRadius = 17.5;
@@ -99,6 +99,9 @@
   [self.switchView setTintColor:[UIColor lightGrayColor]];
   //设置点击右边界面返回
   [self.revealViewController tapGestureRecognizer];
+  
+  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
+  [self switchTheme:temp];
 }
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -121,9 +124,6 @@
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   self.tableView.rowHeight = 50.5f;
-  
-  BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
-  [self switchTheme:temp];
 }
 
 #pragma mark - tableView

@@ -83,6 +83,9 @@
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftArrow"] style:(UIBarButtonItemStylePlain) target:self.revealViewController action:@selector(revealToggle:)];
   leftButton.tintColor = [UIColor whiteColor];
   [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"up_arrow"] style:UIBarButtonItemStylePlain target:self action:@selector(backToTop)];
+  rightButton.tintColor = [UIColor whiteColor];
+  [self.navigationItem setRightBarButtonItem:rightButton animated:YES];
   [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
   //配置下拉刷新的View
@@ -328,7 +331,7 @@
     [self.tableView reloadData];
   }
 }
-#pragma mark - 一些全局设置函数
+#pragma mark - 私有函数
 - (void)switchTheme {
   BOOL temp = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDay"];
   
@@ -353,6 +356,10 @@
   [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:_navBarAlpha]];
   
   [self.tableView reloadData];
+}
+
+- (void)backToTop {
+  [self.tableView setContentOffset:CGPointMake(0, -64) animated:YES];
 }
 
 //拓展NavigationController以设置StatusBar

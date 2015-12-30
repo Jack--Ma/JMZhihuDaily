@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AD11BEF0BDF8D31F7EF3FAA1 /* libPods-JMZhihuDaily.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5688F39C562A66E2926245DD /* libPods-JMZhihuDaily.a */; };
-		C4037CAE1BF6B984003D112B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4037CAD1BF6B984003D112B /* Assets.xcassets */; };
 		C4045B8E1BFDEE1200196582 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4045B8D1BFDEE1200196582 /* DACircularProgressView.m */; };
 		C41314DB1C02E637004A55CE /* EditorsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DA1C02E637004A55CE /* EditorsTableViewController.m */; };
 		C41314DE1C02EC17004A55CE /* EditorsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C41314DD1C02EC17004A55CE /* EditorsTableViewCell.m */; };
@@ -19,6 +18,7 @@
 		C42BC8E61C32BB85008B3C3E /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BC8DE1C32BB85008B3C3E /* CommentsViewController.m */; };
 		C42BC8E71C32BB85008B3C3E /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BC8E01C32BB85008B3C3E /* CommentTableViewCell.m */; };
 		C42BC8E81C32BB85008B3C3E /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BC8E21C32BB85008B3C3E /* ShareView.m */; };
+		C44B46BA1C33F34100CE3C5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C44B46B91C33F34100CE3C5C /* Assets.xcassets */; };
 		C44F22121C2501A500725215 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44F22111C2501A500725215 /* CollectionViewCell.m */; };
 		C46413B61C09CB4C008064E1 /* SwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B51C09CB4C008064E1 /* SwitchTableViewCell.m */; };
 		C46413B91C09D187008064E1 /* SetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C46413B81C09D187008064E1 /* SetTableViewCell.m */; };
@@ -83,7 +83,6 @@
 /* Begin PBXFileReference section */
 		5688F39C562A66E2926245DD /* libPods-JMZhihuDaily.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JMZhihuDaily.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		68AAB5CB82B9C0937B5FB9AA /* Pods-JMZhihuDaily.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JMZhihuDaily.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JMZhihuDaily/Pods-JMZhihuDaily.debug.xcconfig"; sourceTree = "<group>"; };
-		C4037CAD1BF6B984003D112B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4045B8C1BFDEE1200196582 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DACircularProgressView.h; path = Framework/DACircularProgress/DACircularProgressView.h; sourceTree = "<group>"; };
 		C4045B8D1BFDEE1200196582 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DACircularProgressView.m; path = Framework/DACircularProgress/DACircularProgressView.m; sourceTree = "<group>"; };
 		C4058A821BE9E62F00FCD01C /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = JMZhihuDaily/PrefixHeader.pch; sourceTree = "<group>"; };
@@ -104,6 +103,7 @@
 		C42BC8E01C32BB85008B3C3E /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentTableViewCell.m; path = WebView/CommentTableViewCell.m; sourceTree = "<group>"; };
 		C42BC8E11C32BB85008B3C3E /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareView.h; path = WebView/ShareView.h; sourceTree = "<group>"; };
 		C42BC8E21C32BB85008B3C3E /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareView.m; path = WebView/ShareView.m; sourceTree = "<group>"; };
+		C44B46B91C33F34100CE3C5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C44F22101C2501A500725215 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewCell.h; path = CollectionViewController/CollectionViewCell.h; sourceTree = "<group>"; };
 		C44F22111C2501A500725215 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewCell.m; path = CollectionViewController/CollectionViewCell.m; sourceTree = "<group>"; };
 		C46413B41C09CB4C008064E1 /* SwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchTableViewCell.h; path = SetTableViewController/SwitchTableViewCell.h; sourceTree = "<group>"; };
@@ -541,7 +541,7 @@
 				C4C3C1131BE895C500AA1E73 /* Main.storyboard */,
 				C4C3C1181BE895C500AA1E73 /* LaunchScreen.storyboard */,
 				C4C3C11B1BE895C500AA1E73 /* Info.plist */,
-				C4037CAD1BF6B984003D112B /* Assets.xcassets */,
+				C44B46B91C33F34100CE3C5C /* Assets.xcassets */,
 				C4C3C10A1BE895C500AA1E73 /* Supporting Files */,
 			);
 			path = JMZhihuDaily;
@@ -702,8 +702,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4C3C11A1BE895C500AA1E73 /* LaunchScreen.storyboard in Resources */,
-				C4037CAE1BF6B984003D112B /* Assets.xcassets in Resources */,
 				C42BC8E31C32BB85008B3C3E /* ClickImage.js in Resources */,
+				C44B46BA1C33F34100CE3C5C /* Assets.xcassets in Resources */,
 				C4C3C1151BE895C500AA1E73 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

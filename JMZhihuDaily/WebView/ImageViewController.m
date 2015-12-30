@@ -81,6 +81,31 @@
   [self presentViewController:alertVC animated:YES completion:nil];
 }
 
+- (void)changeScale:(UIPinchGestureRecognizer *)sender {
+  UIView *view = sender.view;
+  if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged) {
+    view.transform = CGAffineTransformScale(view.transform, sender.scale, sender.scale);
+    sender.scale = 1.0;
+  }
+}
+
+- (void)changePoint:(UIPanGestureRecognizer *)sender {
+  UIView *view = sender.view;
+  if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged) {
+    CGPoint translation = [sender translationInView:view.superview];
+    [view setCenter:CGPointMake(view.centerX+translation.x, view.centerY+translation.y)];
+    [sender setTranslation:CGPointZero inView:view.superview];
+  }
+}
+
+- (void)rotateImage:(UIRotationGestureRecognizer *)sender {
+  UIView *view = sender.view;
+  if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged) {
+    view.transform = CGAffineTransformRotate(view.transform, sender.rotation);
+    [sender setRotation:0];
+  }
+}
+
 #pragma mark - init
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -115,7 +140,18 @@
   [self.view addGestureRecognizer:longPressGesture];
   
   //图片放大缩小手势
-//  UIPinchGestureRecognizer *pinGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(changeScale)];
+  UIPinchGestureRecognizer *pinGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(changeScale:)];
+  [self.imageView addGestureRecognizer:pinGesture];
+  self.imageView.userInteractionEnabled = YES;
+  self.imageView.multipleTouchEnabled = YES;
+  
+  //图片拖拉手势
+  UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(changePoint:)];
+  [self.imageView addGestureRecognizer:panGesture];
+  
+  //图片旋转手势
+  UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateImage:)];
+  [self.imageView addGestureRecognizer:rotationGesture];
 }
 
 - (void)didReceiveMemoryWarning {
