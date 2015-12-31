@@ -94,10 +94,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
-  if (_webHeaderView) {
-    return;
-  }
-  if (_isThemeStory) {
+  if (_refreshImageView) {
     return;
   }
   [self loadWebView:self.newsId];
@@ -139,6 +136,10 @@
     }
     NSString *js = [NSString stringWithFormat:@"<script type=\"text/javascript\">%@</script>", [NSString stringWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"ClickImage" withExtension:@"js"] encoding:NSUTF8StringEncoding error:nil]];
     NSString *html = [NSString stringWithFormat:@"<html><head>%@<link rel=\"stylesheet\" href=%@></head><body>%@</body></html>", js, css, body];
+    if (!ISDAY) {
+      //夜间下调用night样式的CSS
+      html = [NSString stringWithFormat:@"<html><head>%@<link rel=\"stylesheet\" href=%@></head><body><div class=\"night\">%@</div></body></html>", js, css, body];
+    }
     [self.webView loadHTMLString:html baseURL:nil];
   } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
     NSLog(@"%@", error);
@@ -147,8 +148,9 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+//  NSLog(@"%@", request.URL.pathExtension);
   //处理点击图片
-  if ([request.URL.pathExtension isEqualToString:@"jpg"] || [request.URL.pathExtension isEqualToString:@"png"]) {
+  if ([request.URL.pathExtension containsString:@"jpg"] || [request.URL.pathExtension containsString:@"png"]) {
     ImageViewController *imageViewController = [[ImageViewController alloc] init];
     imageViewController.imageURL = request.URL;
     imageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -183,8 +185,9 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
   if (!ISDAY) {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"change_color()"];
-    self.webView.scrollView.backgroundColor = [UIColor colorWithRed:52.0/255.0 green:51.0/255.0 blue:60.0/255.0 alpha:1.0];
+    self.webView.scrollView.backgroundColor = [UIColor colorWithRed:52.0/255.0 green:51.0/255.0 blue:55.0/255.0 alpha:1.0];
+  } else {
+    self.webView.scrollView.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
   }
   [self.webView stringByEvaluatingJavaScriptFromString:@"set_image_click_function()"];
 }

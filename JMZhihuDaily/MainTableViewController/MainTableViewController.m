@@ -395,7 +395,7 @@
   
   //设置图片遮蔽罩
   [_nightModeView removeFromSuperview];
-  _nightModeView = [[UIView alloc] initWithFrame:_cycleScrollView.frame];
+  _nightModeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 279)];
   _nightModeView.backgroundColor = [UIColor blackColor];
   _nightModeView.alpha = 0.2;
   _nightModeView.userInteractionEnabled = NO;

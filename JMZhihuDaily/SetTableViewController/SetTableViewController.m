@@ -14,12 +14,15 @@
 #import "UserModel.h"
 #import "UserInfoViewController.h"
 #import "LoginViewController.h"
+#import "JMCheckView.h"
 
 @interface SetTableViewController ()
 
 @end
 
-@implementation SetTableViewController
+@implementation SetTableViewController {
+  CGFloat _allCacheSize;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
@@ -42,6 +45,7 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.scrollEnabled = NO;
   [self switchTheme];
+  [self getCacheSize];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchTheme) name:@"switchTheme" object:nil];
 }
 
@@ -71,8 +75,68 @@
 //  UISwitch *switchch = sender;
   
 }
-#pragma mark - Table view data source
+//计算图片缓存大小
+- (void)getCacheSize {
+  NSFileManager *fm = [NSFileManager defaultManager];
+  NSError *error = nil;
+  NSUInteger fileSize = 0;
 
+  NSString *path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/SDDataCache"];
+  NSArray* subFiles = [fm subpathsAtPath:path];
+  for (NSString* fileName in subFiles) {
+    NSDictionary *dic = [fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@/%@", path, fileName] error:&error];
+    NSUInteger size = (error ? 0 : [dic fileSize]);
+    fileSize += size;
+  }
+  
+  path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/qq100858433.JMDaily/fsCachedData"];
+  subFiles = [fm subpathsAtPath:path];
+  for (NSString* fileName in subFiles) {
+    NSDictionary *dic = [fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@/%@", path, fileName] error:&error];
+    NSUInteger size = (error ? 0 : [dic fileSize]);
+    fileSize += size;
+  }
+  
+  path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/default/com.hackemist.SDWebImageCache.default"];
+  subFiles = [fm subpathsAtPath:path];
+  for (NSString* fileName in subFiles) {
+    NSDictionary *dic = [fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@/%@", path, fileName] error:&error];
+    NSUInteger size = (error ? 0 : [dic fileSize]);
+    fileSize += size;
+  }
+  _allCacheSize = fileSize/(1024.0*1024.0);
+}
+//清除缓存
+- (void)clearCache {
+  UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"知乎日报" message:@"是否清除所有缓存" preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    NSString *path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/SDDataCache"];
+    [fm removeItemAtPath:path error:nil];
+    
+    path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/qq100858433.JMDaily/fsCachedData"];
+    [fm removeItemAtPath:path error:nil];
+    
+    path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/default/com.hackemist.SDWebImageCache.default"];
+    [fm removeItemAtPath:path error:nil];
+    
+    [self getCacheSize];
+    [self.tableView reloadData];
+    JMCheckView *checkView = [JMCheckView CheckInView: self.view];
+    checkView.text = @"清除成功";
+    [self.view addSubview:checkView];
+    [checkView beginAnimation];
+  }];
+  UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertVC dismissViewControllerAnimated:YES completion:nil];
+  }];
+  [alertVC addAction:cancelAction];
+  [alertVC addAction:okAction];
+  [self presentViewController:alertVC animated:YES completion:nil];
+}
+
+#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 3;
 }
@@ -81,7 +145,7 @@
   if (section == 0) {
     return 1;
   } else if (section == 1) {
-    return 2;
+    return 3;
   } else if (section == 2) {
     return 1;
   }
@@ -113,6 +177,11 @@
       cell.switchch.on = NO;
       [cell.switchch addTarget:self action:@selector(sendNotification:) forControlEvents:UIControlEventValueChanged];
       return cell;
+    } else if (indexPath.row == 2) {
+      SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setTableViewCell"];
+      [cell awakeFromNib];
+      cell.label.text = [NSString stringWithFormat:@"缓存：%.2fMB", _allCacheSize];
+      return cell;
     }
   } else if (indexPath.section == 2) {
     SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setTableViewCell"];
@@ -133,7 +202,10 @@
       LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
       [self presentViewController:loginViewController animated:YES completion:nil];
     }
-    
+  } else if (indexPath.section == 1) {
+    if (indexPath.row == 2) {
+      [self clearCache];
+    }
   } else if (indexPath.section == 2) {
     ShareViewController *shareViewController = [[ShareViewController alloc] init];
     [self.navigationController pushViewController:shareViewController animated:YES];
