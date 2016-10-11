@@ -1,11 +1,6 @@
-README in JMZhihuDaily
+JMZhihuDaily
 ===========================
 使用Objective-C实现知乎日报的所有功能，目前实现的有mainView视图、主题themeView视图，以及点击视图加载的内容webView视图，用户登录界面，用户信息界面，用户设置界面，文章收藏，夜间模式,在一些第三方库的基础上实现了相似的动画效果
-
-****
-###　　　　　　　　　　　Author:Jack Ma
-###　　　　　　　　　E-mail:100858433@qq.com
-
 ===========================
 
 引用https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-分析 知乎日报的API <br>
